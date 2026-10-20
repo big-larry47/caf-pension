@@ -220,8 +220,8 @@ const defaultState: ApplicationState = {
   },
 
   guardianDeposit: {
-    ownerType: 'member',
-    holderName: mockData.personal.fullName,
+    ownerType: 'guardian',
+    holderName: 'Margaretha Byers (Power of Attorney for Jenny Miller)',
     transit: '',
     institution: '',
     account: '',
@@ -251,7 +251,7 @@ const defaultState: ApplicationState = {
   activeActor: 'member',
 };
 
-const STORAGE_KEY = 'caf_pension_application_state_v3';
+const STORAGE_KEY = 'caf_pension_application_state_v5';
 
 interface ApplicationContextType {
   state: ApplicationState;
@@ -266,9 +266,22 @@ const ApplicationContext = createContext<ApplicationContextType | undefined>(und
 export const ApplicationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [state, setState] = useState<ApplicationState>(() => {
     try {
+      // Clear legacy storage keys across previous versions
+      ['caf_pension_application_state', 'caf_pension_application_state_v2', 'caf_pension_application_state_v3', 'caf_pension_application_state_v4'].forEach((k) => {
+        sessionStorage.removeItem(k);
+        localStorage.removeItem(k);
+      });
+
       const stored = sessionStorage.getItem(STORAGE_KEY);
       if (stored) {
-        return { ...defaultState, ...JSON.parse(stored) };
+        // Sanitize any residual cached names
+        const cleanedStr = stored
+          .replace(/Sarah Miller/g, 'Margaretha Byers')
+          .replace(/Sarah Villa/g, 'Margaretha Byers')
+          .replace(/sarah\.miller@example\.com/g, 'margaretha.byers@example.com')
+          .replace(/sarah\.villa@example\.com/g, 'margaretha.byers@example.com')
+          .replace(/Felix Villa/g, 'Kelvin Miller');
+        return { ...defaultState, ...JSON.parse(cleanedStr) };
       }
     } catch (e) {
       console.warn('Failed to read from sessionStorage', e);
