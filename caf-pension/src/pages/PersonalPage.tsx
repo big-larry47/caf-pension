@@ -52,13 +52,6 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
     {
       label: 'Full name',
       value: mockData.personal.fullName,
-      action: !isLocked
-        ? {
-            text: 'Change',
-            visuallyHiddenText: 'full name',
-            onClick: () => {},
-          }
-        : undefined,
     },
     {
       label: 'Status & Beneficiary',
@@ -87,13 +80,6 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
           ))}
         </>
       ),
-      action: !isLocked
-        ? {
-            text: 'Change',
-            visuallyHiddenText: 'mailing address',
-            onClick: () => {},
-          }
-        : undefined,
     },
     {
       label: 'Phone',
@@ -107,13 +93,6 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
           ))}
         </>
       ),
-      action: !isLocked
-        ? {
-            text: 'Change',
-            visuallyHiddenText: 'phone',
-            onClick: () => {},
-          }
-        : undefined,
     },
     {
       label: 'Email',
@@ -122,13 +101,6 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
           {mockData.personal.email}
         </span>
       ),
-      action: !isLocked
-        ? {
-            text: 'Change',
-            visuallyHiddenText: 'email',
-            onClick: () => {},
-          }
-        : undefined,
     },
   ];
 
@@ -148,11 +120,12 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
         <StepLayout
           aside={
             isGuardian ? (
-              <HelpCard title="Do I need to read every step?">
-                <p>
-                  No, you can go straight to the bank details. But you'll confirm
-                  the whole application before you submit in step 7, so it helps
-                  to look now.
+              <HelpCard title="Official casualty file">
+                <p style={{ margin: '0 0 10px', fontSize: '15px', lineHeight: 1.5 }}>
+                  This casualty file was compiled by the Department of National Defence following General Felix Villa's active operational service in Syria.
+                </p>
+                <p style={{ margin: 0, fontSize: '14px', color: '#64748B' }}>
+                  If you spot an error in the spelling of Jenny's name or contact address, notify a pension counselor below.
                 </p>
               </HelpCard>
             ) : (
@@ -176,152 +149,363 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
         >
           {isLocked && <ReadOnlyNotice />}
 
-          <h1 className="page-title">
-            {isGuardian ? `Personal details for the late ${mockData.personal.fullName}` : 'Personal details'}
-          </h1>
-          <p className="page-lead">
-            {isGuardian
-              ? `Official personal and casualty record on file for the late ${mockData.personal.fullName}.`
-              : `Official personal and casualty record on file for the late ${mockData.personal.fullName}.`}
-          </p>
-
-          <SummaryList items={summaryItems} />
-
-          {isLocked ? (
-            <Card style={{ marginTop: '24px' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px' }}>
-                <div>
-                  <div style={{ fontSize: '14px', color: 'var(--color-muted)' }}>Contact language</div>
-                  <div style={{ fontWeight: 600 }}>
-                    {state.contactLanguage === 'en' ? 'English' : 'French'}
-                  </div>
+          {/* ===================== GUARDIAN / CASUALTY DOSSIER VIEW ===================== */}
+          {isGuardian ? (
+            <div className="fade-in-slide">
+              {/* Prestigious Military Casualty Hero Dossier */}
+              <div
+                style={{
+                  background: 'linear-gradient(135deg, #0B2545 0%, #103460 60%, #15457F 100%)',
+                  borderRadius: '12px',
+                  padding: '28px 30px',
+                  color: '#FFFFFF',
+                  marginBottom: '24px',
+                  boxShadow: '0 8px 20px rgba(11, 37, 69, 0.18)',
+                  border: '1px solid #1E4E8C',
+                  position: 'relative',
+                  overflow: 'hidden',
+                }}
+              >
+                {/* Decorative background watermark */}
+                <div
+                  aria-hidden="true"
+                  style={{
+                    position: 'absolute',
+                    top: '-20px',
+                    right: '-10px',
+                    fontSize: '120px',
+                    opacity: 0.06,
+                    userSelect: 'none',
+                    pointerEvents: 'none',
+                  }}
+                >
+                  🍁
                 </div>
-                <div>
-                  <div style={{ fontSize: '14px', color: 'var(--color-muted)' }}>Living outside Canada</div>
-                  <div style={{ fontWeight: 600 }}>
-                    {state.liveAbroad === 'yes' ? 'Yes' : 'No'}
+
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '20px', position: 'relative', zIndex: 1 }}>
+                  <div style={{ flex: 1, minWidth: '280px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap', marginBottom: '12px' }}>
+                      <span
+                        style={{
+                          background: 'rgba(217, 119, 6, 0.25)',
+                          border: '1px solid #F59E0B',
+                          color: '#FDE68A',
+                          fontSize: '12px',
+                          fontWeight: 800,
+                          letterSpacing: '0.08em',
+                          textTransform: 'uppercase',
+                          padding: '4px 12px',
+                          borderRadius: '999px',
+                        }}
+                      >
+                        🎖️ Official Military Casualty Dossier
+                      </span>
+                      <span style={{ fontSize: '13px', color: '#93C5FD', fontFamily: "'IBM Plex Mono', monospace" }}>
+                        Ref: {mockData.applicationRef}
+                      </span>
+                    </div>
+
+                    <h1 style={{ margin: '0 0 6px', fontSize: '32px', fontWeight: 800, letterSpacing: '-0.02em', color: '#FFFFFF', lineHeight: 1.2 }}>
+                      {mockData.personal.fullName}
+                    </h1>
+
+                    <p style={{ margin: '0 0 16px', fontSize: '17px', color: '#BFDBFE', lineHeight: 1.4 }}>
+                      General · Regular Force · <strong>34 Years 182 Days</strong> Pensionable Service
+                    </p>
+
+                    <div
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '10px',
+                        background: 'rgba(0, 0, 0, 0.35)',
+                        backdropFilter: 'blur(4px)',
+                        padding: '8px 16px',
+                        borderRadius: '8px',
+                        borderLeft: '4px solid #EF4444',
+                        fontSize: '15px',
+                        color: '#FEE2E2',
+                      }}
+                    >
+                      <span style={{ fontSize: '18px' }}>🕯️</span>
+                      <span>
+                        <strong>Died on Active Operational Service:</strong> 15 October 2026 (Syria) · Age 68
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Official DND Seal Box */}
+                  <div
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.08)',
+                      backdropFilter: 'blur(6px)',
+                      border: '1px solid rgba(255, 255, 255, 0.2)',
+                      borderRadius: '10px',
+                      padding: '16px 20px',
+                      textAlign: 'center',
+                      minWidth: '170px',
+                      boxShadow: 'inset 0 1px 1px rgba(255, 255, 255, 0.1)',
+                    }}
+                  >
+                    <div style={{ fontSize: '26px', marginBottom: '4px' }}>🛡️</div>
+                    <div style={{ fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#93C5FD', fontWeight: 800 }}>
+                      DND Certified
+                    </div>
+                    <div style={{ fontSize: '14px', color: '#FFFFFF', fontWeight: 700, marginTop: '2px' }}>
+                      Casualty File Sealed
+                    </div>
+                    <div style={{ fontSize: '12px', color: '#CBD5E1', marginTop: '4px' }}>
+                      Directorate of Casualty Support
+                    </div>
                   </div>
                 </div>
               </div>
-            </Card>
-          ) : (
-            <>
-              <fieldset style={{ border: 0, margin: '28px 0 0', padding: 0 }}>
-                <legend
-                  style={{
-                    fontWeight: 600,
-                    fontSize: '20px',
-                    marginBottom: '10px',
-                    padding: 0,
-                  }}
-                >
-                  Which language should we use to contact you?
-                </legend>
-                <div style={{ display: 'flex', gap: '28px', flexWrap: 'wrap' }}>
-                  <label style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                    <input
-                      type="radio"
-                      name="lang"
-                      checked={state.contactLanguage === 'en'}
-                      onChange={() => updateState({ contactLanguage: 'en' })}
-                      style={{
-                        width: '22px',
-                        height: '22px',
-                        margin: 0,
-                        accentColor: 'var(--color-primary)',
-                      }}
-                    />
-                    English
-                  </label>
-                  <label style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                    <input
-                      type="radio"
-                      name="lang"
-                      checked={state.contactLanguage === 'fr'}
-                      onChange={() => updateState({ contactLanguage: 'fr' })}
-                      style={{
-                        width: '22px',
-                        height: '22px',
-                        margin: 0,
-                        accentColor: 'var(--color-primary)',
-                      }}
-                    />
-                    French
-                  </label>
-                </div>
-              </fieldset>
 
-              <fieldset style={{ border: 0, margin: '24px 0 0', padding: 0 }}>
-                <legend
-                  style={{
-                    fontWeight: 600,
-                    fontSize: '20px',
-                    marginBottom: '10px',
-                    padding: 0,
-                  }}
-                >
-                  Will you live outside Canada when your pension starts?
-                </legend>
-                <div style={{ display: 'flex', gap: '28px', flexWrap: 'wrap' }}>
-                  <label style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                    <input
-                      type="radio"
-                      name="abroad"
-                      checked={state.liveAbroad === 'no'}
-                      onChange={() => updateState({ liveAbroad: 'no' })}
-                      style={{
-                        width: '22px',
-                        height: '22px',
-                        margin: 0,
-                        accentColor: 'var(--color-primary)',
-                      }}
-                    />
-                    No
-                  </label>
-                  <label style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                    <input
-                      type="radio"
-                      name="abroad"
-                      checked={state.liveAbroad === 'yes'}
-                      onChange={() => updateState({ liveAbroad: 'yes' })}
-                      style={{
-                        width: '22px',
-                        height: '22px',
-                        margin: 0,
-                        accentColor: 'var(--color-primary)',
-                      }}
-                    />
-                    Yes
-                  </label>
+              {/* Sole Surviving Beneficiary Card - Highlighted in Rich Gold & Navy */}
+              <div
+                style={{
+                  background: '#FFFBEB',
+                  border: '2px solid #F59E0B',
+                  borderRadius: '12px',
+                  padding: '22px 24px',
+                  marginBottom: '20px',
+                  boxShadow: '0 4px 12px rgba(245, 158, 11, 0.12)',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '10px' }}>
+                  <div
+                    style={{
+                      width: '40px',
+                      height: '40px',
+                      borderRadius: '50%',
+                      background: '#F59E0B',
+                      color: '#FFFFFF',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '20px',
+                      flexShrink: 0,
+                    }}
+                  >
+                    ⭐
+                  </div>
+                  <div>
+                    <span style={{ fontSize: '12px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#B45309' }}>
+                      Designated Sole Survivor Beneficiary
+                    </span>
+                    <h2 style={{ margin: 0, fontSize: '22px', fontWeight: 800, color: '#78350F' }}>
+                      Jenny Villa (Daughter, Age 20)
+                    </h2>
+                  </div>
                 </div>
-                <p
+                <p style={{ margin: '0 0 10px', fontSize: '16px', color: '#92400E', lineHeight: 1.5 }}>
+                  Spouse predeceased (General Felix Villa was widowed). Under the <strong>Canadian Forces Superannuation Act (CFSA)</strong>, Jenny Villa is the sole designated dependent child beneficiary entitled to all survivor pension annuities and capital death benefits.
+                </p>
+                <div style={{ fontSize: '14px', fontWeight: 600, color: '#B45309', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span>✓</span> Authority verified: Sarah Villa acts as legal guardian/representative for disbursement.
+                </div>
+              </div>
+
+              {/* Identification & Vital Records Card */}
+              <div
+                style={{
+                  background: '#FFFFFF',
+                  border: '1px solid #CBD5E1',
+                  borderRadius: '12px',
+                  overflow: 'hidden',
+                  marginBottom: '20px',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+                }}
+              >
+                <div
                   style={{
-                    margin: '8px 0 0',
-                    fontSize: '15px',
-                    color: 'var(--color-muted)',
+                    padding: '16px 22px',
+                    background: '#F8FAFC',
+                    borderBottom: '1px solid #E2E8F0',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
                   }}
                 >
-                  This changes the tax questions and banking options you see later.
-                </p>
-              </fieldset>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <span style={{ fontSize: '20px' }}>🎖️</span>
+                    <span style={{ fontWeight: 800, fontSize: '17px', color: '#0F172A' }}>
+                      Military Identification & Vital Records
+                    </span>
+                  </div>
+                  <span style={{ fontSize: '12px', background: '#E2E8F0', color: '#334155', padding: '4px 10px', borderRadius: '4px', fontWeight: 700 }}>
+                    Official CAF File
+                  </span>
+                </div>
+
+                <div style={{ padding: '20px 22px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: '20px' }}>
+                  <div style={{ background: '#F8FAFC', padding: '14px 16px', borderRadius: '8px', border: '1px solid #E2E8F0' }}>
+                    <div style={{ fontSize: '12px', color: '#64748B', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                      Military Service Number
+                    </div>
+                    <div style={{ fontSize: '20px', fontWeight: 800, color: '#0B335E', fontFamily: "'IBM Plex Mono', monospace", marginTop: '4px' }}>
+                      {mockData.serviceNumber}
+                    </div>
+                    <div style={{ fontSize: '13px', color: '#64748B', marginTop: '2px' }}>
+                      Regular Force · Commissioned
+                    </div>
+                  </div>
+
+                  <div style={{ background: '#F8FAFC', padding: '14px 16px', borderRadius: '8px', border: '1px solid #E2E8F0' }}>
+                    <div style={{ fontSize: '12px', color: '#64748B', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                      Date of Birth
+                    </div>
+                    <div style={{ fontSize: '18px', fontWeight: 800, color: '#0F172A', marginTop: '4px' }}>
+                      {mockData.personal.dateOfBirth}
+                    </div>
+                    <div style={{ fontSize: '13px', color: '#64748B', marginTop: '2px' }}>
+                      Age 68 at time of casualty
+                    </div>
+                  </div>
+
+                  <div style={{ background: '#F8FAFC', padding: '14px 16px', borderRadius: '8px', border: '1px solid #E2E8F0' }}>
+                    <div style={{ fontSize: '12px', color: '#64748B', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                      Social Insurance Number (Masked)
+                    </div>
+                    <div style={{ fontSize: '18px', fontWeight: 800, color: '#0F172A', fontFamily: "'IBM Plex Mono', monospace", marginTop: '4px' }}>
+                      {mockData.personal.maskedSin}
+                    </div>
+                    <div style={{ fontSize: '13px', color: '#64748B', marginTop: '2px' }}>
+                      Validated with CRA
+                    </div>
+                  </div>
+
+                  <div style={{ background: '#F8FAFC', padding: '14px 16px', borderRadius: '8px', border: '1px solid #E2E8F0' }}>
+                    <div style={{ fontSize: '12px', color: '#64748B', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                      Marital Status on Record
+                    </div>
+                    <div style={{ fontSize: '18px', fontWeight: 800, color: '#0F172A', marginTop: '4px' }}>
+                      Widowed
+                    </div>
+                    <div style={{ fontSize: '13px', color: '#64748B', marginTop: '2px' }}>
+                      Spouse predeceased
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Estate & Guardian Contact Record Card */}
+              <div
+                style={{
+                  background: '#FFFFFF',
+                  border: '1px solid #CBD5E1',
+                  borderRadius: '12px',
+                  overflow: 'hidden',
+                  marginBottom: '20px',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+                }}
+              >
+                <div
+                  style={{
+                    padding: '16px 22px',
+                    background: '#F8FAFC',
+                    borderBottom: '1px solid #E2E8F0',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <span style={{ fontSize: '20px' }}>🏛️</span>
+                    <span style={{ fontWeight: 800, fontSize: '17px', color: '#0F172A' }}>
+                      Official Estate & Legal Representation
+                    </span>
+                  </div>
+                  <span style={{ fontSize: '12px', background: '#E2E8F0', color: '#334155', padding: '4px 10px', borderRadius: '4px', fontWeight: 700 }}>
+                    Active Representation
+                  </span>
+                </div>
+
+                <div style={{ padding: '20px 22px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '24px' }}>
+                  <div>
+                    <div style={{ fontSize: '12px', color: '#64748B', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '6px' }}>
+                      Mailing Address for Pension Correspondence
+                    </div>
+                    <div style={{ background: '#F8FAFC', padding: '16px 18px', borderRadius: '8px', border: '1px solid #E2E8F0', fontSize: '16px', lineHeight: 1.6 }}>
+                      <div style={{ fontWeight: 700, color: '#0F172A' }}>Estate of General Felix Villa</div>
+                      <div style={{ color: '#0B5CAD', fontWeight: 700 }}>c/o Sarah Villa (Legal Guardian for Jenny Villa)</div>
+                      <div style={{ color: '#334155' }}>450 Sussex Drive</div>
+                      <div style={{ color: '#334155' }}>Ottawa, Ontario K1N 1J9</div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div style={{ fontSize: '12px', color: '#64748B', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '6px' }}>
+                      Official Contact Channels
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                      <div style={{ background: '#F8FAFC', padding: '12px 16px', borderRadius: '8px', border: '1px solid #E2E8F0' }}>
+                        <div style={{ fontSize: '12px', color: '#64748B', fontWeight: 600 }}>Primary Telephone</div>
+                        <div style={{ fontSize: '17px', fontWeight: 700, color: '#0F172A', marginTop: '2px' }}>
+                          {mockData.personal.phoneLines[0]}
+                        </div>
+                      </div>
+                      <div style={{ background: '#F8FAFC', padding: '12px 16px', borderRadius: '8px', border: '1px solid #E2E8F0' }}>
+                        <div style={{ fontSize: '12px', color: '#64748B', fontWeight: 600 }}>Estate Records Email</div>
+                        <div style={{ fontSize: '15px', fontWeight: 700, color: '#0B5CAD', fontFamily: "'IBM Plex Mono', monospace", marginTop: '2px' }}>
+                          {mockData.personal.email}
+                        </div>
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 12px', fontSize: '14px', color: '#475569' }}>
+                        <span>Official Language: <strong>English</strong></span>
+                        <span>Residency: <strong>Canada</strong></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Casualty Record Verified Callout */}
+              <div
+                style={{
+                  background: '#F0FDF4',
+                  border: '1px solid #86EFAC',
+                  borderRadius: '10px',
+                  padding: '16px 20px',
+                  display: 'flex',
+                  gap: '14px',
+                  alignItems: 'center',
+                  marginBottom: '28px',
+                }}
+              >
+                <span style={{ fontSize: '24px', color: '#16A34A', flexShrink: 0 }}>✓</span>
+                <div style={{ fontSize: '15px', color: '#166534', lineHeight: 1.5 }}>
+                  <strong>Casualty record locked & verified:</strong> This record was verified by the Department of National Defence Directorate of Casualty Support Management (DCSM). All survivor pension disbursements will be issued according to these validated credentials.
+                </div>
+              </div>
+            </div>
+          ) : (
+            /* Living member standard summary */
+            <>
+              <h1 className="page-title">Personal details</h1>
+              <p className="page-lead">
+                Personal record on file for {mockData.personal.fullName}.
+              </p>
+              <SummaryList items={summaryItems} />
             </>
           )}
 
           {isLocked ? (
             <>
               {isGuardian && (
-                <p style={{ margin: '24px 0 0', fontSize: '16px' }}>
-                  Something looks wrong?{' '}
+                <p style={{ margin: '20px 0 0', fontSize: '15px', color: '#64748B' }}>
+                  Something looks wrong with this casualty record?{' '}
                   <a
                     href="#note"
                     onClick={(e) => {
                       e.preventDefault();
                       setSendBackOpen(true);
                     }}
+                    style={{ fontWeight: 600, color: '#0B5CAD' }}
                   >
-                    Report an issue with this record to Pension Centre counselors
+                    Report an issue to Pension Centre counselors
                   </a>
-                  . Your link stays open while we review the file.
+                  . Your access link remains open while files are verified.
                 </p>
               )}
               <div
@@ -336,17 +520,21 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
                   borderTop: '1px solid var(--color-border)',
                 }}
               >
-                <Link to={prevHref} className="btn btn--secondary">
-                  Previous step
+                <Link to={bankHref} className="btn btn--secondary" style={{ fontSize: '16px', padding: '12px 20px' }}>
+                  Skip to Bank Details (Step 6) ➔
                 </Link>
-                <div style={{ display: 'flex', gap: '20px', alignItems: 'center', flexWrap: 'wrap' }}>
-                  <Link to={nextHref} className="link">
-                    Next step
-                  </Link>
-                  <Link to={bankHref} className="btn btn--primary">
-                    Go to bank details
-                  </Link>
-                </div>
+                <Link
+                  to={nextHref}
+                  className="btn btn--primary"
+                  style={{
+                    fontSize: '18px',
+                    padding: '14px 28px',
+                    fontWeight: 700,
+                    borderRadius: '8px',
+                  }}
+                >
+                  Continue to Step 2: Service Record ➔
+                </Link>
               </div>
             </>
           ) : (
@@ -362,3 +550,5 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
     </>
   );
 };
+
+export default PersonalPage;
