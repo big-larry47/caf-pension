@@ -97,7 +97,7 @@ export const FamilyPage: React.FC<FamilyPageProps> = ({
           </h1>
           <p className="page-lead">
             {isGuardian
-              ? `Survivor and death benefits record for the late ${mockData.personal.fullName}. Designated sole beneficiary: Jenny Villa (daughter, age 20).`
+              ? `Survivor and death benefits record for the late ${mockData.personal.fullName}. Designated sole beneficiary: Jenny Miller (daughter).`
               : `Survivor and death benefits record for the late ${mockData.personal.fullName}.`}
           </p>
 
@@ -123,7 +123,7 @@ export const FamilyPage: React.FC<FamilyPageProps> = ({
                 <div>
                   <div style={{ fontSize: '14px', color: 'var(--color-muted)' }}>Beneficiary</div>
                   <div style={{ fontWeight: 600 }}>
-                    {state.beneficiaryName || 'Jenny Villa'} ({state.beneficiaryRelationship || 'Daughter, Age 20'})
+                    {state.beneficiaryName || 'Jenny Miller'} ({state.beneficiaryRelationship || 'Daughter'})
                   </div>
                 </div>
               </div>

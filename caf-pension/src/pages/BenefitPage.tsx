@@ -175,7 +175,7 @@ export const BenefitPage: React.FC<BenefitPageProps> = ({
           </h1>
           <p className="page-lead">
             {isGuardian
-              ? `As legal guardian, please choose how the late ${mockData.personal.fullName}'s pension benefits should be paid to Jenny Villa (age 20).`
+              ? `As legal guardian, please choose how the late ${mockData.personal.fullName}'s pension benefits should be paid to Jenny Miller.`
               : `Survivor benefit entitlement on file for the late ${mockData.personal.fullName}.`}
           </p>
 
