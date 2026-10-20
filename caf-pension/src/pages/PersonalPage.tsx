@@ -407,34 +407,7 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
                         </div>
                       </div>
 
-                      {/* Divider */}
-                      <hr style={{ border: 'none', borderTop: '1px solid #E2E8F0', margin: '10px 0 12px' }} />
 
-                      {/* Section 3: Biography */}
-                      <div>
-                        <div
-                          style={{
-                            fontSize: '11px',
-                            fontWeight: 800,
-                            textTransform: 'uppercase',
-                            letterSpacing: '0.06em',
-                            color: '#334155',
-                            marginBottom: '6px',
-                          }}
-                        >
-                          Biography
-                        </div>
-                        <p
-                          style={{
-                            margin: 0,
-                            fontSize: '12px',
-                            lineHeight: 1.55,
-                            color: '#475569',
-                          }}
-                        >
-                          General Felix Villa enlisted in 1992 and served 34 dedicated years in the Regular Force. Commanded multinational joint operations and overseas missions, recognized for strategic bravery and steadfast leadership. Died on active operational service in Syria at age 68. Under the Canadian Forces Superannuation Act, surviving daughter Jenny Villa (age 20) is designated sole beneficiary.
-                        </p>
-                      </div>
                     </div>
                   </div>
                 </div>
