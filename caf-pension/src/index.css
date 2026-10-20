@@ -615,9 +615,10 @@ a:hover { color: var(--color-primary-hover); }
   }
 }
 
-/* ── Hide senior guide banner on mobile ── */
+/* ── Hide on mobile ── */
 @media (max-width: 768px) {
   .senior-guide-banner,
+  .guardian-stepper,
   .hide-on-mobile {
     display: none !important;
   }
