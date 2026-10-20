@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useApplication } from '../context/ApplicationContext';
 import { Card } from '../components/Card';
@@ -6,6 +6,7 @@ import { Card } from '../components/Card';
 export const VerifyPage: React.FC = () => {
   const { state, updateState } = useApplication();
   const navigate = useNavigate();
+  const [isVerifyingMember, setIsVerifyingMember] = useState(false);
 
   useEffect(() => {
     document.title = "Confirm it's you - CAF Pension Centre";
@@ -13,7 +14,11 @@ export const VerifyPage: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    navigate('/applicant');
+    setIsVerifyingMember(true);
+    setTimeout(() => {
+      setIsVerifyingMember(false);
+      navigate('/applicant');
+    }, 650);
   };
 
   return (
@@ -243,6 +248,7 @@ export const VerifyPage: React.FC = () => {
         >
           <button
             type="submit"
+            disabled={isVerifyingMember}
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -254,11 +260,20 @@ export const VerifyPage: React.FC = () => {
               fontWeight: 600,
               border: 0,
               borderRadius: 'var(--radius-input)',
-              cursor: 'pointer',
+              cursor: isVerifyingMember ? 'wait' : 'pointer',
               font: 'inherit',
+              gap: '10px',
+              opacity: isVerifyingMember ? 0.9 : 1,
             }}
           >
-            Confirm and continue
+            {isVerifyingMember ? (
+              <>
+                <span className="spinner" />
+                Querying Canadian Armed Forces database...
+              </>
+            ) : (
+              'Confirm and continue'
+            )}
           </button>
           <a
             href="#"

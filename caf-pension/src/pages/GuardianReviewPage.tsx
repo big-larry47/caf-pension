@@ -32,6 +32,10 @@ export const GuardianReviewPage: React.FC = () => {
   const [sendBackOpen, setSendBackOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
+  // Backend interaction submission animation
+  const [isSubmittingApp, setIsSubmittingApp] = useState(false);
+  const [submitStage, setSubmitStage] = useState<1 | 2 | 3>(1);
+
   useEffect(() => {
     document.title = 'Guardian review and submit - CAF Pension Centre';
   }, []);
@@ -57,27 +61,38 @@ export const GuardianReviewPage: React.FC = () => {
     setSubmitted(true);
 
     if (decl1 && decl2 && sigMatches) {
-      updateState({
-        guardianDeclared1: true,
-        guardianDeclared2: true,
-        guardianSignature: signature,
-        invite: {
-          ...state.invite,
-          status: 'submitted',
-        },
-      });
-      markStepComplete(6, 'guardian');
-      markStepComplete(7, 'guardian');
+      setIsSubmittingApp(true);
+      setSubmitStage(1);
 
-      sendNotificationEmail({
-        type: 'submitted',
-        recipientEmail: state.invite.guardian.email || 'guardian@example.com',
-        guardianName,
-        memberName: mockData.personal.fullName,
-        refNumber: mockData.applicationRef || 'CAF-2026-849204',
-      });
+      setTimeout(() => {
+        setSubmitStage(2);
+        setTimeout(() => {
+          setSubmitStage(3);
+          setTimeout(() => {
+            updateState({
+              guardianDeclared1: true,
+              guardianDeclared2: true,
+              guardianSignature: signature,
+              invite: {
+                ...state.invite,
+                status: 'submitted',
+              },
+            });
+            markStepComplete(6, 'guardian');
+            markStepComplete(7, 'guardian');
 
-      navigate(`/g/${token}/submitted`);
+            sendNotificationEmail({
+              type: 'submitted',
+              recipientEmail: state.invite.guardian.email || 'guardian@example.com',
+              guardianName,
+              memberName: mockData.personal.fullName,
+              refNumber: mockData.applicationRef || 'CAF-2026-849204',
+            });
+
+            navigate(`/g/${token}/submitted`);
+          }, 450);
+        }, 500);
+      }, 500);
     }
   };
 
@@ -625,6 +640,48 @@ export const GuardianReviewPage: React.FC = () => {
               </div>
             </section>
 
+            {isSubmittingApp && (
+              <div
+                className="fade-in-slide"
+                style={{
+                  marginTop: '28px',
+                  background: '#F0F7FF',
+                  border: '2px solid #0B5CAD',
+                  borderRadius: '12px',
+                  padding: '22px 24px',
+                  boxShadow: '0 4px 14px rgba(11, 92, 173, 0.15)',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '14px' }}>
+                  <span className="spinner spinner--primary" style={{ width: '22px', height: '22px' }} />
+                  <div>
+                    <h3 style={{ margin: 0, fontSize: '19px', color: '#0B335E' }}>
+                      Transmitting application to Government of Canada Pension Centre...
+                    </h3>
+                    <p style={{ margin: 0, fontSize: '14px', color: '#475569' }}>
+                      Please keep this window open while we secure the file.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="indeterminate-progress" style={{ marginBottom: '16px', height: '6px' }}>
+                  <div className="indeterminate-progress__bar" />
+                </div>
+
+                <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '15px' }}>
+                  <li style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#166534', fontWeight: 600 }}>
+                    <span className="pop-in">✓</span> Verified legal electronic signature: {guardianName}
+                  </li>
+                  <li style={{ display: 'flex', alignItems: 'center', gap: '8px', color: submitStage >= 2 ? '#166534' : '#64748B', fontWeight: submitStage >= 2 ? 600 : 400 }}>
+                    <span>{submitStage >= 2 ? '✓' : '•'}</span> {submitStage >= 2 ? 'Encrypted direct wire mandate (Payments Canada EFT verified)' : 'Encrypting direct deposit wire mandate...'}
+                  </li>
+                  <li style={{ display: 'flex', alignItems: 'center', gap: '8px', color: submitStage >= 3 ? '#166534' : '#64748B', fontWeight: submitStage >= 3 ? 600 : 400 }}>
+                    <span>{submitStage >= 3 ? '✓' : '•'}</span> {submitStage >= 3 ? 'Survivor file recorded · Reference CAF-2026-849204 generated' : 'Transmitting to Matane Pension Centre casualty files...'}
+                  </li>
+                </ul>
+              </div>
+            )}
+
             <div
               style={{
                 display: 'flex',
@@ -656,6 +713,7 @@ export const GuardianReviewPage: React.FC = () => {
                 </Link>
                 <button
                   type="submit"
+                  disabled={isSubmittingApp}
                   className="btn btn--primary"
                   style={{
                     minHeight: '56px',
@@ -666,10 +724,21 @@ export const GuardianReviewPage: React.FC = () => {
                     boxShadow: '0 2px 6px rgba(11, 92, 173, 0.35)',
                     display: 'inline-flex',
                     alignItems: 'center',
-                    gap: '10px',
+                    gap: '12px',
+                    opacity: isSubmittingApp ? 0.9 : 1,
+                    cursor: isSubmittingApp ? 'wait' : 'pointer',
                   }}
                 >
-                  <span aria-hidden="true">🔒</span> Submit Jenny's Application
+                  {isSubmittingApp ? (
+                    <>
+                      <span className="spinner" />
+                      Securing and submitting...
+                    </>
+                  ) : (
+                    <>
+                      <span aria-hidden="true">🔒</span> Submit Jenny's Application
+                    </>
+                  )}
                 </button>
               </div>
             </div>

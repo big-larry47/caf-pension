@@ -39,6 +39,12 @@ export const GuardianVerifyPage: React.FC = () => {
   const [declared, setDeclared] = useState(state.guardianProfile.declared ?? true);
   const [submittedPart3, setSubmittedPart3] = useState(false);
 
+  // Backend interaction animation states
+  const [isVerifyingPart1, setIsVerifyingPart1] = useState(false);
+  const [part1Success, setPart1Success] = useState(false);
+  const [isSavingPart2, setIsSavingPart2] = useState(false);
+  const [isSubmittingPart3, setIsSubmittingPart3] = useState(false);
+
   useEffect(() => {
     document.title = 'Guardian verify - CAF Pension Centre';
     // If invite was not opened yet, set to opened
@@ -106,8 +112,16 @@ export const GuardianVerifyPage: React.FC = () => {
     e.preventDefault();
     setSubmittedPart1(true);
     if (cleanCode.length === 6 && memberDobValid) {
-      setCurrentPart(2);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setIsVerifyingPart1(true);
+      setTimeout(() => {
+        setPart1Success(true);
+        setTimeout(() => {
+          setIsVerifyingPart1(false);
+          setPart1Success(false);
+          setCurrentPart(2);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 350);
+      }, 700);
     }
   };
 
@@ -115,8 +129,12 @@ export const GuardianVerifyPage: React.FC = () => {
     e.preventDefault();
     setSubmittedPart2(true);
     if (gName.trim() && gDob && gStreet.trim() && gCity.trim() && postalCodeValid) {
-      setCurrentPart(3);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setIsSavingPart2(true);
+      setTimeout(() => {
+        setIsSavingPart2(false);
+        setCurrentPart(3);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 600);
     }
   };
 
@@ -125,27 +143,30 @@ export const GuardianVerifyPage: React.FC = () => {
     setSubmittedPart3(true);
 
     if (declared) {
-      updateState({
-        guardianProfile: {
-          fullName: gName,
-          dateOfBirth: gDob,
-          address: {
-            street: gStreet,
-            city: gCity,
-            province: gProv,
-            postalCode: gPc.toUpperCase(),
+      setIsSubmittingPart3(true);
+      setTimeout(() => {
+        updateState({
+          guardianProfile: {
+            fullName: gName,
+            dateOfBirth: gDob,
+            address: {
+              street: gStreet,
+              city: gCity,
+              province: gProv,
+              postalCode: gPc.toUpperCase(),
+            },
+            language: gLang,
+            authorityType: authority,
+            authorityFile: { name: fileName, pages: 4 },
+            declared: true,
           },
-          language: gLang,
-          authorityType: authority,
-          authorityFile: { name: fileName, pages: 4 },
-          declared: true,
-        },
-        invite: {
-          ...state.invite,
-          status: 'verified',
-        },
-      });
-      navigate(`/g/${token || 'demo-token'}/step/1`);
+          invite: {
+            ...state.invite,
+            status: 'verified',
+          },
+        });
+        navigate(`/g/${token || 'demo-token'}/step/1`);
+      }, 850);
     }
   };
 
@@ -480,6 +501,37 @@ export const GuardianVerifyPage: React.FC = () => {
               </fieldset>
             </Card>
 
+            {isVerifyingPart1 && (
+              <div
+                className="fade-in-slide"
+                style={{
+                  marginTop: '16px',
+                  background: part1Success ? '#F0FDF4' : '#EFF6FF',
+                  border: `1px solid ${part1Success ? '#86EFAC' : '#BFDBFE'}`,
+                  borderRadius: '8px',
+                  padding: '14px 18px',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
+                  {part1Success ? (
+                    <span className="pop-in" style={{ color: '#16A34A', fontSize: '18px', fontWeight: 700 }}>✓</span>
+                  ) : (
+                    <span className="spinner spinner--primary" style={{ width: '16px', height: '16px' }} />
+                  )}
+                  <span style={{ fontSize: '15px', fontWeight: 600, color: part1Success ? '#166534' : '#1E40AF' }}>
+                    {part1Success
+                      ? `Authentication verified: Casualty file linked for ${memberName}.`
+                      : 'Connecting to Government of Canada 2FA service... Validating security code and casualty record.'}
+                  </span>
+                </div>
+                {!part1Success && (
+                  <div className="indeterminate-progress">
+                    <div className="indeterminate-progress__bar" />
+                  </div>
+                )}
+              </div>
+            )}
+
             <div
               style={{
                 display: 'flex',
@@ -492,6 +544,7 @@ export const GuardianVerifyPage: React.FC = () => {
             >
               <button
                 type="submit"
+                disabled={isVerifyingPart1}
                 className="btn btn--primary"
                 style={{
                   padding: '14px 28px',
@@ -499,9 +552,21 @@ export const GuardianVerifyPage: React.FC = () => {
                   fontWeight: 700,
                   borderRadius: '8px',
                   minHeight: '52px',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  opacity: isVerifyingPart1 ? 0.9 : 1,
+                  cursor: isVerifyingPart1 ? 'wait' : 'pointer',
                 }}
               >
-                Continue to Part 2: Your Details ➔
+                {isVerifyingPart1 ? (
+                  <>
+                    <span className="spinner" />
+                    {part1Success ? '✓ Code & record verified!' : 'Verifying with Government of Canada...'}
+                  </>
+                ) : (
+                  'Continue to Part 2: Your Details ➔'
+                )}
               </button>
               <Link to="/" style={{ fontSize: '15px', color: '#64748B' }}>
                 I'm not the right person
@@ -771,6 +836,7 @@ export const GuardianVerifyPage: React.FC = () => {
               </button>
               <button
                 type="submit"
+                disabled={isSavingPart2}
                 className="btn btn--primary"
                 style={{
                   padding: '14px 28px',
@@ -778,9 +844,21 @@ export const GuardianVerifyPage: React.FC = () => {
                   fontWeight: 700,
                   borderRadius: '8px',
                   minHeight: '52px',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  opacity: isSavingPart2 ? 0.9 : 1,
+                  cursor: isSavingPart2 ? 'wait' : 'pointer',
                 }}
               >
-                Continue to Part 3: Authorization ➔
+                {isSavingPart2 ? (
+                  <>
+                    <span className="spinner" />
+                    Saving contact record...
+                  </>
+                ) : (
+                  'Continue to Part 3: Authorization ➔'
+                )}
               </button>
             </div>
           </form>
@@ -920,6 +998,29 @@ export const GuardianVerifyPage: React.FC = () => {
               </span>
             </label>
 
+            {isSubmittingPart3 && (
+              <div
+                className="fade-in-slide"
+                style={{
+                  marginTop: '16px',
+                  background: '#EFF6FF',
+                  border: '1px solid #BFDBFE',
+                  borderRadius: '8px',
+                  padding: '14px 18px',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
+                  <span className="spinner spinner--primary" style={{ width: '16px', height: '16px' }} />
+                  <span style={{ fontSize: '15px', fontWeight: 600, color: '#1E40AF' }}>
+                    Authorizing legal representation for Jenny Villa with Canadian Armed Forces casualty registry...
+                  </span>
+                </div>
+                <div className="indeterminate-progress">
+                  <div className="indeterminate-progress__bar" />
+                </div>
+              </div>
+            )}
+
             <div
               style={{
                 display: 'flex',
@@ -943,6 +1044,7 @@ export const GuardianVerifyPage: React.FC = () => {
               </button>
               <button
                 type="submit"
+                disabled={isSubmittingPart3}
                 className="btn btn--primary"
                 style={{
                   padding: '16px 32px',
@@ -950,9 +1052,21 @@ export const GuardianVerifyPage: React.FC = () => {
                   fontWeight: 700,
                   borderRadius: '8px',
                   minHeight: '54px',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  opacity: isSubmittingPart3 ? 0.9 : 1,
+                  cursor: isSubmittingPart3 ? 'wait' : 'pointer',
                 }}
               >
-                Confirm and open the application ➔
+                {isSubmittingPart3 ? (
+                  <>
+                    <span className="spinner" />
+                    Authorizing representation...
+                  </>
+                ) : (
+                  'Confirm and open the application ➔'
+                )}
               </button>
             </div>
           </form>
