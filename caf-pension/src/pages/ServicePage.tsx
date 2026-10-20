@@ -31,7 +31,7 @@ export const ServicePage: React.FC<ServicePageProps> = ({
     state.invite.status === 'opened' ||
     state.invite.status === 'verified';
 
-  const isLocked = readOnly || (inviteActive && !isGuardian);
+  const isLocked = readOnly || isGuardian || inviteActive;
   const token = state.invite.token || 'demo-token';
 
   useEffect(() => {
@@ -151,14 +151,14 @@ export const ServicePage: React.FC<ServicePageProps> = ({
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px' }}>
                 <div>
                   <div style={{ fontSize: '14px', color: 'var(--color-muted)' }}>Release date confirmed</div>
-                  <div style={{ fontWeight: 600 }}>
-                    {state.releaseDateFinal === 'yes' ? 'Yes, confirmed' : 'No, may change'}
+                  <div style={{ fontWeight: 600, color: 'var(--color-ink)' }}>
+                    Permanent & confirmed (15 October 2026 - Date of Casualty)
                   </div>
                 </div>
                 <div>
                   <div style={{ fontSize: '14px', color: 'var(--color-muted)' }}>Paying for past service buy-back</div>
-                  <div style={{ fontWeight: 600 }}>
-                    {state.buyBackElected === 'yes' ? 'Yes' : state.buyBackElected === 'no' ? 'No' : "I'm not sure"}
+                  <div style={{ fontWeight: 600, color: 'var(--color-ink)' }}>
+                    No past service buy-back owing
                   </div>
                 </div>
               </div>

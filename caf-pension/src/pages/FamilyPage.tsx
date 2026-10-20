@@ -31,7 +31,7 @@ export const FamilyPage: React.FC<FamilyPageProps> = ({
     state.invite.status === 'opened' ||
     state.invite.status === 'verified';
 
-  const isLocked = readOnly || (inviteActive && !isGuardian);
+  const isLocked = readOnly || isGuardian || inviteActive;
   const token = state.invite.token || 'demo-token';
 
   useEffect(() => {
