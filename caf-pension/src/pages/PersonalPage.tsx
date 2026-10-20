@@ -152,110 +152,144 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
           {/* ===================== GUARDIAN / CASUALTY DOSSIER VIEW ===================== */}
           {isGuardian ? (
             <div className="fade-in-slide">
-              {/* Prestigious Military Casualty Hero Dossier */}
+              {/* Official Military Casualty Dossier Card */}
               <div
                 style={{
-                  background: 'linear-gradient(135deg, #0B2545 0%, #103460 60%, #15457F 100%)',
+                  background: '#FFFFFF',
+                  border: '1px solid #CBD5E1',
                   borderRadius: '12px',
-                  padding: '28px 30px',
-                  color: '#FFFFFF',
-                  marginBottom: '24px',
-                  boxShadow: '0 8px 20px rgba(11, 37, 69, 0.18)',
-                  border: '1px solid #1E4E8C',
-                  position: 'relative',
                   overflow: 'hidden',
+                  marginBottom: '20px',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
                 }}
               >
-                {/* Decorative background watermark */}
                 <div
-                  aria-hidden="true"
                   style={{
-                    position: 'absolute',
-                    top: '-20px',
-                    right: '-10px',
-                    fontSize: '120px',
-                    opacity: 0.06,
-                    userSelect: 'none',
-                    pointerEvents: 'none',
+                    padding: '16px 22px',
+                    background: '#F8FAFC',
+                    borderBottom: '1px solid #E2E8F0',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    flexWrap: 'wrap',
+                    gap: '10px',
                   }}
                 >
-                  🍁
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <span style={{ fontSize: '20px' }}>🍁</span>
+                    <span style={{ fontWeight: 800, fontSize: '17px', color: '#0F172A' }}>
+                      Official Military Casualty Dossier
+                    </span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                    <span
+                      style={{
+                        fontSize: '12px',
+                        background: '#F1F5F9',
+                        color: '#475569',
+                        padding: '4px 10px',
+                        borderRadius: '4px',
+                        fontWeight: 600,
+                        fontFamily: "'IBM Plex Mono', monospace",
+                      }}
+                    >
+                      Ref: {mockData.applicationRef}
+                    </span>
+                    <span
+                      style={{
+                        fontSize: '12px',
+                        background: '#E2E8F0',
+                        color: '#0F172A',
+                        padding: '4px 10px',
+                        borderRadius: '4px',
+                        fontWeight: 700,
+                      }}
+                    >
+                      DND Certified
+                    </span>
+                  </div>
                 </div>
 
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '20px', position: 'relative', zIndex: 1 }}>
-                  <div style={{ flex: 1, minWidth: '280px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap', marginBottom: '12px' }}>
-                      <span
+                <div style={{ padding: '22px 24px' }}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'flex-start',
+                      flexWrap: 'wrap',
+                      gap: '16px',
+                      marginBottom: '16px',
+                    }}
+                  >
+                    <div>
+                      <div
                         style={{
-                          background: 'rgba(217, 119, 6, 0.25)',
-                          border: '1px solid #F59E0B',
-                          color: '#FDE68A',
                           fontSize: '12px',
-                          fontWeight: 800,
-                          letterSpacing: '0.08em',
+                          color: '#64748B',
+                          fontWeight: 700,
                           textTransform: 'uppercase',
-                          padding: '4px 12px',
-                          borderRadius: '999px',
+                          letterSpacing: '0.04em',
+                          marginBottom: '4px',
                         }}
                       >
-                        🎖️ Official Military Casualty Dossier
-                      </span>
-                      <span style={{ fontSize: '13px', color: '#93C5FD', fontFamily: "'IBM Plex Mono', monospace" }}>
-                        Ref: {mockData.applicationRef}
-                      </span>
+                        Deceased Member & Rank
+                      </div>
+                      <h1
+                        style={{
+                          margin: '0 0 6px',
+                          fontSize: '28px',
+                          fontWeight: 800,
+                          letterSpacing: '-0.02em',
+                          color: '#0F172A',
+                          lineHeight: 1.2,
+                        }}
+                      >
+                        {mockData.personal.fullName}
+                      </h1>
+                      <div style={{ fontSize: '16px', color: '#475569', lineHeight: 1.4 }}>
+                        General · Regular Force · <strong style={{ color: '#0F172A' }}>34 Years 182 Days</strong> Pensionable Service
+                      </div>
                     </div>
-
-                    <h1 style={{ margin: '0 0 6px', fontSize: '32px', fontWeight: 800, letterSpacing: '-0.02em', color: '#FFFFFF', lineHeight: 1.2 }}>
-                      {mockData.personal.fullName}
-                    </h1>
-
-                    <p style={{ margin: '0 0 16px', fontSize: '17px', color: '#BFDBFE', lineHeight: 1.4 }}>
-                      General · Regular Force · <strong>34 Years 182 Days</strong> Pensionable Service
-                    </p>
 
                     <div
                       style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '10px',
-                        background: 'rgba(0, 0, 0, 0.35)',
-                        backdropFilter: 'blur(4px)',
-                        padding: '8px 16px',
+                        background: '#F8FAFC',
+                        border: '1px solid #E2E8F0',
                         borderRadius: '8px',
-                        borderLeft: '4px solid #EF4444',
-                        fontSize: '15px',
-                        color: '#FEE2E2',
+                        padding: '12px 18px',
+                        textAlign: 'center',
+                        minWidth: '150px',
                       }}
                     >
-                      <span style={{ fontSize: '18px' }}>🕯️</span>
-                      <span>
-                        <strong>Died on Active Operational Service:</strong> 15 October 2026 (Syria) · Age 68
-                      </span>
+                      <div style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.06em', color: '#64748B', fontWeight: 700 }}>
+                        Casualty Status
+                      </div>
+                      <div style={{ fontSize: '15px', color: '#0F172A', fontWeight: 800, marginTop: '2px' }}>
+                        File Sealed
+                      </div>
+                      <div style={{ fontSize: '12px', color: '#64748B', marginTop: '2px' }}>
+                        Directorate of Casualty Support
+                      </div>
                     </div>
                   </div>
 
-                  {/* Official DND Seal Box */}
                   <div
                     style={{
-                      background: 'rgba(255, 255, 255, 0.08)',
-                      backdropFilter: 'blur(6px)',
-                      border: '1px solid rgba(255, 255, 255, 0.2)',
-                      borderRadius: '10px',
-                      padding: '16px 20px',
-                      textAlign: 'center',
-                      minWidth: '170px',
-                      boxShadow: 'inset 0 1px 1px rgba(255, 255, 255, 0.1)',
+                      background: '#FEF2F2',
+                      border: '1px solid #FECACA',
+                      borderLeft: '4px solid #EF4444',
+                      borderRadius: '8px',
+                      padding: '12px 16px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '12px',
+                      fontSize: '15px',
+                      color: '#991B1B',
                     }}
                   >
-                    <div style={{ fontSize: '26px', marginBottom: '4px' }}>🛡️</div>
-                    <div style={{ fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#93C5FD', fontWeight: 800 }}>
-                      DND Certified
-                    </div>
-                    <div style={{ fontSize: '14px', color: '#FFFFFF', fontWeight: 700, marginTop: '2px' }}>
-                      Casualty File Sealed
-                    </div>
-                    <div style={{ fontSize: '12px', color: '#CBD5E1', marginTop: '4px' }}>
-                      Directorate of Casualty Support
+                    <span style={{ fontSize: '20px' }}>🕯️</span>
+                    <div>
+                      <strong>Died on Active Operational Service:</strong> 15 October 2026 (Syria) · Age 68
                     </div>
                   </div>
                 </div>
