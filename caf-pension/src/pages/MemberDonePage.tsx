@@ -37,7 +37,7 @@ export const MemberDonePage: React.FC = () => {
         <h1 style={{ margin: '0 0 8px', fontSize: '32px', lineHeight: 1.2 }}>
           Application submitted
         </h1>
-        <p style={{ margin: 0, fontSize: '19px' }}>for {mockData.personal.fullName}</p>
+        <p style={{ margin: 0, fontSize: '19px' }}>for Jenny Villa (surviving daughter of the late General Felix Villa)</p>
         <p style={{ margin: '16px 0 0', fontSize: '16px' }}>
           Reference number
           <br />

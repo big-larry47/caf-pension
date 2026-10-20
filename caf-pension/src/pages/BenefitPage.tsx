@@ -130,11 +130,13 @@ export const BenefitPage: React.FC<BenefitPageProps> = ({
         >
           {isLocked && <ReadOnlyNotice />}
 
-          <h1 className="page-title">Benefit option</h1>
+          <h1 className="page-title">
+            {isGuardian ? `Survivor pension options for Jenny Villa` : 'Benefit option'}
+          </h1>
           <p className="page-lead">
             {isGuardian
-              ? `How ${mockData.personal.fullName} chose to receive their pension.`
-              : "Based on your age and service, these are your options. Amounts are estimates in today's dollars from your Options Statement."}
+              ? `Survivor annuity and dependent child benefits designated for Jenny Villa based on the late ${mockData.personal.fullName}'s service.`
+              : `Survivor benefit entitlement on file for the late ${mockData.personal.fullName}.`}
           </p>
 
           {isLocked ? (
@@ -245,9 +247,9 @@ export const BenefitPage: React.FC<BenefitPageProps> = ({
                       setSendBackOpen(true);
                     }}
                   >
-                    Send this back to {mockData.personal.fullName} with a note
+                    Report an issue with this benefit calculation to Pension Centre counselors
                   </a>
-                  . They'll get an email, and your link stays open.
+                  . Your link stays open while we review the file.
                 </p>
               )}
 

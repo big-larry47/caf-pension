@@ -144,10 +144,8 @@ export const ApplicantPage: React.FC = () => {
           variant="info"
           style={{ marginTop: '24px', padding: '18px 20px', fontSize: '16px' }}
         >
-          Survivor and estate benefits use a separate application.{' '}
-          <a href="#" onClick={(e) => e.preventDefault()}>
-            Go to survivor benefits
-          </a>
+          Applying for survivor and estate pension benefits on behalf of surviving daughter
+          Jenny Villa (child of the late General Felix Villa).
         </Callout>
       )}
 

@@ -101,7 +101,7 @@ export const HubPage: React.FC = () => {
           {state.serviceNumber || mockData.serviceNumber}
         </p>
         <h1 style={{ margin: '0 0 20px', fontSize: '34px', lineHeight: 1.2 }}>
-          Your pension application
+          Survivor pension application for Jenny Villa
         </h1>
 
         <div
@@ -134,12 +134,12 @@ export const HubPage: React.FC = () => {
           </svg>
           <div>
             <b style={{ fontSize: '19px' }}>
-              Waiting for {guardianName} to finish your application
+              Waiting for {guardianName} to complete the direct deposit and review for Jenny Villa
             </b>
             <br />
             <span style={{ fontSize: '16px', color: 'var(--color-ink-2)' }}>
               We sent them a link on {state.invite.sentAt}. It works until{' '}
-              <b>{state.invite.expiresAt}</b>. We'll email you when they submit.
+              <b>{state.invite.expiresAt}</b>. We will email confirmation once submitted.
             </span>
           </div>
         </div>
@@ -375,10 +375,9 @@ export const HubPage: React.FC = () => {
         Application reference {mockData.applicationRef} · Service number{' '}
         {state.serviceNumber || mockData.serviceNumber}
       </p>
-      <h1 className="page-title">Your pension application</h1>
+      <h1 className="page-title">Survivor pension application for Jenny Villa</h1>
       <p className="page-lead">
-        Complete the application in order. Everything is saved as you go, so you
-        can stop and come back.
+        Survivor benefits for the estate of the late General Felix Villa. Complete the application in order. Everything is saved as you go.
       </p>
 
       <StepLayout

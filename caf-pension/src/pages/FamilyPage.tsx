@@ -90,11 +90,13 @@ export const FamilyPage: React.FC<FamilyPageProps> = ({
         >
           {isLocked && <ReadOnlyNotice />}
 
-          <h1 className="page-title">Your family and beneficiaries</h1>
+          <h1 className="page-title">
+            {isGuardian ? 'Family and survivor beneficiaries' : 'Family and beneficiaries'}
+          </h1>
           <p className="page-lead">
             {isGuardian
-              ? `Survivor and death benefits situation for ${mockData.personal.fullName}.`
-              : 'We use this to set up survivor and death benefits. Tell us about your situation on your release date.'}
+              ? `Survivor and death benefits record for the late ${mockData.personal.fullName}. Designated sole beneficiary: Jenny Villa (daughter, age 20).`
+              : `Survivor and death benefits record for the late ${mockData.personal.fullName}.`}
           </p>
 
           {isLocked ? (
@@ -324,9 +326,9 @@ export const FamilyPage: React.FC<FamilyPageProps> = ({
                       setSendBackOpen(true);
                     }}
                   >
-                    Send this back to {mockData.personal.fullName} with a note
+                    Report an issue with this beneficiary record to Pension Centre counselors
                   </a>
-                  . They'll get an email, and your link stays open.
+                  . Your link stays open while we review the file.
                 </p>
               )}
               <div

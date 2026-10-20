@@ -85,11 +85,13 @@ export const DeductionsPage: React.FC<DeductionsPageProps> = ({
         >
           {isLocked && <ReadOnlyNotice />}
 
-          <h1 className="page-title">Tax and deductions</h1>
+          <h1 className="page-title">
+            {isGuardian ? 'Tax and deductions for survivor benefits' : 'Tax and deductions'}
+          </h1>
           <p className="page-lead">
             {isGuardian
-              ? `Tax choices and insurance plans for ${mockData.personal.fullName}.`
-              : 'These decide how much is taken off each payment before it reaches your bank.'}
+              ? `Tax choices and insurance continuation on file for Jenny Villa based on the late ${mockData.personal.fullName}'s service.`
+              : `Tax withholding and benefit deductions on file for the late ${mockData.personal.fullName}.`}
           </p>
 
           <Card style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -263,9 +265,9 @@ export const DeductionsPage: React.FC<DeductionsPageProps> = ({
                       setSendBackOpen(true);
                     }}
                   >
-                    Send this back to {mockData.personal.fullName} with a note
+                    Report an issue with these tax/insurance deductions to Pension Centre counselors
                   </a>
-                  . They'll get an email, and your link stays open.
+                  . Your link stays open while we review the file.
                 </p>
               )}
               <div

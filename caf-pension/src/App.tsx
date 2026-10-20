@@ -23,11 +23,13 @@ import { GuardianDepositPage } from './pages/GuardianDepositPage';
 import { GuardianReviewPage } from './pages/GuardianReviewPage';
 import { GuardianDonePage } from './pages/GuardianDonePage';
 import { GuardianExpiredPage } from './pages/GuardianExpiredPage';
+import { ScrollToTop } from './components/ScrollToTop';
 
 export const App: React.FC = () => {
   return (
     <ApplicationProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
           <AppHeader />
           <div style={{ flex: 1 }}>

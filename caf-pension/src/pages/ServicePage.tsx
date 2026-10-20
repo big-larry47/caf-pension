@@ -85,11 +85,13 @@ export const ServicePage: React.FC<ServicePageProps> = ({
         >
           {isLocked && <ReadOnlyNotice />}
 
-          <h1 className="page-title">Your service and release</h1>
+          <h1 className="page-title">
+            {isGuardian ? `Service record for the late ${mockData.personal.fullName}` : 'Service record'}
+          </h1>
           <p className="page-lead">
             {isGuardian
-              ? `Service history on file for ${mockData.personal.fullName}.`
-              : 'This is what we have on file. It decides which pension options you can choose in the next step.'}
+              ? `Official service and deployment history on file for the late ${mockData.personal.fullName} (died on operational service in Syria).`
+              : `Official service history on file for the late ${mockData.personal.fullName}.`}
           </p>
 
           <Card>
@@ -289,9 +291,9 @@ export const ServicePage: React.FC<ServicePageProps> = ({
                       setSendBackOpen(true);
                     }}
                   >
-                    Send this back to {mockData.personal.fullName} with a note
+                    Report an issue with this service record to Pension Centre counselors
                   </a>
-                  . They'll get an email, and your link stays open.
+                  . Your link stays open while we review the file.
                 </p>
               )}
               <div

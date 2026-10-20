@@ -37,7 +37,7 @@ export const GuardianStepper: React.FC<GuardianStepperProps> = ({
                 <b style={{ color: 'var(--color-ink)' }}>
                   Viewing step {currentStep} of 7
                 </b>{' '}
-                · Steps 1–5 completed by {memberName}
+                · Steps 1–5 on file for the late {memberName}
               </>
             ) : (
               <>
@@ -67,7 +67,7 @@ export const GuardianStepper: React.FC<GuardianStepperProps> = ({
             if (i === 5) href = `/g/${token}/deposit`;
             if (i === 6) href = `/g/${token}/review`;
 
-            let tag = 'Locked · by member';
+            let tag = 'CAF Official Record';
             if (i === 5) {
               tag = isCurrent ? 'In progress' : (state.guardianDeposit.submitted ? 'Done by you' : 'Your turn');
             } else if (i === 6) {

@@ -174,11 +174,13 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
         >
           {isLocked && <ReadOnlyNotice />}
 
-          <h1 className="page-title">Check your personal details</h1>
+          <h1 className="page-title">
+            {isGuardian ? `Personal details for the late ${mockData.personal.fullName}` : 'Personal details'}
+          </h1>
           <p className="page-lead">
             {isGuardian
-              ? `Personal and contact details on file for ${mockData.personal.fullName}.`
-              : 'We filled these in from your service record. Change anything that is wrong or out of date.'}
+              ? `Official personal and casualty record on file for the late ${mockData.personal.fullName}.`
+              : `Official personal and casualty record on file for the late ${mockData.personal.fullName}.`}
           </p>
 
           <SummaryList items={summaryItems} />
@@ -315,9 +317,9 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
                       setSendBackOpen(true);
                     }}
                   >
-                    Send this back to {mockData.personal.fullName} with a note
+                    Report an issue with this record to Pension Centre counselors
                   </a>
-                  . They'll get an email, and your link stays open.
+                  . Your link stays open while we review the file.
                 </p>
               )}
               <div

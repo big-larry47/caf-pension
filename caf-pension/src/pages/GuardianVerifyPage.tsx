@@ -147,8 +147,9 @@ export const GuardianVerifyPage: React.FC = () => {
           Before you start, confirm it's you
         </h1>
         <p style={{ margin: '0 0 28px', color: 'var(--color-ink-2)' }}>
-          {memberName} asked you to finish their pension application. We need to
-          check who you are and that you can act for them.
+          You have been designated as legal guardian / representative to receive survivor benefits
+          for Jenny Villa (daughter of the late {memberName}). We need to check who you are
+          and that you have legal authority to act on her behalf.
         </p>
 
         {errors.length > 0 && (
@@ -210,7 +211,7 @@ export const GuardianVerifyPage: React.FC = () => {
                   padding: 0,
                 }}
               >
-                {memberName}'s date of birth
+                The late {memberName}'s date of birth
               </legend>
               <p
                 style={{
@@ -219,7 +220,7 @@ export const GuardianVerifyPage: React.FC = () => {
                   color: 'var(--color-muted)',
                 }}
               >
-                This shows us you know the person you're acting for.
+                This confirms your relation to the deceased member's military service record.
               </p>
               <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
                 <div>
@@ -622,8 +623,8 @@ export const GuardianVerifyPage: React.FC = () => {
               }}
             />
             <span>
-              I declare that I am legally allowed to manage {memberName}'s
-              pension affairs, and that the information I give is true.
+              I declare that I am legally appointed to act on behalf of Jenny Villa
+              (beneficiary and surviving daughter of the late {memberName}), and that the information I give is true.
             </span>
           </label>
 

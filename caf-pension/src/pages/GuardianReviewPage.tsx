@@ -345,8 +345,8 @@ export const GuardianReviewPage: React.FC = () => {
                 />
                 <span>
                   I have reviewed this application. To the best of my knowledge,
-                  the information given by {memberName} and by me is true and
-                  complete.
+                  the information on file for the late {memberName} and provided for
+                  beneficiary Jenny Villa is true and complete.
                 </span>
               </label>
 
@@ -371,8 +371,9 @@ export const GuardianReviewPage: React.FC = () => {
                   }}
                 />
                 <span>
-                  I am submitting it as {memberName}'s power of attorney, and I
-                  will mail proof of my authority.
+                  I am submitting this application as legal guardian and trustee on behalf
+                  of Jenny Villa (daughter of the late {memberName}), and I
+                  will mail certified proof of my authority.
                 </span>
               </label>
 

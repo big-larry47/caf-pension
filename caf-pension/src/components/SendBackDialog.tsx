@@ -76,17 +76,17 @@ export const SendBackDialog: React.FC<SendBackDialogProps> = ({
               textAlign: 'center',
             }}
           >
-            Note sent to {memberName}. Your link remains open.
+            Note sent to the CAF Pension Centre counselors. Your link remains open.
           </div>
         ) : (
           <form onSubmit={handleSubmit}>
             <h2 id="send-back-title" style={{ margin: '0 0 12px', fontSize: '22px' }}>
-              Send application back to {memberName}
+              Report an issue with the record for the late {memberName}
             </h2>
             <p style={{ margin: '0 0 18px', color: 'var(--color-ink-2)' }}>
-              Explain what looks wrong or needs updating in steps 1 to 5. We'll
-              email your note to {memberName}. Your link stays open while they
-              update it.
+              Explain what looks wrong or needs updating in steps 1 to 5. A Canadian Armed
+              Forces Pension Centre counselor will check the official estate and casualty files.
+              Your link stays open.
             </p>
 
             <div style={{ marginBottom: '20px' }}>
@@ -94,7 +94,7 @@ export const SendBackDialog: React.FC<SendBackDialogProps> = ({
                 htmlFor="send-back-note"
                 style={{ display: 'block', fontWeight: 600, marginBottom: '6px' }}
               >
-                Note for {memberName} <span aria-hidden="true">*</span>
+                Note for Pension Centre counselors <span aria-hidden="true">*</span>
               </label>
               {error && (
                 <p
@@ -106,7 +106,7 @@ export const SendBackDialog: React.FC<SendBackDialogProps> = ({
                   }}
                   role="alert"
                 >
-                  Error: enter a note for {memberName}
+                  Error: enter a note describing the issue
                 </p>
               )}
               <textarea

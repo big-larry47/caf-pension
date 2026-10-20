@@ -6,6 +6,7 @@ export interface MockData {
   deadline: string;
   personal: {
     fullName: string;
+    displayTitle: string;
     dateOfBirth: string;
     maskedSin: string;
     mailingAddressLines: string[];
@@ -54,7 +55,8 @@ export const mockData: MockData = {
   pensionableServiceYears: '34',
   deadline: '15 November 2026',
   personal: {
-    fullName: 'The late General Felix Villa (Deceased)',
+    fullName: 'General Felix Villa',
+    displayTitle: 'the late General Felix Villa',
     dateOfBirth: '14 August 1958',
     maskedSin: '••• ••• 842',
     mailingAddressLines: [
