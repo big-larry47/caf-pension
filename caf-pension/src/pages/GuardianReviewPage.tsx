@@ -147,11 +147,11 @@ export const GuardianReviewPage: React.FC = () => {
         {
           k: 'Account type',
           v:
-            state.guardianDeposit.ownerType === 'guardian'
-              ? `Your own personal account (${guardianName})`
+            state.guardianDeposit.ownerType === 'trust'
+              ? `Trust account for ${memberName}`
               : state.guardianDeposit.ownerType === 'joint'
-              ? `Joint or family account for Jenny Villa`
-              : `Jenny Villa's personal account`,
+              ? `Joint account with ${memberName}`
+              : `${memberName}'s own account`,
         },
         {
           k: 'Bank numbers',
@@ -197,92 +197,23 @@ export const GuardianReviewPage: React.FC = () => {
             This is everything we'll send to the Pension Centre for {memberName}.
           </p>
 
-          {/* Progressive disclosure: Steps 1-5 grouped inside a collapsible drawer so mobile guardians don't have to scroll through 5 screens */}
-          <details
-            style={{
-              background: '#F8FAFC',
-              border: '1px solid #CBD5E1',
-              borderRadius: '8px',
-              marginBottom: '18px',
-              overflow: 'hidden',
-            }}
-          >
-            <summary
-              style={{
-                padding: '16px 20px',
-                fontSize: '17px',
-                fontWeight: 600,
-                color: '#0B5CAD',
-                cursor: 'pointer',
-                background: '#EEF4FA',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}
-            >
-              <span>📂 View Steps 1 to 5 (Approved Official Records on File)</span>
-              <span style={{ fontSize: '13px', background: 'var(--color-success-bg)', color: 'var(--color-success)', padding: '2px 8px', borderRadius: '999px', fontWeight: 600 }}>
-                5 Records Locked
+          {/* Guardian's Direct Deposit Card - Highlighted first */}
+          <div style={{ marginBottom: '20px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+              <span style={{ fontSize: '15px', fontWeight: 700, color: 'var(--color-primary)' }}>
+                Your Part (Step 6)
               </span>
-            </summary>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', padding: '16px' }}>
-              {sections.slice(0, 5).map((s) => (
-                <section
-                  key={s.n}
-                  style={{
-                    background: '#FFFFFF',
-                    borderRadius: '6px',
-                    border: '1px solid var(--color-border)',
-                  }}
-                >
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      padding: '10px 16px',
-                      borderBottom: '1px solid var(--color-divider)',
-                    }}
-                  >
-                    <h2 style={{ margin: 0, fontSize: '16px' }}>
-                      {s.n}. {s.name}
-                    </h2>
-                    <Link to={s.href} style={{ fontSize: '14px', fontWeight: 600 }}>
-                      View
-                    </Link>
-                  </div>
-                  <dl style={{ margin: 0, padding: '6px 16px 10px' }}>
-                    {s.rows.map((r, idx) => (
-                      <div
-                        key={idx}
-                        style={{
-                          display: 'grid',
-                          gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-                          gap: '8px',
-                          padding: '4px 0',
-                          fontSize: '15px',
-                        }}
-                      >
-                        <dt style={{ color: 'var(--color-muted)' }}>{r.k}</dt>
-                        <dd style={{ margin: 0, fontWeight: 600 }}>{r.v}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                </section>
-              ))}
+              <Link to={`/g/${token}/deposit`} style={{ fontSize: '15px', fontWeight: 600 }}>
+                Edit bank details
+              </Link>
             </div>
-          </details>
-
-          {/* Step 6 (Direct Deposit): Highlighted prominently */}
-          {sections.slice(5).map((s) => (
             <section
-              key={s.n}
               style={{
                 background: '#FFFFFF',
-                borderRadius: '8px',
-                border: '2px solid #0B5CAD',
-                marginBottom: '16px',
-                boxShadow: '0 2px 4px rgba(0,0,0,0.04)',
+                borderRadius: '10px',
+                border: '2px solid var(--color-primary)',
+                boxShadow: '0 2px 6px rgba(11, 92, 173, 0.1)',
+                overflow: 'hidden',
               }}
             >
               <div
@@ -290,65 +221,125 @@ export const GuardianReviewPage: React.FC = () => {
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  gap: '12px',
-                  flexWrap: 'wrap',
                   padding: '16px 20px',
                   background: '#F0F7FF',
-                  borderBottom: '1px solid #D0E3F7',
+                  borderBottom: '1px solid #D0E4FA',
                 }}
               >
                 <div>
-                  <span style={{ fontSize: '13px', fontWeight: 700, color: '#0B5CAD', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-                    Your Provided Information
-                  </span>
-                  <h2 style={{ margin: '2px 0 0', fontSize: '20px', color: '#0B335E' }}>
-                    6. {s.name}
+                  <h2 style={{ margin: 0, fontSize: '19px', color: '#0B335E' }}>
+                    Direct Deposit Account
                   </h2>
+                  <span style={{ fontSize: '14px', color: '#475569' }}>
+                    Where Jenny’s pension will be wired
+                  </span>
                 </div>
-                <Link
-                  to={s.href}
+                <span
                   style={{
-                    fontSize: '16px',
+                    fontSize: '13px',
                     fontWeight: 700,
-                    background: '#FFFFFF',
-                    padding: '6px 14px',
-                    borderRadius: '6px',
-                    border: '1px solid #0B5CAD',
-                    textDecoration: 'none',
+                    padding: '4px 10px',
+                    borderRadius: '999px',
+                    background: '#E9F5EE',
+                    color: '#1F6F4A',
                   }}
                 >
-                  Change
-                </Link>
+                  ✓ Ready
+                </span>
               </div>
-              <dl style={{ margin: 0, padding: '14px 20px' }}>
-                {s.rows.map((r, idx) => (
-                  <div
-                    key={idx}
-                    style={{
-                      display: 'grid',
-                      gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-                      gap: '12px',
-                      padding: '8px 0',
-                      fontSize: '17px',
-                    }}
-                  >
-                    <dt style={{ color: 'var(--color-muted)' }}>{r.k}</dt>
-                    <dd style={{ margin: 0, fontWeight: 600 }}>{r.v}</dd>
-                  </div>
-                ))}
+              <dl style={{ margin: 0, padding: '12px 20px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', fontSize: '16px' }}>
+                  <dt style={{ color: 'var(--color-muted)' }}>Account holder</dt>
+                  <dd style={{ margin: 0, fontWeight: 700 }}>
+                    {state.guardianDeposit.holderName || guardianName}
+                  </dd>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', fontSize: '16px' }}>
+                  <dt style={{ color: 'var(--color-muted)' }}>Bank numbers</dt>
+                  <dd style={{ margin: 0, fontWeight: 700 }}>
+                    {state.guardianDeposit.account
+                      ? `Transit ${state.guardianDeposit.transit || '12345'} · Inst. ${
+                          state.guardianDeposit.institution || '003'
+                        } · Acct ••••${state.guardianDeposit.account.slice(-4) || '4567'}`
+                      : 'Transit 12345 · Inst. 003 · Acct ••••4567'}
+                  </dd>
+                </div>
               </dl>
             </section>
-          ))}
+          </div>
 
-            <section
+          {/* Progressive disclosure for official records (Steps 1 to 5) */}
+          <details
+            style={{
+              background: '#FFFFFF',
+              border: '1px solid #CBD5E1',
+              borderRadius: '10px',
+              padding: '16px 20px',
+              marginBottom: '20px',
+            }}
+          >
+            <summary
               style={{
-                background: '#FFFFFF',
-                border: '1px solid var(--color-border)',
-                borderRadius: '8px',
-                padding: '16px 20px',
+                cursor: 'pointer',
+                fontWeight: 700,
+                fontSize: '17px',
+                color: '#1E293B',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                userSelect: 'none',
               }}
             >
-              <h2 style={{ margin: '0 0 8px', fontSize: '18px' }}>
+              <span>
+                📋 Review Official Military Records (Steps 1–5)
+              </span>
+              <span style={{ fontSize: '14px', color: '#0B5CAD', fontWeight: 600 }}>
+                Tap to expand
+              </span>
+            </summary>
+
+            <div style={{ marginTop: '16px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
+              <p style={{ margin: '0 0 4px', fontSize: '14px', color: '#64748B' }}>
+                These records are already approved and locked from Department of National Defence casualty files:
+              </p>
+              {sections.filter(s => !s.mine).map((s) => (
+                <div
+                  key={s.n}
+                  style={{
+                    padding: '12px 16px',
+                    borderRadius: '8px',
+                    background: '#F8FAFC',
+                    border: '1px solid #E2E8F0',
+                  }}
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                    <b style={{ fontSize: '16px', color: '#1E293B' }}>{s.n}. {s.name}</b>
+                    <span style={{ fontSize: '12px', background: '#E2E8F0', padding: '2px 8px', borderRadius: '4px', color: '#475569' }}>
+                      Official Record
+                    </span>
+                  </div>
+                  <dl style={{ margin: 0 }}>
+                    {s.rows.map((r, idx) => (
+                      <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px', padding: '3px 0' }}>
+                        <dt style={{ color: '#64748B' }}>{r.k}:</dt>
+                        <dd style={{ margin: 0, fontWeight: 600, color: '#1E293B' }}>{r.v}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </div>
+              ))}
+            </div>
+          </details>
+
+          <section
+            style={{
+              background: '#FFFFFF',
+              border: '1px solid var(--color-border)',
+              borderRadius: '8px',
+              padding: '16px 20px',
+            }}
+          >
+            <h2 style={{ margin: '0 0 8px', fontSize: '18px' }}>
                 Representative & Authority
               </h2>
               <p style={{ margin: '0 0 4px', fontSize: '16px' }}>
