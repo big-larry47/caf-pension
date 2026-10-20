@@ -614,3 +614,12 @@ a:hover { color: var(--color-primary-hover); }
     grid-template-columns: 1fr;
   }
 }
+
+/* ── Hide senior guide banner on mobile ── */
+@media (max-width: 768px) {
+  .senior-guide-banner,
+  .hide-on-mobile {
+    display: none !important;
+  }
+}
+
