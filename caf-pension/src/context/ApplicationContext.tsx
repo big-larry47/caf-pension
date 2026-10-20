@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { mockData } from '../data/mockData';
 
 export type Actor = 'member' | 'guardian';
-export type AuthorityType = 'poa' | 'guardian' | 'trustee' | 'other';
+export type AuthorityType = 'family' | 'guardian' | 'poa' | 'trustee' | 'other';
 export type InviteStatus =
   | 'none'
   | 'sent'
@@ -43,7 +43,7 @@ export interface GuardianProfile {
 }
 
 export interface DepositData {
-  ownerType?: 'member' | 'joint' | 'trust';
+  ownerType?: 'guardian' | 'member' | 'joint' | 'trust';
   holderName: string;
   transit: string;
   institution: string;

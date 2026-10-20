@@ -42,13 +42,13 @@ export const GuardianDonePage: React.FC = () => {
         <h2 className="text-2xl font-bold mt-8 mb-4">What happens next</h2>
         <ol className="space-y-4 pl-6 list-decimal text-base">
           <li>
-            <strong>Mail your proof of authority.</strong> Send the original, a notarized copy or a certified true copy by courier to Government of Canada Pension Centre – Mail Facility, PO Box 9500, Matane QC G4W 0H3. Write the reference number on it.
+            <strong>Application review.</strong> The CAF Pension Centre will review the casualty file and confirm survivor benefit entitlement for Jenny Villa.
           </li>
           <li>
-            <strong>We check your authority and the bank account.</strong> We may call you if anything is unclear.
+            <strong>Direct deposit confirmation.</strong> We will verify the bank account provided for direct deposit.
           </li>
           <li>
-            <strong>Payments start.</strong> Once we have every document, the first payment is normally deposited within 45 calendar days of {memberName}'s retirement date.
+            <strong>Payments start.</strong> The first survivor pension payment is scheduled to be deposited within 30 to 45 calendar days.
           </li>
         </ol>
 

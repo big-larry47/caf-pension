@@ -281,16 +281,16 @@ export const GuardianReviewPage: React.FC = () => {
               }}
             >
               <h2 style={{ margin: '0 0 8px', fontSize: '18px' }}>
-                Proof of authority
+                Representative & Authority
               </h2>
               <p style={{ margin: '0 0 4px', fontSize: '16px' }}>
-                <b style={{ color: 'var(--color-success)' }}>Uploaded:</b>{' '}
-                {state.guardianProfile.authorityFile?.name || 'power-of-attorney.pdf'}{' '}
-                (4 pages)
+                <b style={{ color: 'var(--color-success)' }}>Status:</b>{' '}
+                Authorized representative for Jenny Villa
               </p>
-              <p style={{ margin: 0, fontSize: '16px' }}>
-                <b style={{ color: '#8A3608' }}>Still needed by mail:</b> the
-                original, a notarized copy or a certified true copy.
+              <p style={{ margin: 0, fontSize: '15px', color: 'var(--color-muted)' }}>
+                {state.guardianProfile.authorityFile?.name
+                  ? `Document on file: ${state.guardianProfile.authorityFile.name}`
+                  : 'No additional paperwork required unless requested by the Pension Centre.'}
               </p>
             </section>
           </div>
@@ -371,9 +371,8 @@ export const GuardianReviewPage: React.FC = () => {
                   }}
                 />
                 <span>
-                  I am submitting this application as legal guardian and trustee on behalf
-                  of Jenny Villa (daughter of the late {memberName}), and I
-                  will mail certified proof of my authority.
+                  I am submitting this application on behalf of Jenny Villa
+                  (daughter of the late {memberName}).
                 </span>
               </label>
 

@@ -25,8 +25,8 @@ export const GuardianDepositPage: React.FC = () => {
   const memberName = mockData.personal.fullName;
   const guardianName = state.guardianProfile.fullName || 'Sarah Villa';
 
-  const [owner, setOwner] = useState<'member' | 'joint' | 'trust'>(
-    state.guardianDeposit.ownerType || 'member'
+  const [owner, setOwner] = useState<'guardian' | 'member' | 'joint' | 'trust'>(
+    state.guardianDeposit.ownerType || 'guardian'
   );
   const [holder, setHolder] = useState(
     state.guardianDeposit.holderName || memberName
@@ -46,26 +46,27 @@ export const GuardianDepositPage: React.FC = () => {
 
   const ownerOptions = [
     {
-      id: 'trust' as const,
-      title: 'A trust or guardianship account for Jenny Villa',
-      hint: 'An account held by you as legal guardian/trustee for Jenny Villa (age 20).',
+      id: 'guardian' as const,
+      title: 'Your own personal bank account',
+      hint: `Direct deposit into your personal account (${guardianName}) to manage for Jenny.`,
     },
     {
       id: 'member' as const,
-      title: "Jenny Villa's own personal account",
+      title: "Jenny Villa's personal account",
       hint: 'In Jenny Villa’s name only.',
     },
     {
       id: 'joint' as const,
-      title: 'A joint account with Jenny Villa',
-      hint: 'Both your name and Jenny Villa are on the account.',
+      title: 'A joint, trust, or family account',
+      hint: 'A joint account, informal trust, or family account held for Jenny.',
     },
   ];
 
-  const holderHints = {
-    member: `${memberName}'s name`,
-    joint: 'Both names, as on the account',
-    trust: `For example: ${guardianName} in trust for ${memberName}`,
+  const holderHints: Record<string, string> = {
+    guardian: `Your name: ${guardianName}`,
+    member: `Jenny Villa's name`,
+    joint: 'Both names or as written on the cheque/account',
+    trust: `For example: ${guardianName} or Jenny Villa`,
   };
 
   const tBad = !/^\d{5}$/.test(t);
@@ -160,8 +161,7 @@ export const GuardianDepositPage: React.FC = () => {
             Where should we send the pension for Jenny Villa?
           </h1>
           <p className="page-lead">
-            Payments go by direct deposit only. The account must be held for the
-            benefit of Jenny Villa (surviving daughter of the late General Felix Villa).
+            Payments go by direct deposit. You can use your own personal bank account, Jenny's personal account, or a shared/family account.
           </p>
 
           <fieldset style={{ border: 0, margin: '0 0 24px', padding: 0 }}>
@@ -472,9 +472,8 @@ export const GuardianDepositPage: React.FC = () => {
                   }}
                 />
                 <span>
-                  As legal guardian on behalf of Jenny Villa (beneficiary of the late General Felix Villa), I authorize the Canadian Armed
-                  Forces Pension Centre to deposit her pension payments into
-                  this account until told otherwise.
+                  I authorize the Canadian Armed Forces Pension Centre to deposit pension payments
+                  for Jenny Villa into this account until told otherwise.
                 </span>
               </label>
             </div>

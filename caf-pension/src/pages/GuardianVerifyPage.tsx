@@ -79,12 +79,6 @@ export const GuardianVerifyPage: React.FC = () => {
         message: 'Enter a valid Canadian postal code (e.g. K1P 5Z9)',
       });
     }
-    if (!fileName) {
-      errors.push({
-        targetId: 'file-upload',
-        message: 'Upload proof of your authority to act for the member',
-      });
-    }
     if (!declared) {
       errors.push({
         targetId: 'decl-check',
@@ -531,16 +525,17 @@ export const GuardianVerifyPage: React.FC = () => {
                 onChange={(e) => setAuthority(e.target.value as AuthorityType)}
                 className="field__select"
               >
+                <option value="family">Family member / assisting representative</option>
+                <option value="guardian">Guardian</option>
                 <option value="poa">Power of attorney</option>
-                <option value="guardian">Court-appointed guardian</option>
-                <option value="trustee">Trustee or committee</option>
-                <option value="other">Other legal representative</option>
+                <option value="trustee">Trustee or estate representative</option>
+                <option value="other">Other authorized contact</option>
               </select>
             </div>
 
             <div>
               <p style={{ margin: '0 0 4px', fontWeight: 600 }}>
-                Upload the document
+                Upload document or note (Optional)
               </p>
               <p
                 style={{
@@ -549,8 +544,7 @@ export const GuardianVerifyPage: React.FC = () => {
                   color: 'var(--color-muted)',
                 }}
               >
-                A photo or scan of every page. PDF, JPG or PNG, up to 10 MB. This
-                starts our check.
+                If you have an authorization letter, POA, or family statement, upload it here. If not, you can continue and provide details later if requested.
               </p>
               <label
                 id="file-upload"
@@ -578,19 +572,15 @@ export const GuardianVerifyPage: React.FC = () => {
 
             <div
               style={{
-                background: 'var(--color-warning-bg)',
-                border: '1px solid var(--color-warning-border)',
+                background: '#F4F6F8',
+                border: '1px solid #DCE3EB',
                 borderRadius: '8px',
                 padding: '16px 18px',
-                fontSize: '16px',
+                fontSize: '15px',
+                color: 'var(--color-ink-2)',
               }}
             >
-              <b>You'll also need to mail the original.</b> Before any payment,
-              we need the original document, a notarized copy or a certified true
-              copy. Send it by courier to:
-              <br />
-              Government of Canada Pension Centre – Mail Facility, PO Box 9500,
-              Matane QC G4W 0H3. Write {memberName}'s service number on it.
+              <b>Support note:</b> If additional documentation is required by the Pension Centre to verify the survivor claim, a counselor will contact you or you can mail records to Government of Canada Pension Centre – Mail Facility, PO Box 9500, Matane QC G4W 0H3.
             </div>
           </Card>
 
@@ -623,8 +613,7 @@ export const GuardianVerifyPage: React.FC = () => {
               }}
             />
             <span>
-              I declare that I am legally appointed to act on behalf of Jenny Villa
-              (beneficiary and surviving daughter of the late {memberName}), and that the information I give is true.
+              I declare that I am assisting Jenny Villa (surviving daughter of the late {memberName}) with this application, and that the information I give is true.
             </span>
           </label>
 
