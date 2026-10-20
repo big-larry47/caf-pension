@@ -23,13 +23,13 @@ export const GuardianDepositPage: React.FC = () => {
   }
 
   const memberName = mockData.personal.fullName;
-  const guardianName = state.guardianProfile.fullName || 'Sarah Villa';
+  const guardianName = state.guardianProfile.fullName || 'Sarah Miller';
 
   const [owner, setOwner] = useState<'guardian' | 'member' | 'joint' | 'trust'>(
     state.guardianDeposit.ownerType || 'guardian'
   );
   const [holder, setHolder] = useState(
-    state.guardianDeposit.holderName || memberName
+    state.guardianDeposit.holderName || guardianName
   );
   const [t, setT] = useState(state.guardianDeposit.transit || '');
   const [i, setI] = useState(state.guardianDeposit.institution || '');
@@ -48,25 +48,25 @@ export const GuardianDepositPage: React.FC = () => {
     {
       id: 'guardian' as const,
       title: 'Your own personal bank account',
-      hint: `Direct deposit into your personal account (${guardianName}) to manage for Jenny.`,
+      hint: `Direct deposit into your personal account (${guardianName}) to manage for Jenny Miller.`,
     },
     {
       id: 'member' as const,
-      title: "Jenny Villa's personal account",
-      hint: 'In Jenny Villa’s name only.',
+      title: "Jenny Miller's personal account",
+      hint: 'In Jenny Miller’s name only.',
     },
     {
       id: 'joint' as const,
       title: 'A joint, trust, or family account',
-      hint: 'A joint account, informal trust, or family account held for Jenny.',
+      hint: 'A joint account, informal trust, or family account held for Jenny Miller.',
     },
   ];
 
   const holderHints: Record<string, string> = {
     guardian: `Your name: ${guardianName}`,
-    member: `Jenny Villa's name`,
+    member: `Jenny Miller's name`,
     joint: 'Both names or as written on the cheque/account',
-    trust: `For example: ${guardianName} or Jenny Villa`,
+    trust: `For example: ${guardianName} or Jenny Miller`,
   };
 
   const [depositStep, setDepositStep] = useState<1 | 2>(1);
@@ -99,6 +99,9 @@ export const GuardianDepositPage: React.FC = () => {
   const showSuccess = submitted && isValid;
   const last4 = a.slice(-4);
 
+  const [isVerifyingOwnership, setIsVerifyingOwnership] = useState(false);
+  const [ownershipVerified, setOwnershipVerified] = useState(false);
+
   const handleStep1Next = (e: React.FormEvent) => {
     e.preventDefault();
     if (!holder.trim()) {
@@ -106,8 +109,14 @@ export const GuardianDepositPage: React.FC = () => {
       return;
     }
     setSubmitted(false);
-    setDepositStep(2);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setIsVerifyingOwnership(true);
+
+    setTimeout(() => {
+      setIsVerifyingOwnership(false);
+      setOwnershipVerified(true);
+      setDepositStep(2);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 750);
   };
 
   const [isVerifyingBank, setIsVerifyingBank] = useState(false);
@@ -203,7 +212,7 @@ export const GuardianDepositPage: React.FC = () => {
 
           <h1 className="page-title">
             {depositStep === 1
-              ? 'Whose account will receive Jenny Villa’s pension?'
+              ? 'Whose account will receive Jenny Miller’s pension?'
               : 'Enter the bank numbers for direct wire transfer'}
           </h1>
           <p className="page-lead" style={{ fontSize: '18px', marginBottom: '24px' }}>
@@ -327,6 +336,7 @@ export const GuardianDepositPage: React.FC = () => {
                 </Link>
                 <button
                   type="submit"
+                  disabled={isVerifyingOwnership}
                   className="btn btn--primary"
                   style={{
                     minHeight: '52px',
@@ -334,35 +344,96 @@ export const GuardianDepositPage: React.FC = () => {
                     fontWeight: 700,
                     padding: '0 32px',
                     borderRadius: '8px',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                    cursor: isVerifyingOwnership ? 'wait' : 'pointer',
                   }}
                 >
-                  Continue to bank numbers ➔
+                  {isVerifyingOwnership ? (
+                    <>
+                      <span className="spinner" />
+                      <span>Loading Bank Details...</span>
+                    </>
+                  ) : (
+                    <span>Continue to bank numbers ➔</span>
+                  )}
                 </button>
               </div>
+
+              {isVerifyingOwnership && (
+                <div
+                  className="pop-in"
+                  style={{
+                    marginTop: '20px',
+                    background: '#F0F9FF',
+                    border: '1px solid #BAE6FD',
+                    borderRadius: '8px',
+                    padding: '16px 20px',
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '10px' }}>
+                    <span className="spinner spinner--primary" />
+                    <div>
+                      <div style={{ fontSize: '16px', fontWeight: 700, color: '#0369A1' }}>
+                        Confirming account ownership profile...
+                      </div>
+                      <div style={{ fontSize: '14px', color: '#0284C7' }}>
+                        Registering {holder} as authorized recipient and preparing Payments Canada clearing routing...
+                      </div>
+                    </div>
+                  </div>
+                  <div className="indeterminate-progress">
+                    <div className="indeterminate-progress__bar" />
+                  </div>
+                </div>
+              )}
             </form>
           )}
 
           {depositStep === 2 && (
-            <form onSubmit={handleSaveAndReview}>
-              {/* Summary pill showing Part 1 choice */}
-              <div
-                style={{
-                  background: '#F1F5F9',
-                  border: '1px solid #CBD5E1',
-                  borderRadius: '8px',
-                  padding: '12px 18px',
-                  marginBottom: '24px',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  flexWrap: 'wrap',
-                  gap: '10px',
-                }}
-              >
-                <div>
-                  <span style={{ fontSize: '14px', color: '#64748B' }}>Depositing to: </span>
-                  <strong style={{ fontSize: '16px', color: '#1E293B' }}>{holder}</strong>
+            <div className="fade-in-slide">
+              {ownershipVerified && (
+                <div
+                  className="pop-in"
+                  style={{
+                    background: '#F0FDF4',
+                    border: '1px solid #86EFAC',
+                    borderRadius: '8px',
+                    padding: '12px 18px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                    marginBottom: '20px',
+                  }}
+                >
+                  <span style={{ fontSize: '20px', color: '#16A34A', fontWeight: 800 }}>✓</span>
+                  <div style={{ fontSize: '15px', color: '#166534', lineHeight: 1.4 }}>
+                    <strong>Account ownership recorded:</strong> {holder} is registered as the authorized wire transfer recipient for Jenny Miller.
+                  </div>
                 </div>
+              )}
+
+              <form onSubmit={handleSaveAndReview}>
+                {/* Summary pill showing Part 1 choice */}
+                <div
+                  style={{
+                    background: '#F1F5F9',
+                    border: '1px solid #CBD5E1',
+                    borderRadius: '8px',
+                    padding: '12px 18px',
+                    marginBottom: '24px',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    flexWrap: 'wrap',
+                    gap: '10px',
+                  }}
+                >
+                  <div>
+                    <span style={{ fontSize: '14px', color: '#64748B' }}>Depositing to: </span>
+                    <strong style={{ fontSize: '16px', color: '#1E293B' }}>{holder}</strong>
+                  </div>
                 <button
                   type="button"
                   onClick={() => setDepositStep(1)}
@@ -623,7 +694,7 @@ export const GuardianDepositPage: React.FC = () => {
                   />
                   <span>
                     I authorize the Canadian Armed Forces Pension Centre to deposit pension payments
-                    for Jenny Villa into this account until told otherwise.
+                    for Jenny Miller into this account until told otherwise.
                   </span>
                 </label>
               </div>
@@ -710,7 +781,8 @@ export const GuardianDepositPage: React.FC = () => {
                 </button>
               </div>
             </form>
-          )}
+          </div>
+        )}
         </StepLayout>
       </main>
     </>
