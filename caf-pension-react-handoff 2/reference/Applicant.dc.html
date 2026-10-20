@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Who is applying</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F6F8}
+a{color:#0B5CAD}a:hover{color:#08427C}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #F4F6F8; font-family: 'Public Sans', system-ui, sans-serif; color: #14263C; font-size: 17px; line-height: 1.5">
+<header style="background: #14263C; color: #FFFFFF">
+<div style="max-width: 1120px; margin: 0 auto; padding: 14px 24px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between">
+<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap"><span style="font-weight: 700; font-size: 18px">CAF Pension Centre</span><span style="font-size: 15px; color: #C9D6E6">Online pension application</span><span style="font-size: 12px; font-weight: 600; letter-spacing: 0.04em; padding: 2px 8px; border: 1px solid #8FA6C2; border-radius: 999px; color: #DCE7F3">CONCEPT</span></div>
+<div style="display: flex; gap: 20px; font-size: 15px"><a href="#" style="color: #FFFFFF">Français</a><a href="Start.dc.html" style="color: #FFFFFF">Sign out</a></div>
+</div>
+</header>
+<main style="max-width: 720px; margin: 0 auto; padding: 40px 24px 64px">
+<a href="Verify.dc.html" style="font-size: 15px">‹ Back</a>
+<h1 style="margin: 12px 0 8px; font-size: 34px; line-height: 1.2">Who is applying?</h1>
+<p style="margin: 0 0 24px; color: #2A3442">This tells us which application to show you.</p>
+<fieldset style="border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px">
+<legend style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Who is applying</legend>
+<sc-for list="{{options}}" as="o" hint-placeholder-count="3">
+<label style="{{o.box}}">
+<input type="radio" name="who" checked="{{o.checked}}" onChange="{{o.pick}}" style="width: 24px; height: 24px; margin: 2px 0 0; accent-color: #0B5CAD; flex: none">
+<span style="display: flex; flex-direction: column; gap: 2px"><b>{{o.title}}</b><span style="font-size: 15px; color: #4A5565">{{o.hint}}</span></span>
+</label>
+</sc-for>
+</fieldset>
+<sc-if value="{{isMember}}" hint-placeholder-val="{{ true }}">
+<fieldset style="border: 0; margin: 28px 0 0; padding: 0">
+<legend style="font-weight: 600; font-size: 20px; margin-bottom: 10px; padding: 0">Which force were you in when you released?</legend>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<label style="display: flex; gap: 12px; align-items: center"><input type="radio" name="force" checked style="width: 22px; height: 22px; margin: 0; accent-color: #0B5CAD">Regular Force</label>
+<label style="display: flex; gap: 12px; align-items: center"><input type="radio" name="force" style="width: 22px; height: 22px; margin: 0; accent-color: #0B5CAD">Reserve Force</label>
+<label style="display: flex; gap: 12px; align-items: center"><input type="radio" name="force" style="width: 22px; height: 22px; margin: 0; accent-color: #0B5CAD">I served in both</label>
+</div>
+</fieldset>
+</sc-if>
+<sc-if value="{{isPoa}}" hint-placeholder-val="{{ false }}">
+<div role="note" style="margin-top: 24px; background: #FFF4E5; border: 1px solid #E6B87A; border-radius: 8px; padding: 18px 20px; font-size: 16px">You can fill in the application online. The Pension Centre also needs the original, notarized or certified true copy of the power of attorney by mail before any payment starts.</div>
+</sc-if>
+<sc-if value="{{isSurvivor}}" hint-placeholder-val="{{ false }}">
+<div role="note" style="margin-top: 24px; background: #E8F0FA; border: 1px solid #A9C3E3; border-radius: 8px; padding: 18px 20px; font-size: 16px">Survivor and estate benefits use a separate application. <a href="#">Go to survivor benefits</a></div>
+</sc-if>
+<div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: center; margin-top: 32px">
+<a href="Hub.dc.html" style="display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 32px; background: #0B5CAD; color: #FFFFFF; font-weight: 600; text-decoration: none; border-radius: 6px">Continue</a>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":900}}'>
+class Component extends DCLogic {
+renderVals() {
+const sel = (this.state && this.state.who) || 'member';
+const list = [
+{ id: 'member', title: 'I am the CAF member applying for my own pension', hint: 'You are releasing or have released from the Regular or Reserve Force.' },
+{ id: 'poa', title: 'I manage pension affairs for a member', hint: 'You hold a power of attorney for the member.' },
+{ id: 'survivor', title: 'I am a survivor or represent an estate', hint: 'The member has died.' }
+];
+return {
+isMember: sel === 'member',
+isPoa: sel === 'poa',
+isSurvivor: sel === 'survivor',
+options: list.map((o) => ({
+...o,
+checked: sel === o.id,
+pick: () => this.setState({ who: o.id }),
+box: 'display: flex; gap: 14px; align-items: flex-start; padding: 18px 20px; background: #FFFFFF; border-radius: 8px; cursor: pointer; border: 2px solid ' + (sel === o.id ? '#0B5CAD; box-shadow: 0 0 0 1px #0B5CAD' : '#C9D1DB')
+}))
+};
+}
+}
+</script>
+</body>
+</html>

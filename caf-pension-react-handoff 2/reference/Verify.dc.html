@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Verify identity</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F6F8}
+a{color:#0B5CAD}a:hover{color:#08427C}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #F4F6F8; font-family: 'Public Sans', system-ui, sans-serif; color: #14263C; font-size: 17px; line-height: 1.5">
+<header style="background: #14263C; color: #FFFFFF">
+<div style="max-width: 1120px; margin: 0 auto; padding: 14px 24px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between">
+<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap"><span style="font-weight: 700; font-size: 18px">CAF Pension Centre</span><span style="font-size: 15px; color: #C9D6E6">Online pension application</span><span style="font-size: 12px; font-weight: 600; letter-spacing: 0.04em; padding: 2px 8px; border: 1px solid #8FA6C2; border-radius: 999px; color: #DCE7F3">CONCEPT</span></div>
+<div style="display: flex; gap: 20px; font-size: 15px"><a href="#" style="color: #FFFFFF">Français</a><a href="Start.dc.html" style="color: #FFFFFF">Sign out</a></div>
+</div>
+</header>
+<main style="max-width: 720px; margin: 0 auto; padding: 40px 24px 64px">
+<a href="Start.dc.html" style="font-size: 15px">‹ Back</a>
+<h1 style="margin: 12px 0 8px; font-size: 34px; line-height: 1.2">Confirm it's you</h1>
+<p style="margin: 0 0 28px; color: #2A3442">The first time you sign in, we link your account to your pension record. You only do this once.</p>
+<section style="background: #FFFFFF; border: 1px solid #D9DEE5; border-radius: 8px; padding: 28px; display: flex; flex-direction: column; gap: 22px">
+<h2 style="margin: 0; font-size: 22px">1. Find your pension record</h2>
+<div>
+<label for="svc" style="display: block; font-weight: 600; margin-bottom: 2px">Service number</label>
+<p style="margin: 0 0 8px; font-size: 15px; color: #4A5565">One letter followed by 8 digits, for example A12345678</p>
+<input id="svc" type="text" autocomplete="off" placeholder="A12345678" style="width: 220px; max-width: 100%; box-sizing: border-box; height: 48px; padding: 0 14px; font: inherit; color: #14263C; background: #FFFFFF; border: 2px solid #5B6573; border-radius: 6px">
+</div>
+<fieldset style="border: 0; margin: 0; padding: 0">
+<legend style="font-weight: 600; margin-bottom: 8px; padding: 0">Date of birth</legend>
+<div style="display: flex; gap: 12px; flex-wrap: wrap">
+<div><label for="dd" style="display: block; font-size: 15px">Day</label><input id="dd" inputmode="numeric" style="width: 64px; box-sizing: border-box; height: 48px; padding: 0 12px; font: inherit; border: 2px solid #5B6573; border-radius: 6px"></div>
+<div><label for="mm" style="display: block; font-size: 15px">Month</label><input id="mm" inputmode="numeric" style="width: 64px; box-sizing: border-box; height: 48px; padding: 0 12px; font: inherit; border: 2px solid #5B6573; border-radius: 6px"></div>
+<div><label for="yy" style="display: block; font-size: 15px">Year</label><input id="yy" inputmode="numeric" style="width: 96px; box-sizing: border-box; height: 48px; padding: 0 12px; font: inherit; border: 2px solid #5B6573; border-radius: 6px"></div>
+</div>
+</fieldset>
+<div>
+<label for="sin" style="display: block; font-weight: 600; margin-bottom: 2px">Last 3 digits of your Social Insurance Number</label>
+<input id="sin" inputmode="numeric" maxlength="3" style="width: 96px; box-sizing: border-box; height: 48px; padding: 0 12px; font: inherit; border: 2px solid #5B6573; border-radius: 6px">
+</div>
+</section>
+<section style="margin-top: 20px; background: #FFFFFF; border: 1px solid #D9DEE5; border-radius: 8px; padding: 28px; display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-size: 22px">2. Enter your security code</h2>
+<p style="margin: 0; color: #2A3442">We sent a 6-digit code to the email on your pension file, j•••••@gmail.com. It expires in 10 minutes.</p>
+<div>
+<label for="otp" style="display: block; font-weight: 600; margin-bottom: 6px">Security code</label>
+<input id="otp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" style="width: 180px; box-sizing: border-box; height: 52px; padding: 0 14px; font: inherit; font-size: 22px; letter-spacing: 0.3em; border: 2px solid #5B6573; border-radius: 6px">
+</div>
+<p style="margin: 0; font-size: 15px"><a href="#">Send a new code</a> · <a href="#">Send it by text message instead</a></p>
+</section>
+<div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: center; margin-top: 28px">
+<a href="Applicant.dc.html" style="display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 32px; background: #0B5CAD; color: #FFFFFF; font-weight: 600; text-decoration: none; border-radius: 6px">Confirm and continue</a>
+<a href="#" style="font-size: 15px">I can't find my service number</a>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":860}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

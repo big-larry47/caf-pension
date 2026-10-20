@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Guardian verify</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F6F8}
+a{color:#0B5CAD}a:hover{color:#08427C}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #F4F6F8; font-family: 'Public Sans', system-ui, sans-serif; color: #14263C; font-size: 17px; line-height: 1.5">
+<header style="background: #14263C; color: #FFFFFF">
+<div style="max-width: 1120px; margin: 0 auto; padding: 14px 24px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between">
+<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap"><span style="font-weight: 700; font-size: 18px">CAF Pension Centre</span><span style="font-size: 15px; color: #C9D6E6">Online pension application</span><span style="font-size: 12px; font-weight: 600; letter-spacing: 0.04em; padding: 2px 8px; border: 1px solid #8FA6C2; border-radius: 999px; color: #DCE7F3">CONCEPT</span></div>
+<div style="display: flex; gap: 20px; font-size: 15px"><a href="#" style="color: #FFFFFF">Français</a></div>
+</div>
+</header>
+<div style="background: #FFF4E5; border-bottom: 1px solid #E6B87A">
+<div style="max-width: 1120px; margin: 0 auto; padding: 10px 24px; font-size: 15px">You are acting for <b>[Member name]</b> · Invitation from [DATE]</div>
+</div>
+<main style="max-width: 720px; margin: 0 auto; padding: 40px 24px 64px">
+<h1 style="margin: 0 0 8px; font-size: 34px; line-height: 1.2">Before you start, confirm it's you</h1>
+<p style="margin: 0 0 28px; color: #2A3442">[Member name] asked you to finish their pension application. We need to check who you are and that you can act for them.</p>
+<section style="background: #FFFFFF; border: 1px solid #D9DEE5; border-radius: 8px; padding: 28px; display: flex; flex-direction: column; gap: 18px">
+<h2 style="margin: 0; font-size: 22px">1. Your security code</h2>
+<p style="margin: 0; color: #2A3442">We texted a 6-digit code to your mobile ending in 1234.</p>
+<div>
+<label for="otp" style="display: block; font-weight: 600; margin-bottom: 6px">Security code</label>
+<input id="otp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" style="width: 180px; box-sizing: border-box; height: 52px; padding: 0 14px; font: inherit; font-size: 22px; letter-spacing: 0.3em; border: 2px solid #5B6573; border-radius: 6px">
+</div>
+<fieldset style="border: 0; margin: 0; padding: 0">
+<legend style="font-weight: 600; margin-bottom: 2px; padding: 0">[Member name]'s date of birth</legend>
+<p style="margin: 0 0 8px; font-size: 15px; color: #4A5565">This shows us you know the person you're acting for.</p>
+<div style="display: flex; gap: 12px; flex-wrap: wrap">
+<div><label for="dd" style="display: block; font-size: 15px">Day</label><input id="dd" inputmode="numeric" style="width: 64px; box-sizing: border-box; height: 48px; padding: 0 12px; font: inherit; border: 2px solid #5B6573; border-radius: 6px"></div>
+<div><label for="mm" style="display: block; font-size: 15px">Month</label><input id="mm" inputmode="numeric" style="width: 64px; box-sizing: border-box; height: 48px; padding: 0 12px; font: inherit; border: 2px solid #5B6573; border-radius: 6px"></div>
+<div><label for="yy" style="display: block; font-size: 15px">Year</label><input id="yy" inputmode="numeric" style="width: 96px; box-sizing: border-box; height: 48px; padding: 0 12px; font: inherit; border: 2px solid #5B6573; border-radius: 6px"></div>
+</div>
+</fieldset>
+</section>
+<section style="margin-top: 20px; background: #FFFFFF; border: 1px solid #D9DEE5; border-radius: 8px; padding: 28px; display: flex; flex-direction: column; gap: 18px">
+<h2 style="margin: 0; font-size: 22px">2. Your details</h2>
+<p style="margin: 0; color: #2A3442">We'll send letters about [Member name]'s pension to you at this address.</p>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">
+<div><label for="gfull" style="display: block; font-weight: 600; margin-bottom: 6px">Full name</label><input id="gfull" autocomplete="name" value="[Guardian name]" style="width: 100%; box-sizing: border-box; height: 48px; padding: 0 12px; font: inherit; border: 2px solid #5B6573; border-radius: 6px"></div>
+<div><label for="gdob" style="display: block; font-weight: 600; margin-bottom: 6px">Your date of birth</label><input id="gdob" type="date" autocomplete="bday" style="width: 100%; box-sizing: border-box; height: 48px; padding: 0 12px; font: inherit; border: 2px solid #5B6573; border-radius: 6px"></div>
+</div>
+<div><label for="gaddr" style="display: block; font-weight: 600; margin-bottom: 6px">Street address</label><input id="gaddr" autocomplete="street-address" style="width: 100%; box-sizing: border-box; height: 48px; padding: 0 12px; font: inherit; border: 2px solid #5B6573; border-radius: 6px"></div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+<div><label for="gcity" style="display: block; font-weight: 600; margin-bottom: 6px">City</label><input id="gcity" autocomplete="address-level2" style="width: 100%; box-sizing: border-box; height: 48px; padding: 0 12px; font: inherit; border: 2px solid #5B6573; border-radius: 6px"></div>
+<div><label for="gprov" style="display: block; font-weight: 600; margin-bottom: 6px">Province</label><select id="gprov" autocomplete="address-level1" style="width: 100%; box-sizing: border-box; height: 48px; padding: 0 10px; font: inherit; color: #14263C; background: #FFFFFF; border: 2px solid #5B6573; border-radius: 6px"><option>Ontario</option><option>Quebec</option><option>Other…</option></select></div>
+<div><label for="gpc" style="display: block; font-weight: 600; margin-bottom: 6px">Postal code</label><input id="gpc" autocomplete="postal-code" style="width: 100%; box-sizing: border-box; height: 48px; padding: 0 12px; font: inherit; border: 2px solid #5B6573; border-radius: 6px"></div>
+</div>
+<fieldset style="border: 0; margin: 0; padding: 0">
+<legend style="font-weight: 600; margin-bottom: 8px; padding: 0">Which language should we use with you?</legend>
+<div style="display: flex; gap: 28px; flex-wrap: wrap">
+<label style="display: flex; gap: 10px; align-items: center"><input type="radio" name="glang" checked style="width: 22px; height: 22px; margin: 0; accent-color: #0B5CAD">English</label>
+<label style="display: flex; gap: 10px; align-items: center"><input type="radio" name="glang" style="width: 22px; height: 22px; margin: 0; accent-color: #0B5CAD">French</label>
+</div>
+</fieldset>
+</section>
+<section style="margin-top: 20px; background: #FFFFFF; border: 1px solid #D9DEE5; border-radius: 8px; padding: 28px; display: flex; flex-direction: column; gap: 18px">
+<h2 style="margin: 0; font-size: 22px">3. Proof you can act for them</h2>
+<div style="max-width: 420px">
+<label for="role" style="display: block; font-weight: 600; margin-bottom: 6px">Your authority</label>
+<select id="role" style="width: 100%; box-sizing: border-box; height: 48px; padding: 0 12px; font: inherit; color: #14263C; background: #FFFFFF; border: 2px solid #5B6573; border-radius: 6px"><option>Power of attorney</option><option>Court-appointed guardian</option><option>Trustee or committee</option><option>Other legal representative</option></select>
+</div>
+<div>
+<p style="margin: 0 0 4px; font-weight: 600">Upload the document</p>
+<p style="margin: 0 0 10px; font-size: 15px; color: #4A5565">A photo or scan of every page. PDF, JPG or PNG, up to 10 MB. This starts our check.</p>
+<label style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 20px; border: 2px dashed #5B6573; border-radius: 6px; cursor: pointer; font-weight: 600; color: #0B5CAD; background: #FFFFFF">Choose a file<input type="file" style="position: absolute; width: 1px; height: 1px; opacity: 0"></label>
+</div>
+<div style="background: #FFF4E5; border: 1px solid #E6B87A; border-radius: 8px; padding: 16px 18px; font-size: 16px">
+<b>You'll also need to mail the original.</b> Before any payment, we need the original document, a notarized copy or a certified true copy. Send it by courier to:<br>Government of Canada Pension Centre – Mail Facility, PO Box 9500, Matane QC G4W 0H3. Write [Member name]'s service number on it.
+</div>
+</section>
+<label style="display: flex; gap: 12px; align-items: flex-start; margin-top: 20px; padding: 16px 20px; background: #FFFFFF; border: 1px solid #D9DEE5; border-radius: 8px">
+<input type="checkbox" style="width: 22px; height: 22px; margin: 2px 0 0; accent-color: #0B5CAD; flex: none">
+<span>I declare that I am legally allowed to manage [Member name]'s pension affairs, and that the information I give is true.</span>
+</label>
+<div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: center; margin-top: 28px">
+<a href="GViewStep.dc.html" style="display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 32px; background: #0B5CAD; color: #FFFFFF; font-weight: 600; text-decoration: none; border-radius: 6px">Confirm and open the application</a>
+<a href="#" style="font-size: 15px">I'm not the right person</a>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1280}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

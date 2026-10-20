@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Step 3 Benefit option</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F6F8}
+a{color:#0B5CAD}a:hover{color:#08427C}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #F4F6F8; font-family: 'Public Sans', system-ui, sans-serif; color: #14263C; font-size: 17px; line-height: 1.5">
+<header style="background: #14263C; color: #FFFFFF">
+<div style="max-width: 1120px; margin: 0 auto; padding: 14px 24px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between">
+<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap"><span style="font-weight: 700; font-size: 18px">CAF Pension Centre</span><span style="font-size: 15px; color: #C9D6E6">Online pension application</span><span style="font-size: 12px; font-weight: 600; letter-spacing: 0.04em; padding: 2px 8px; border: 1px solid #8FA6C2; border-radius: 999px; color: #DCE7F3">CONCEPT</span></div>
+<div style="display: flex; gap: 20px; font-size: 15px"><a href="#" style="color: #FFFFFF">Français</a><a href="Start.dc.html" style="color: #FFFFFF">Sign out</a></div>
+</div>
+</header>
+<nav aria-label="Application progress" style="background: #FFFFFF; border-bottom: 1px solid #D9DEE5">
+<div style="max-width: 1120px; margin: 0 auto; padding: 16px 24px 18px">
+<div style="display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 15px; color: #4A5565; margin-bottom: 10px"><span><b style="color: #14263C">Step 3 of 6</b> · Benefit option</span><span>All changes saved</span></div>
+<ol style="list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{steps}}" as="s" hint-placeholder-count="6">
+<li style="{{s.li}}"><span style="{{s.bar}}"></span><span>{{s.n}}. {{s.name}}<span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)"> ({{s.state}})</span></span></li>
+</sc-for>
+</ol>
+</div>
+</nav>
+<main style="max-width: 1120px; margin: 0 auto; padding: 36px 24px 64px">
+<div style="display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start">
+<div style="flex: 999 1 560px; min-width: 0">
+<h1 style="margin: 0 0 8px; font-size: 34px; line-height: 1.2">Choose how your pension is paid</h1>
+<p style="margin: 0 0 20px; color: #2A3442">Based on your age and service, these are your options. Amounts are estimates in today's dollars from your Options Statement.</p>
+<div role="note" style="margin: 0 0 24px; background: #FFF4E5; border: 1px solid #E6B87A; border-radius: 8px; padding: 16px 20px; font-size: 16px"><b>This choice is final once payments start.</b> Choose by <b>[DEADLINE]</b>. Not sure? <a href="#">Book a call with a pension officer</a>.</div>
+<fieldset style="border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px">
+<legend style="font-weight: 600; font-size: 20px; margin-bottom: 10px; padding: 0">Your options</legend>
+<sc-for list="{{options}}" as="o" hint-placeholder-count="4">
+<label style="{{o.box}}">
+<input type="radio" name="benefit" checked="{{o.checked}}" disabled="{{o.disabled}}" onChange="{{o.pick}}" style="width: 24px; height: 24px; margin: 4px 0 0; accent-color: #0B5CAD; flex: none">
+<span style="display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 0">
+<span style="display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap"><b style="font-size: 19px">{{o.title}}</b><b style="font-size: 19px; color: #0B5CAD">{{o.amount}}</b></span>
+<span style="font-size: 16px; color: #2A3442">{{o.desc}}</span>
+<span style="font-size: 14px; color: #4A5565">{{o.note}}</span>
+</span>
+</label>
+</sc-for>
+</fieldset>
+<label style="display: flex; gap: 12px; align-items: flex-start; margin-top: 24px; padding: 16px 20px; background: #FFFFFF; border: 1px solid #D9DEE5; border-radius: 8px">
+<input type="checkbox" style="width: 22px; height: 22px; margin: 2px 0 0; accent-color: #0B5CAD; flex: none">
+<span>I understand that I can't change my benefit option after my first payment, or after my transfer value is paid.</span>
+</label>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 36px; padding-top: 24px; border-top: 1px solid #D9DEE5">
+<a href="Service.dc.html" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px; border: 2px solid #0B5CAD; color: #0B5CAD; font-weight: 600; text-decoration: none; border-radius: 6px; box-sizing: border-box">Back</a>
+<div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap"><a href="Hub.dc.html">Save and exit</a><a href="Family.dc.html" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 28px; background: #0B5CAD; color: #FFFFFF; font-weight: 600; text-decoration: none; border-radius: 6px">Save and continue</a></div>
+</div>
+</div>
+<aside style="flex: 1 1 260px; display: flex; flex-direction: column; gap: 16px">
+<div style="background: #FFFFFF; border: 1px solid #D9DEE5; border-radius: 8px; padding: 20px">
+<h2 style="margin: 0 0 8px; font-size: 18px">Compare before you choose</h2>
+<p style="margin: 0 0 12px; font-size: 15px">A transfer value includes the value of indexing and survivor benefits. An annuity bought later from an insurer usually does not.</p>
+<p style="margin: 0; font-size: 15px"><a href="#">Open the pension estimator</a></p>
+</div>
+<div style="background: #FFFFFF; border: 1px solid #D9DEE5; border-radius: 8px; padding: 20px">
+<h2 style="margin: 0 0 8px; font-size: 18px">If you choose a transfer value</h2>
+<p style="margin: 0; font-size: 15px">Your bank fills in a lock-in certification instead of the direct deposit step. We'll show you how at the end.</p>
+</div>
+</aside>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1260}}'>
+class Component extends DCLogic {
+renderVals() {
+const cur = 2;
+const names = ['Personal details', 'Service & release', 'Benefit option', 'Family', 'Deductions & tax', 'Direct deposit'];
+const sel = (this.state && this.state.pick) || 'deferred';
+const list = [
+{ id: 'deferred', title: 'Deferred annuity', amount: '[$] / month at 60', desc: 'A full, unreduced monthly pension that starts at age 60.', note: 'Indexed to inflation. Includes survivor benefits.' },
+{ id: 'allowance', title: 'Annual allowance', amount: '[$] / month at [AGE]', desc: 'A smaller monthly pension that can start as early as age 50.', note: 'Reduced for each year it starts before 60.' },
+{ id: 'transfer', title: 'Transfer value', amount: '[$] lump sum', desc: 'A one-time payment moved into a locked-in retirement account.', note: 'Available because you are under 50 with 2 or more years of service.' },
+{ id: 'immediate', title: 'Immediate annuity', amount: 'Not available', desc: 'A monthly pension that starts right after release.', note: 'You do not meet the age and service rules for this option.', off: true }
+];
+return {
+steps: names.map((name, i) => ({
+n: i + 1, name,
+state: i < cur ? 'completed' : (i === cur ? 'current step' : 'not started'),
+li: 'position: relative; display: flex; flex-direction: column; gap: 6px; font-size: 14px; line-height: 1.3; color: ' + (i <= cur ? '#14263C' : '#5B6573') + '; font-weight: ' + (i === cur ? '700' : '500'),
+bar: 'display: block; height: 6px; border-radius: 3px; background: ' + (i < cur ? '#1F6F4A' : (i === cur ? '#0B5CAD' : '#D9DEE5'))
+})),
+options: list.map((o) => ({
+...o,
+checked: !o.off && sel === o.id,
+disabled: !!o.off,
+pick: () => this.setState({ pick: o.id }),
+box: 'display: flex; gap: 14px; align-items: flex-start; padding: 18px 20px; border-radius: 8px; ' + (o.off ? 'background: #EEF1F4; border: 2px dashed #C9D1DB; color: #4A5565; cursor: not-allowed' : 'background: #FFFFFF; cursor: pointer; border: 2px solid ' + (sel === o.id ? '#0B5CAD; box-shadow: 0 0 0 1px #0B5CAD' : '#C9D1DB'))
+}))
+};
+}
+}
+</script>
+</body>
+</html>

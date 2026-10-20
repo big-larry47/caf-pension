@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Step 5 Deductions and tax</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F6F8}
+a{color:#0B5CAD}a:hover{color:#08427C}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #F4F6F8; font-family: 'Public Sans', system-ui, sans-serif; color: #14263C; font-size: 17px; line-height: 1.5">
+<header style="background: #14263C; color: #FFFFFF">
+<div style="max-width: 1120px; margin: 0 auto; padding: 14px 24px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between">
+<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap"><span style="font-weight: 700; font-size: 18px">CAF Pension Centre</span><span style="font-size: 15px; color: #C9D6E6">Online pension application</span><span style="font-size: 12px; font-weight: 600; letter-spacing: 0.04em; padding: 2px 8px; border: 1px solid #8FA6C2; border-radius: 999px; color: #DCE7F3">CONCEPT</span></div>
+<div style="display: flex; gap: 20px; font-size: 15px"><a href="#" style="color: #FFFFFF">Français</a><a href="Start.dc.html" style="color: #FFFFFF">Sign out</a></div>
+</div>
+</header>
+<nav aria-label="Application progress" style="background: #FFFFFF; border-bottom: 1px solid #D9DEE5">
+<div style="max-width: 1120px; margin: 0 auto; padding: 16px 24px 18px">
+<div style="display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 15px; color: #4A5565; margin-bottom: 10px"><span><b style="color: #14263C">Step 5 of 6</b> · Deductions and tax</span><span>All changes saved</span></div>
+<ol style="list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{steps}}" as="s" hint-placeholder-count="6">
+<li style="{{s.li}}"><span style="{{s.bar}}"></span><span>{{s.n}}. {{s.name}}<span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)"> ({{s.state}})</span></span></li>
+</sc-for>
+</ol>
+</div>
+</nav>
+<main style="max-width: 1120px; margin: 0 auto; padding: 36px 24px 64px">
+<div style="display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start">
+<div style="flex: 999 1 560px; min-width: 0">
+<h1 style="margin: 0 0 8px; font-size: 34px; line-height: 1.2">Tax and deductions</h1>
+<p style="margin: 0 0 24px; color: #2A3442">These decide how much is taken off each payment before it reaches your bank.</p>
+<section style="background: #FFFFFF; border: 1px solid #D9DEE5; border-radius: 8px; padding: 24px; display: flex; flex-direction: column; gap: 20px">
+<h2 style="margin: 0; font-size: 22px">Income tax</h2>
+<div style="max-width: 360px">
+<label for="prov" style="display: block; font-weight: 600; margin-bottom: 6px">Province or territory where you'll live</label>
+<select id="prov" style="width: 100%; box-sizing: border-box; height: 48px; padding: 0 12px; font: inherit; color: #14263C; background: #FFFFFF; border: 2px solid #5B6573; border-radius: 6px"><option>Ontario</option><option>Quebec</option><option>Nova Scotia</option><option>British Columbia</option><option>Other…</option></select>
+</div>
+<fieldset style="border: 0; margin: 0; padding: 0">
+<legend style="font-weight: 600; margin-bottom: 8px; padding: 0">Tax credits (TD1)</legend>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<label style="display: flex; gap: 10px; align-items: flex-start"><input type="radio" name="td1" checked style="width: 22px; height: 22px; margin: 2px 0 0; accent-color: #0B5CAD; flex: none">Claim the basic personal amount only</label>
+<label style="display: flex; gap: 10px; align-items: flex-start"><input type="radio" name="td1" style="width: 22px; height: 22px; margin: 2px 0 0; accent-color: #0B5CAD; flex: none">I have other credits, take me through the federal and provincial TD1 questions</label>
+</div>
+</fieldset>
+<div style="max-width: 300px">
+<label for="xtra" style="display: block; font-weight: 600; margin-bottom: 2px">Extra tax to deduct each month (optional)</label>
+<p style="margin: 0 0 8px; font-size: 15px; color: #4A5565">Useful if you also have other income.</p>
+<div style="display: flex; align-items: center; border: 2px solid #5B6573; border-radius: 6px; height: 48px; box-sizing: border-box; background: #FFFFFF"><span style="padding: 0 10px; color: #4A5565">$</span><input id="xtra" inputmode="decimal" placeholder="0.00" style="flex: 1; min-width: 0; height: 100%; border: 0; font: inherit; background: transparent; padding-right: 12px"></div>
+</div>
+</section>
+<section style="margin-top: 20px; background: #FFFFFF; border: 1px solid #D9DEE5; border-radius: 8px; padding: 24px; display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-size: 22px">Health and dental</h2>
+<label style="display: flex; gap: 12px; align-items: flex-start"><input type="checkbox" checked style="width: 22px; height: 22px; margin: 2px 0 0; accent-color: #0B5CAD; flex: none"><span><b>Join the Public Service Health Care Plan as a pensioner</b><br><span style="font-size: 15px; color: #4A5565">Premium taken from your pension. [$] per month for [coverage level].</span></span></label>
+<label style="display: flex; gap: 12px; align-items: flex-start"><input type="checkbox" style="width: 22px; height: 22px; margin: 2px 0 0; accent-color: #0B5CAD; flex: none"><span><b>Join the Pensioners' Dental Services Plan</b><br><span style="font-size: 15px; color: #4A5565">Premium taken from your pension. [$] per month.</span></span></label>
+</section>
+<section style="margin-top: 20px; background: #FFFFFF; border: 1px solid #D9DEE5; border-radius: 8px; padding: 24px">
+<h2 style="margin: 0 0 12px; font-size: 22px">Your monthly deductions so far</h2>
+<table style="width: 100%; border-collapse: collapse; font-size: 16px">
+<tbody>
+<tr style="border-bottom: 1px solid #E6EAEF"><th scope="row" style="text-align: left; font-weight: 500; padding: 10px 0">Supplementary Death Benefit</th><td style="text-align: right; padding: 10px 0">[$]</td></tr>
+<tr style="border-bottom: 1px solid #E6EAEF"><th scope="row" style="text-align: left; font-weight: 500; padding: 10px 0">Health care plan</th><td style="text-align: right; padding: 10px 0">[$]</td></tr>
+<tr style="border-bottom: 1px solid #E6EAEF"><th scope="row" style="text-align: left; font-weight: 500; padding: 10px 0">Past service buy-back</th><td style="text-align: right; padding: 10px 0">[$]</td></tr>
+<tr><th scope="row" style="text-align: left; padding: 12px 0 0">Total before tax</th><td style="text-align: right; padding: 12px 0 0; font-weight: 700">[$]</td></tr>
+</tbody>
+</table>
+</section>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 36px; padding-top: 24px; border-top: 1px solid #D9DEE5">
+<a href="Family.dc.html" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px; border: 2px solid #0B5CAD; color: #0B5CAD; font-weight: 600; text-decoration: none; border-radius: 6px; box-sizing: border-box">Back</a>
+<div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap"><a href="Hub.dc.html">Save and exit</a><a href="Deposit.dc.html" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 28px; background: #0B5CAD; color: #FFFFFF; font-weight: 600; text-decoration: none; border-radius: 6px">Save and continue</a></div>
+</div>
+</div>
+<aside style="flex: 1 1 260px; background: #FFFFFF; border: 1px solid #D9DEE5; border-radius: 8px; padding: 20px">
+<h2 style="margin: 0 0 8px; font-size: 18px">Want to see your net pension?</h2>
+<p style="margin: 0 0 12px; font-size: 15px">The Pension Centre quotes gross amounts. Use the estimator to see what lands in your account after these deductions.</p>
+<p style="margin: 0; font-size: 15px"><a href="#">Estimate my net pension</a></p>
+</aside>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1180}}'>
+class Component extends DCLogic {
+renderVals() {
+const cur = 4;
+const names = ['Personal details', 'Service & release', 'Benefit option', 'Family', 'Deductions & tax', 'Direct deposit'];
+return { steps: names.map((name, i) => ({
+n: i + 1, name,
+state: i < cur ? 'completed' : (i === cur ? 'current step' : 'not started'),
+li: 'position: relative; display: flex; flex-direction: column; gap: 6px; font-size: 14px; line-height: 1.3; color: ' + (i <= cur ? '#14263C' : '#5B6573') + '; font-weight: ' + (i === cur ? '700' : '500'),
+bar: 'display: block; height: 6px; border-radius: 3px; background: ' + (i < cur ? '#1F6F4A' : (i === cur ? '#0B5CAD' : '#D9DEE5'))
+})) };
+}
+}
+</script>
+</body>
+</html>

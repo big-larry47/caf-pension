@@ -1,0 +1,9 @@
+{
+  "name": "pension-root",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix caf-pension run dev",
+    "build": "npm --prefix caf-pension run build",
+    "preview": "npm --prefix caf-pension run preview"
+  }
+}

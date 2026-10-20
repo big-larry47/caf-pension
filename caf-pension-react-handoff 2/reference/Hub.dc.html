@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Application overview</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F6F8}
+a{color:#0B5CAD}a:hover{color:#08427C}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #F4F6F8; font-family: 'Public Sans', system-ui, sans-serif; color: #14263C; font-size: 17px; line-height: 1.5">
+<header style="background: #14263C; color: #FFFFFF">
+<div style="max-width: 1120px; margin: 0 auto; padding: 14px 24px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between">
+<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap"><span style="font-weight: 700; font-size: 18px">CAF Pension Centre</span><span style="font-size: 15px; color: #C9D6E6">Online pension application</span><span style="font-size: 12px; font-weight: 600; letter-spacing: 0.04em; padding: 2px 8px; border: 1px solid #8FA6C2; border-radius: 999px; color: #DCE7F3">CONCEPT</span></div>
+<div style="display: flex; gap: 20px; font-size: 15px"><a href="#" style="color: #FFFFFF">Français</a><a href="Start.dc.html" style="color: #FFFFFF">Sign out</a></div>
+</div>
+</header>
+<main style="max-width: 1120px; margin: 0 auto; padding: 40px 24px 64px">
+<p style="margin: 0 0 4px; font-size: 15px; color: #4A5565">Application reference [REF-NUMBER] · Service number [A12345678]</p>
+<h1 style="margin: 0 0 8px; font-size: 34px; line-height: 1.2">Your pension application</h1>
+<p style="margin: 0 0 28px; color: #2A3442">Complete the six sections in order. Everything is saved as you go, so you can stop and come back.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start">
+<div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
+<section style="background: #FFFFFF; border: 1px solid #D9DEE5; border-radius: 8px; padding: 24px">
+<h2 style="margin: 0 0 16px; font-size: 20px">From your Pension Benefit Options Statement</h2>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+<div><div style="font-size: 14px; color: #4A5565">Release date</div><div style="font-size: 20px; font-weight: 600">[DATE]</div></div>
+<div><div style="font-size: 14px; color: #4A5565">Pensionable service</div><div style="font-size: 20px; font-weight: 600">[YEARS] years</div></div>
+<div><div style="font-size: 14px; color: #4A5565">Choose your option by</div><div style="font-size: 20px; font-weight: 600; color: #B4480C">[DEADLINE]</div></div>
+</div>
+<p style="margin: 16px 0 0; font-size: 15px"><a href="#">View your full Options Statement (PDF)</a></p>
+</section>
+<section style="background: #FFFFFF; border: 1px solid #D9DEE5; border-radius: 8px; overflow: hidden">
+<div style="padding: 20px 24px; border-bottom: 1px solid #D9DEE5; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: baseline">
+<h2 style="margin: 0; font-size: 20px">Application sections</h2>
+<span style="font-size: 15px; color: #4A5565">0 of 6 completed</span>
+</div>
+<ol style="list-style: none; margin: 0; padding: 0">
+<sc-for list="{{tasks}}" as="t" hint-placeholder-count="6">
+<li style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding: 16px 24px; border-bottom: 1px solid #E6EAEF">
+<span style="display: flex; flex-direction: column"><a href="{{t.href}}" style="font-weight: 600">{{t.n}}. {{t.name}}</a><span style="font-size: 15px; color: #4A5565">{{t.hint}}</span></span>
+<span style="font-size: 14px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: #E6EAEF; color: #2A3442">{{t.status}}</span>
+</li>
+</sc-for>
+</ol>
+</section>
+<div><a href="Personal.dc.html" style="display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 32px; background: #0B5CAD; color: #FFFFFF; font-weight: 600; text-decoration: none; border-radius: 6px">Start application</a></div>
+</div>
+<aside style="flex: 1 1 260px; display: flex; flex-direction: column; gap: 16px">
+<div style="background: #FFFFFF; border: 1px solid #D9DEE5; border-radius: 8px; padding: 20px">
+<h2 style="margin: 0 0 8px; font-size: 18px">What happens next</h2>
+<p style="margin: 0; font-size: 15px">Once all documents are in, the first payment is normally deposited within 45 calendar days of your retirement date.</p>
+</div>
+<div style="background: #FFFFFF; border: 1px solid #D9DEE5; border-radius: 8px; padding: 20px">
+<h2 style="margin: 0 0 8px; font-size: 18px">Need help?</h2>
+<p style="margin: 0; font-size: 15px">Call <b>1-800-267-0325</b> or <a href="#">send a secure message</a>.</p>
+</div>
+</aside>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1060}}'>
+class Component extends DCLogic {
+renderVals() {
+const t = [
+['Personal details', 'Name, address, contact', 'Personal.dc.html'],
+['Service and release', 'Release date and service history', 'Service.dc.html'],
+['Benefit option', 'Choose how your pension is paid', 'Benefit.dc.html'],
+['Family and beneficiaries', 'Spouse and death benefit', 'Family.dc.html'],
+['Deductions and tax', 'Tax credits and insurance', 'Deductions.dc.html'],
+['Direct deposit', 'Where we send your payments', 'Deposit.dc.html']
+];
+return { tasks: t.map((x, i) => ({ n: i + 1, name: x[0], hint: x[1], href: x[2], status: 'Not started' })) };
+}
+}
+</script>
+</body>
+</html>

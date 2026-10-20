@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Guardian invitation</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#E6EAEF}
+a{color:#0B5CAD}a:hover{color:#08427C}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #E6EAEF; font-family: 'Public Sans', system-ui, sans-serif; color: #14263C; font-size: 17px; line-height: 1.5">
+<main style="max-width: 1040px; margin: 0 auto; padding: 48px 24px 64px; display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start">
+<div style="flex: 999 1 560px; min-width: 0">
+<p style="margin: 0 0 10px; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; color: #4A5565">EMAIL TO THE GUARDIAN</p>
+<article style="background: #FFFFFF; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 2px rgba(20, 38, 60, 0.12)">
+<div style="padding: 16px 28px; border-bottom: 1px solid #E6EAEF; font-size: 15px; color: #4A5565; display: flex; flex-direction: column; gap: 2px">
+<span><b style="color: #14263C">From:</b> CAF Pension Centre &lt;[no-reply address]&gt;</span>
+<span><b style="color: #14263C">To:</b> [guardian@example.com]</span>
+<span><b style="color: #14263C">Subject:</b> [Member name] asked you to finish their pension application</span>
+</div>
+<div style="background: #14263C; color: #FFFFFF; padding: 16px 28px; font-weight: 700">CAF Pension Centre</div>
+<div style="padding: 28px">
+<p style="margin: 0 0 16px">Hello [Guardian name],</p>
+<p style="margin: 0 0 16px"><b>[Member name]</b> has asked you to finish their Canadian Armed Forces pension application. They named you as their <b>power of attorney</b>.</p>
+<p style="margin: 0 0 8px">You'll need about 10 minutes to:</p>
+<ul style="margin: 0 0 24px; padding-left: 22px">
+<li>confirm who you are with a code we text to your mobile</li>
+<li>upload proof that you can act for them</li>
+<li>enter the bank account for their pension</li>
+<li>review the application and submit it</li>
+</ul>
+<a href="GVerify.dc.html" style="display: inline-flex; align-items: center; min-height: 52px; padding: 0 32px; background: #0B5CAD; color: #FFFFFF; font-weight: 600; text-decoration: none; border-radius: 6px">Open the application</a>
+<p style="margin: 20px 0 0; font-size: 15px; color: #4A5565">This link is for you only and works until <b style="color: #14263C">[EXPIRY DATE]</b>.</p>
+<div style="margin-top: 24px; padding: 16px 18px; background: #F4F6F8; border-radius: 8px; font-size: 15px; color: #2A3442">We never ask for passwords or bank details by email or text. Didn't expect this message? Don't open the link. Call us at <b>1-800-267-0325</b>.</div>
+</div>
+</article>
+</div>
+<div style="flex: 1 1 280px; min-width: 0">
+<p style="margin: 0 0 10px; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; color: #4A5565">TEXT MESSAGE</p>
+<div style="background: #FFFFFF; border-radius: 10px; padding: 20px; box-shadow: 0 1px 2px rgba(20, 38, 60, 0.12)">
+<div style="background: #E8F0FA; border-radius: 14px 14px 14px 4px; padding: 12px 14px; font-size: 15px">CAF Pension Centre: [Member name] asked you to finish their pension application. We emailed you a link. Your security code will follow when you open it.</div>
+</div>
+<p style="margin: 20px 0 0; font-size: 15px; color: #4A5565">The email carries the link and the text carries the code, so someone needs both the guardian's inbox and phone to get in.</p>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":960}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>
