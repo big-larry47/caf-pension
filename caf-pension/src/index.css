@@ -706,4 +706,70 @@ a:hover { color: var(--color-primary-hover); }
   animation: pulseGlow 1.4s ease-in-out infinite;
 }
 
+/* ── Military Dossier Card Layout (matching reference layout on mobile & desktop) ── */
+.military-dossier-card {
+  display: grid;
+  grid-template-columns: 135px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+@media (min-width: 640px) {
+  .military-dossier-card {
+    grid-template-columns: 220px 1fr;
+    gap: 28px;
+  }
+}
+
+@media (max-width: 370px) {
+  .military-dossier-card {
+    grid-template-columns: 115px 1fr;
+    gap: 10px;
+  }
+}
+
+.military-dossier-kv {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 6px;
+  padding: 3px 0;
+}
+
+.military-dossier-key {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748B;
+  flex-shrink: 0;
+}
+
+.military-dossier-val {
+  font-size: 12px;
+  font-weight: 700;
+  color: #0F172A;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 640px) {
+  .military-dossier-key {
+    font-size: 12px;
+  }
+  .military-dossier-val {
+    font-size: 14px;
+  }
+}
+
+.military-ribbon {
+  display: inline-block;
+  width: 22px;
+  height: 12px;
+  border-radius: 2px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+}
+
 

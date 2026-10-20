@@ -210,29 +210,21 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
                   </div>
                 </div>
 
-                <div style={{ padding: '22px 24px' }}>
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      flexWrap: 'wrap',
-                      gap: '20px',
-                      marginBottom: '20px',
-                    }}
-                  >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
-                      {/* Official Military ID / Passport Photo */}
-                      <div style={{ position: 'relative', flexShrink: 0 }}>
+                <div style={{ padding: '20px 22px' }}>
+                  <div className="military-dossier-card">
+                    {/* LEFT COLUMN: Portrait Photo + Medals and Honors */}
+                    <div>
+                      {/* Portrait Photo */}
+                      <div style={{ position: 'relative', width: '100%', marginBottom: '14px' }}>
                         <img
                           src="/general_felix_villa.jpg"
                           alt="Official military identification photograph of General Felix Villa"
                           style={{
-                            width: '104px',
-                            height: '124px',
+                            width: '100%',
+                            aspectRatio: '4 / 5',
                             objectFit: 'cover',
                             borderRadius: '6px',
-                            border: '3px solid #E2E8F0',
+                            border: '2px solid #CBD5E1',
                             boxShadow: '0 4px 10px rgba(0, 0, 0, 0.08)',
                             display: 'block',
                           }}
@@ -259,76 +251,190 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
                         </div>
                       </div>
 
-                      <div style={{ flex: 1, minWidth: '220px' }}>
+                      {/* Medals and Honors Section */}
+                      <div style={{ marginTop: '16px' }}>
                         <div
                           style={{
-                            fontSize: '12px',
-                            color: '#64748B',
-                            fontWeight: 700,
+                            fontSize: '11px',
+                            fontWeight: 800,
                             textTransform: 'uppercase',
-                            letterSpacing: '0.04em',
-                            marginBottom: '4px',
+                            letterSpacing: '0.06em',
+                            color: '#334155',
+                            marginBottom: '10px',
+                            borderBottom: '1px solid #E2E8F0',
+                            paddingBottom: '4px',
                           }}
                         >
-                          Deceased Member & Rank
+                          Medals & Honors
+                        </div>
+
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <span
+                              className="military-ribbon"
+                              style={{ background: 'linear-gradient(90deg, #1E3A8A 35%, #F59E0B 35% 65%, #1E3A8A 65%)' }}
+                              title="Order of Military Merit"
+                            />
+                            <span style={{ fontSize: '11px', fontWeight: 600, color: '#1E293B', lineHeight: 1.2 }}>
+                              Order of Military Merit (CMM)
+                            </span>
+                          </div>
+
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <span
+                              className="military-ribbon"
+                              style={{ background: 'linear-gradient(90deg, #1E40AF 35%, #FFFFFF 35% 65%, #1E40AF 65%)' }}
+                              title="Meritorious Service Cross"
+                            />
+                            <span style={{ fontSize: '11px', fontWeight: 600, color: '#1E293B', lineHeight: 1.2 }}>
+                              Meritorious Service Cross (MSC)
+                            </span>
+                          </div>
+
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <span
+                              className="military-ribbon"
+                              style={{ background: 'linear-gradient(90deg, #15803D 25%, #DC2626 25% 50%, #FFFFFF 50% 75%, #15803D 75%)' }}
+                              title="Special Service Medal - NATO/Syria"
+                            />
+                            <span style={{ fontSize: '11px', fontWeight: 600, color: '#1E293B', lineHeight: 1.2 }}>
+                              Special Service Medal (SSM)
+                            </span>
+                          </div>
+
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <span
+                              className="military-ribbon"
+                              style={{ background: 'linear-gradient(90deg, #111827 30%, #DC2626 30% 70%, #111827 70%)' }}
+                              title="Sacrifice Medal"
+                            />
+                            <span style={{ fontSize: '11px', fontWeight: 600, color: '#991B1B', lineHeight: 1.2 }}>
+                              Sacrifice Medal (Active Duty)
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* RIGHT COLUMN: Header, Identity Details, Service Info, Biography */}
+                    <div>
+                      {/* Header: Rank + Name */}
+                      <div style={{ marginBottom: '12px' }}>
+                        <div
+                          style={{
+                            fontSize: '11px',
+                            fontWeight: 800,
+                            letterSpacing: '0.12em',
+                            textTransform: 'uppercase',
+                            color: '#64748B',
+                          }}
+                        >
+                          General
                         </div>
                         <h1
                           style={{
-                            margin: '0 0 6px',
-                            fontSize: '28px',
-                            fontWeight: 800,
-                            letterSpacing: '-0.02em',
+                            margin: '2px 0 0',
+                            fontSize: '26px',
+                            fontWeight: 900,
+                            letterSpacing: '0.02em',
+                            textTransform: 'uppercase',
                             color: '#0F172A',
-                            lineHeight: 1.2,
+                            lineHeight: 1.15,
+                            fontFamily: "'Public Sans', -apple-system, BlinkMacSystemFont, sans-serif",
                           }}
                         >
-                          {mockData.personal.fullName}
+                          Felix Villa
                         </h1>
-                        <div style={{ fontSize: '16px', color: '#475569', lineHeight: 1.4 }}>
-                          General · Regular Force · <strong style={{ color: '#0F172A' }}>34 Years 182 Days</strong> Pensionable Service
+                      </div>
+
+                      {/* Key-Value Table 1: Service ID, Rank, Branch, Unit, Status */}
+                      <div style={{ marginBottom: '10px' }}>
+                        <div className="military-dossier-kv">
+                          <span className="military-dossier-key">Service ID</span>
+                          <span className="military-dossier-val" style={{ fontFamily: "'IBM Plex Mono', monospace" }}>{mockData.serviceNumber}</span>
+                        </div>
+                        <div className="military-dossier-kv">
+                          <span className="military-dossier-key">Rank</span>
+                          <span className="military-dossier-val">General (4-Star)</span>
+                        </div>
+                        <div className="military-dossier-kv">
+                          <span className="military-dossier-key">Branch</span>
+                          <span className="military-dossier-val">Canadian Army</span>
+                        </div>
+                        <div className="military-dossier-kv">
+                          <span className="military-dossier-key">Unit</span>
+                          <span className="military-dossier-val">Joint Task Force (Syria)</span>
+                        </div>
+                        <div className="military-dossier-kv">
+                          <span className="military-dossier-key">Status</span>
+                          <span className="military-dossier-val" style={{ color: '#B91C1C' }}>Casualty (Active Duty)</span>
                         </div>
                       </div>
-                    </div>
 
-                    <div
-                      style={{
-                        background: '#F8FAFC',
-                        border: '1px solid #E2E8F0',
-                        borderRadius: '8px',
-                        padding: '14px 20px',
-                        textAlign: 'center',
-                        minWidth: '150px',
-                      }}
-                    >
-                      <div style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.06em', color: '#64748B', fontWeight: 700 }}>
-                        Casualty Status
-                      </div>
-                      <div style={{ fontSize: '15px', color: '#0F172A', fontWeight: 800, marginTop: '2px' }}>
-                        File Sealed
-                      </div>
-                      <div style={{ fontSize: '12px', color: '#64748B', marginTop: '2px' }}>
-                        Directorate of Casualty Support
-                      </div>
-                    </div>
-                  </div>
+                      {/* Divider */}
+                      <hr style={{ border: 'none', borderTop: '1px solid #E2E8F0', margin: '10px 0 12px' }} />
 
-                  <div
-                    style={{
-                      background: '#FEF2F2',
-                      border: '1px solid #FECACA',
-                      borderLeft: '4px solid #EF4444',
-                      borderRadius: '8px',
-                      padding: '12px 16px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '12px',
-                      fontSize: '15px',
-                      color: '#991B1B',
-                    }}
-                  >
-                    <span style={{ fontSize: '20px' }}>🕯️</span>
-                    <div>
-                      <strong>Died on Active Operational Service:</strong> 15 October 2026 (Syria) · Age 68
+                      {/* Section 2: Service Information */}
+                      <div style={{ marginBottom: '10px' }}>
+                        <div
+                          style={{
+                            fontSize: '11px',
+                            fontWeight: 800,
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.06em',
+                            color: '#334155',
+                            marginBottom: '6px',
+                          }}
+                        >
+                          Service Information
+                        </div>
+
+                        <div className="military-dossier-kv">
+                          <span className="military-dossier-key">Enlistment</span>
+                          <span className="military-dossier-val">June 1992</span>
+                        </div>
+                        <div className="military-dossier-kv">
+                          <span className="military-dossier-key">Years of Service</span>
+                          <span className="military-dossier-val">34 Years 182 Days</span>
+                        </div>
+                        <div className="military-dossier-kv">
+                          <span className="military-dossier-key">Current Posting</span>
+                          <span className="military-dossier-val">Syria (Op IMPACT)</span>
+                        </div>
+                        <div className="military-dossier-kv">
+                          <span className="military-dossier-key">Clearance Level</span>
+                          <span className="military-dossier-val">Top Secret / DND Sealed</span>
+                        </div>
+                      </div>
+
+                      {/* Divider */}
+                      <hr style={{ border: 'none', borderTop: '1px solid #E2E8F0', margin: '10px 0 12px' }} />
+
+                      {/* Section 3: Biography */}
+                      <div>
+                        <div
+                          style={{
+                            fontSize: '11px',
+                            fontWeight: 800,
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.06em',
+                            color: '#334155',
+                            marginBottom: '6px',
+                          }}
+                        >
+                          Biography
+                        </div>
+                        <p
+                          style={{
+                            margin: 0,
+                            fontSize: '12px',
+                            lineHeight: 1.55,
+                            color: '#475569',
+                          }}
+                        >
+                          General Felix Villa enlisted in 1992 and served 34 dedicated years in the Regular Force. Commanded multinational joint operations and overseas missions, recognized for strategic bravery and steadfast leadership. Died on active operational service in Syria at age 68. Under the Canadian Forces Superannuation Act, surviving daughter Jenny Villa (age 20) is designated sole beneficiary.
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
