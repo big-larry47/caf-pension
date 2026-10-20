@@ -80,9 +80,8 @@ export const StartPage: React.FC = () => {
               </li>
               <li>Your spouse or common-law partner's name and date of birth</li>
               <li>
-                Your <b>banking information</b>: institution number, transit
-                (branch) number and account number. A void cheque or a direct
-                deposit form from your bank shows all three.
+                Your <b>banking information</b> for direct wire deposit: institution number, transit
+                (branch) number and account number.
               </li>
             </ul>
           </Card>

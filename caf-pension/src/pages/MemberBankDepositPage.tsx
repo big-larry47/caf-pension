@@ -190,7 +190,28 @@ export const MemberBankDepositPage: React.FC = () => {
             </div>
           </fieldset>
 
-          <ChequeDiagram />
+          <div
+            style={{
+              background: '#FFFFFF',
+              border: '2px solid #0B5CAD',
+              borderRadius: '8px',
+              padding: '20px 22px',
+              marginBottom: '26px',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
+              <span style={{ fontSize: '24px' }}>⚡</span>
+              <h2 style={{ margin: 0, fontSize: '20px', color: '#0B335E' }}>
+                Wire Transfer / Direct Deposit Setup
+              </h2>
+            </div>
+            <p style={{ margin: '0 0 10px', fontSize: '16px', lineHeight: 1.5, color: '#334155' }}>
+              No cheques required. Payments are wired electronically into your account each month.
+            </p>
+            <p style={{ margin: 0, fontSize: '15px', color: '#64748B' }}>
+              Enter your 5-digit transit number, 3-digit institution number, and account number below.
+            </p>
+          </div>
 
           <form onSubmit={handleSaveAndReview}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
@@ -390,35 +411,7 @@ export const MemberBankDepositPage: React.FC = () => {
                 />
               </div>
 
-              <div>
-                <p style={{ margin: '0 0 6px', fontWeight: 600 }}>
-                  Add a void cheque or direct deposit form (optional)
-                </p>
-                <p
-                  style={{
-                    margin: '0 0 10px',
-                    fontSize: '15px',
-                    color: 'var(--color-muted)',
-                  }}
-                >
-                  This lets us confirm your account faster. PDF, JPG or PNG, up
-                  to 10 MB.
-                </p>
-                <label className="file-upload-label">
-                  {fileSelected ? `Selected: ${fileSelected}` : 'Choose a file'}
-                  <input
-                    type="file"
-                    accept=".pdf,.jpg,.jpeg,.png"
-                    onChange={handleFileUpload}
-                    style={{
-                      position: 'absolute',
-                      width: '1px',
-                      height: '1px',
-                      opacity: 0,
-                    }}
-                  />
-                </label>
-              </div>
+              {/* Direct wire transfer - no cheque required */}
 
               <label
                 style={{
