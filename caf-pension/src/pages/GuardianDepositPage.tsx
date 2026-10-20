@@ -139,9 +139,7 @@ export const GuardianDepositPage: React.FC = () => {
             <>
               <HelpCard title="Which account can I use?">
                 <p>
-                  Use an account in {memberName}'s name, a joint account with
-                  them, or a trust account you hold for them. Don't use an
-                  account that is only in your own name.
+                  You can use your own personal bank account ({guardianName}), an account in Jenny's name, or a joint/family account held for Jenny.
                 </p>
               </HelpCard>
               <HelpCard title="Saved as you go">
@@ -198,17 +196,22 @@ export const GuardianDepositPage: React.FC = () => {
                     id={`owner-${opt.id}`}
                     name="owner"
                     checked={owner === opt.id}
-                    onChange={() => setOwner(opt.id)}
+                    onChange={() => {
+                      setOwner(opt.id);
+                      if (opt.id === 'guardian') setHolder(guardianName);
+                      else if (opt.id === 'member') setHolder('Jenny Villa');
+                      else if (opt.id === 'joint') setHolder(`${guardianName} & Jenny Villa`);
+                    }}
                     style={{
-                      width: '22px',
-                      height: '22px',
+                      width: '24px',
+                      height: '24px',
                       margin: '2px 0 0',
                       accentColor: 'var(--color-primary)',
                       flex: 'none',
                     }}
                   />
                   <span style={{ display: 'flex', flexDirection: 'column' }}>
-                    <b>{opt.title}</b>
+                    <b style={{ fontSize: '18px' }}>{opt.title}</b>
                     <span style={{ fontSize: '15px', color: 'var(--color-muted)' }}>
                       {opt.hint}
                     </span>
@@ -221,19 +224,10 @@ export const GuardianDepositPage: React.FC = () => {
           <div style={{ maxWidth: '460px', marginBottom: '24px' }}>
             <label
               htmlFor="holder"
-              style={{ display: 'block', fontWeight: 600, marginBottom: '2px' }}
+              style={{ display: 'block', fontWeight: 600, fontSize: '17px', marginBottom: '4px' }}
             >
-              Account holder name, as the bank shows it
+              Account holder name
             </label>
-            <p
-              style={{
-                margin: '0 0 8px',
-                fontSize: '15px',
-                color: 'var(--color-muted)',
-              }}
-            >
-              {holderHints[owner]}
-            </p>
             <input
               id="holder"
               value={holder}
@@ -241,9 +235,10 @@ export const GuardianDepositPage: React.FC = () => {
               style={{
                 width: '100%',
                 boxSizing: 'border-box',
-                height: '48px',
+                height: '52px',
                 padding: '0 14px',
                 font: 'inherit',
+                fontSize: '18px',
                 border:
                   submitted && !holder.trim()
                     ? '3px solid var(--color-error)'

@@ -147,11 +147,11 @@ export const GuardianReviewPage: React.FC = () => {
         {
           k: 'Account type',
           v:
-            state.guardianDeposit.ownerType === 'trust'
-              ? `Trust account for ${memberName}`
+            state.guardianDeposit.ownerType === 'guardian'
+              ? `Your own personal account (${guardianName})`
               : state.guardianDeposit.ownerType === 'joint'
-              ? `Joint account with ${memberName}`
-              : `${memberName}'s own account`,
+              ? `Joint or family account for Jenny Villa`
+              : `Jenny Villa's personal account`,
         },
         {
           k: 'Bank numbers',
@@ -197,80 +197,148 @@ export const GuardianReviewPage: React.FC = () => {
             This is everything we'll send to the Pension Centre for {memberName}.
           </p>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            {sections.map((s) => (
-              <section
-                key={s.n}
-                style={{
-                  background: '#FFFFFF',
-                  borderRadius: '8px',
-                  border: s.mine
-                    ? '2px solid var(--color-accent)'
-                    : '1px solid var(--color-border)',
-                }}
-              >
-                <div
+          {/* Progressive disclosure: Steps 1-5 grouped inside a collapsible drawer so mobile guardians don't have to scroll through 5 screens */}
+          <details
+            style={{
+              background: '#F8FAFC',
+              border: '1px solid #CBD5E1',
+              borderRadius: '8px',
+              marginBottom: '18px',
+              overflow: 'hidden',
+            }}
+          >
+            <summary
+              style={{
+                padding: '16px 20px',
+                fontSize: '17px',
+                fontWeight: 600,
+                color: '#0B5CAD',
+                cursor: 'pointer',
+                background: '#EEF4FA',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            >
+              <span>📂 View Steps 1 to 5 (Approved Official Records on File)</span>
+              <span style={{ fontSize: '13px', background: 'var(--color-success-bg)', color: 'var(--color-success)', padding: '2px 8px', borderRadius: '999px', fontWeight: 600 }}>
+                5 Records Locked
+              </span>
+            </summary>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', padding: '16px' }}>
+              {sections.slice(0, 5).map((s) => (
+                <section
+                  key={s.n}
                   style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    gap: '12px',
-                    flexWrap: 'wrap',
-                    padding: '14px 20px',
-                    borderBottom: '1px solid var(--color-divider)',
+                    background: '#FFFFFF',
+                    borderRadius: '6px',
+                    border: '1px solid var(--color-border)',
                   }}
                 >
-                  <h2 style={{ margin: 0, fontSize: '18px' }}>
-                    {s.n}. {s.name}
-                  </h2>
-                  <span
+                  <div
                     style={{
                       display: 'flex',
-                      gap: '14px',
+                      justifyContent: 'space-between',
                       alignItems: 'center',
-                      flexWrap: 'wrap',
+                      padding: '10px 16px',
+                      borderBottom: '1px solid var(--color-divider)',
                     }}
                   >
-                    <span
-                      style={{
-                        fontSize: '13px',
-                        fontWeight: 600,
-                        padding: '3px 10px',
-                        borderRadius: '999px',
-                        background: s.mine ? 'var(--color-warning-bg)' : 'var(--color-success-bg)',
-                        color: s.mine ? '#8A3608' : 'var(--color-success)',
-                      }}
-                    >
-                      {s.mine ? 'Completed by you (Guardian)' : 'CAF Official Record'}
-                    </span>
-                    <Link
-                      to={s.href}
-                      style={{ fontSize: '15px', fontWeight: 600 }}
-                    >
-                      {s.action}
-                      <span className="sr-only"> {s.name}</span>
+                    <h2 style={{ margin: 0, fontSize: '16px' }}>
+                      {s.n}. {s.name}
+                    </h2>
+                    <Link to={s.href} style={{ fontSize: '14px', fontWeight: 600 }}>
+                      View
                     </Link>
+                  </div>
+                  <dl style={{ margin: 0, padding: '6px 16px 10px' }}>
+                    {s.rows.map((r, idx) => (
+                      <div
+                        key={idx}
+                        style={{
+                          display: 'grid',
+                          gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+                          gap: '8px',
+                          padding: '4px 0',
+                          fontSize: '15px',
+                        }}
+                      >
+                        <dt style={{ color: 'var(--color-muted)' }}>{r.k}</dt>
+                        <dd style={{ margin: 0, fontWeight: 600 }}>{r.v}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </section>
+              ))}
+            </div>
+          </details>
+
+          {/* Step 6 (Direct Deposit): Highlighted prominently */}
+          {sections.slice(5).map((s) => (
+            <section
+              key={s.n}
+              style={{
+                background: '#FFFFFF',
+                borderRadius: '8px',
+                border: '2px solid #0B5CAD',
+                marginBottom: '16px',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.04)',
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  gap: '12px',
+                  flexWrap: 'wrap',
+                  padding: '16px 20px',
+                  background: '#F0F7FF',
+                  borderBottom: '1px solid #D0E3F7',
+                }}
+              >
+                <div>
+                  <span style={{ fontSize: '13px', fontWeight: 700, color: '#0B5CAD', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                    Your Provided Information
                   </span>
+                  <h2 style={{ margin: '2px 0 0', fontSize: '20px', color: '#0B335E' }}>
+                    6. {s.name}
+                  </h2>
                 </div>
-                <dl style={{ margin: 0, padding: '6px 20px 12px' }}>
-                  {s.rows.map((r, idx) => (
-                    <div
-                      key={idx}
-                      style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-                        gap: '12px',
-                        padding: '6px 0',
-                        fontSize: '16px',
-                      }}
-                    >
-                      <dt style={{ color: 'var(--color-muted)' }}>{r.k}</dt>
-                      <dd style={{ margin: 0, fontWeight: 600 }}>{r.v}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </section>
-            ))}
+                <Link
+                  to={s.href}
+                  style={{
+                    fontSize: '16px',
+                    fontWeight: 700,
+                    background: '#FFFFFF',
+                    padding: '6px 14px',
+                    borderRadius: '6px',
+                    border: '1px solid #0B5CAD',
+                    textDecoration: 'none',
+                  }}
+                >
+                  Change
+                </Link>
+              </div>
+              <dl style={{ margin: 0, padding: '14px 20px' }}>
+                {s.rows.map((r, idx) => (
+                  <div
+                    key={idx}
+                    style={{
+                      display: 'grid',
+                      gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+                      gap: '12px',
+                      padding: '8px 0',
+                      fontSize: '17px',
+                    }}
+                  >
+                    <dt style={{ color: 'var(--color-muted)' }}>{r.k}</dt>
+                    <dd style={{ margin: 0, fontWeight: 600 }}>{r.v}</dd>
+                  </div>
+                ))}
+              </dl>
+            </section>
+          ))}
 
             <section
               style={{
@@ -293,7 +361,6 @@ export const GuardianReviewPage: React.FC = () => {
                   : 'No additional paperwork required unless requested by the Pension Centre.'}
               </p>
             </section>
-          </div>
 
           <p style={{ margin: '20px 0 0', fontSize: '16px' }}>
             Something wrong in steps 1 to 5?{' '}
