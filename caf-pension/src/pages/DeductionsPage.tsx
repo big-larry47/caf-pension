@@ -92,7 +92,7 @@ export const DeductionsPage: React.FC<DeductionsPageProps> = ({
           </h1>
           <p className="page-lead">
             {isGuardian
-              ? `Tax choices and insurance continuation on file for Jenny Villa based on the late ${mockData.personal.fullName}'s service.`
+              ? `Tax choices and insurance continuation on file for Jenny Miller based on the late ${mockData.personal.fullName}'s service.`
               : `Tax withholding and benefit deductions on file for the late ${mockData.personal.fullName}.`}
           </p>
 

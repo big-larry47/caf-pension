@@ -21,7 +21,7 @@ export const HubPage: React.FC = () => {
     state.invite.status === 'opened' ||
     state.invite.status === 'verified';
 
-  const guardianName = state.invite.guardian.fullName || 'Sarah Villa';
+  const guardianName = state.invite.guardian.fullName || 'Margaretha Byers';
   const guardianRoleText =
     state.invite.guardian.role === 'poa'
       ? 'Power of attorney'
@@ -101,7 +101,7 @@ export const HubPage: React.FC = () => {
           {state.serviceNumber || mockData.serviceNumber}
         </p>
         <h1 style={{ margin: '0 0 20px', fontSize: '34px', lineHeight: 1.2 }}>
-          Survivor pension application for Jenny Villa
+          Survivor pension application for Jenny Miller
         </h1>
 
         <div
@@ -134,7 +134,7 @@ export const HubPage: React.FC = () => {
           </svg>
           <div>
             <b style={{ fontSize: '19px' }}>
-              Waiting for {guardianName} to complete the direct deposit and review for Jenny Villa
+              Waiting for {guardianName} to complete the direct deposit and review for Jenny Miller
             </b>
             <br />
             <span style={{ fontSize: '16px', color: 'var(--color-ink-2)' }}>
@@ -191,7 +191,7 @@ export const HubPage: React.FC = () => {
                     Email
                   </div>
                   <div style={{ fontWeight: 600, overflowWrap: 'anywhere' }}>
-                    {state.invite.guardian.email || 'sarah.villa@example.com'}
+                    {state.invite.guardian.email || 'margaretha.byers@example.com'}
                   </div>
                 </div>
                 <div>
@@ -375,9 +375,9 @@ export const HubPage: React.FC = () => {
         Application reference {mockData.applicationRef} · Service number{' '}
         {state.serviceNumber || mockData.serviceNumber}
       </p>
-      <h1 className="page-title">Survivor pension application for Jenny Villa</h1>
+      <h1 className="page-title">Survivor pension application for Jenny Miller</h1>
       <p className="page-lead">
-        Survivor benefits for the estate of the late General Felix Villa. Complete the application in order. Everything is saved as you go.
+        Survivor benefits for the estate of the late {mockData.personal.fullName}. Complete the application in order. Everything is saved as you go.
       </p>
 
       <StepLayout

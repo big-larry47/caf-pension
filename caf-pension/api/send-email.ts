@@ -10,7 +10,7 @@ export default async function handler(req: any, res: any) {
     type,
     recipientEmail,
     guardianName,
-    memberName = 'General Felix Villa',
+    memberName = 'General Kelvin Miller',
     token = 'demo-token',
     refNumber = 'CAF-2026-849204',
     customMessage,

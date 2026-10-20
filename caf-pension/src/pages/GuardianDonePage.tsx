@@ -27,7 +27,7 @@ export const GuardianDonePage: React.FC = () => {
           </svg>
           <h1 className="text-3xl font-bold mb-2 leading-tight">Application submitted</h1>
           <p className="text-lg text-emerald-100">
-            Survivor pension & benefits for <strong>Jenny Villa</strong> (surviving daughter of the late General Felix Villa)
+            Survivor pension & benefits for <strong>Jenny Miller</strong> (surviving daughter of the late General Kelvin Miller)
           </p>
           <div className="mt-4 pt-4 border-t border-emerald-600/50">
             <p className="text-sm text-emerald-200 uppercase tracking-wider font-semibold">Reference number</p>
@@ -36,13 +36,13 @@ export const GuardianDonePage: React.FC = () => {
         </div>
 
         <p className="mt-6 text-[#14263C]">
-          We've emailed a confirmation to you as legal guardian for Jenny Villa. This link no longer works.
+          We've emailed a confirmation to you as Power of Attorney for Jenny Miller. This link no longer works.
         </p>
 
         <h2 className="text-2xl font-bold mt-8 mb-4">What happens next</h2>
         <ol className="space-y-4 pl-6 list-decimal text-base">
           <li>
-            <strong>Application review.</strong> The CAF Pension Centre will review the casualty file and confirm survivor benefit entitlement for Jenny Villa.
+            <strong>Application review.</strong> The CAF Pension Centre will review the casualty file and confirm survivor benefit entitlement for Jenny Miller.
           </li>
           <li>
             <strong>Direct deposit confirmation.</strong> We will verify the bank account provided for direct deposit.

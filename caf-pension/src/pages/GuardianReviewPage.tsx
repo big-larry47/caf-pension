@@ -24,7 +24,7 @@ export const GuardianReviewPage: React.FC = () => {
   }
 
   const memberName = mockData.personal.fullName;
-  const guardianName = state.guardianProfile.fullName || 'Sarah Villa';
+  const guardianName = state.guardianProfile.fullName || 'Margaretha Byers';
 
   const [decl1, setDecl1] = useState(state.guardianDeclared1);
   const [decl2, setDecl2] = useState(state.guardianDeclared2);
@@ -105,7 +105,7 @@ export const GuardianReviewPage: React.FC = () => {
       mine: false,
       rows: [
         { k: 'Deceased member', v: 'The late General Kelvin Miller' },
-        { k: 'Surviving beneficiary', v: 'Jenny Miller (Daughter, 20)' },
+        { k: 'Surviving beneficiary', v: 'Jenny Miller (Daughter)' },
       ],
     },
     {
@@ -154,7 +154,7 @@ export const GuardianReviewPage: React.FC = () => {
       mine: false,
       rows: [
         { k: 'Marital status', v: 'Widowed (Spouse deceased)' },
-        { k: 'Designated beneficiary', v: 'Jenny Miller (Daughter, age 20)' },
+        { k: 'Designated beneficiary', v: 'Jenny Miller (Daughter)' },
       ],
     },
     {

@@ -17,7 +17,7 @@ export interface MockData {
   beneficiary: {
     fullName: string;
     relationship: string;
-    age: number;
+    age?: number;
     guardianName: string;
   };
   service: {
@@ -61,19 +61,18 @@ export const mockData: MockData = {
     maskedSin: '••• ••• 321',
     mailingAddressLines: [
       'Estate of General Kelvin Miller',
-      'c/o Sarah Miller, Legal Guardian for Jenny Miller',
+      'c/o Margaretha Byers, Power of Attorney for Jenny Miller',
       '450 Sussex Drive',
       'Ottawa, Ontario K1N 1J9',
     ],
     phoneLines: ['613-555-0194', '613-555-0182'],
     email: 'estate.kelvin.miller@caf-fac.ca',
-    statusNote: 'Killed in action on 18 April 2025 in Damascus, Syria (Registration #554321). Born in Chicoutimi, Quebec. Spouse predeceased (widowed). Survived by daughter Jenny Miller (age 20).',
+    statusNote: 'Killed in action on 18 April 2025 in Damascus, Syria (Registration #554321). Born in Chicoutimi, Quebec. Spouse predeceased (widowed). Survived by daughter Jenny Miller.',
   },
   beneficiary: {
     fullName: 'Jenny Miller',
     relationship: 'Daughter (Sole surviving child)',
-    age: 20,
-    guardianName: 'Sarah Miller',
+    guardianName: 'Margaretha Byers',
   },
   service: {
     componentAtRelease: 'Regular Force',
@@ -87,7 +86,7 @@ export const mockData: MockData = {
     deferredAnnuity: '$6,480.00 / month survivor annuity for Jenny Miller',
     annualAllowance: '$5,120.00 / month',
     transferValue: '$1,240,500.00 lump-sum death benefit',
-    immediateAnnuity: 'Survivor Child / Dependent Annuity (payable to Guardian for Jenny Miller)',
+    immediateAnnuity: 'Survivor Child / Dependent Annuity (payable to Margaretha Byers, Power of Attorney for Jenny Miller)',
   },
   deductions: {
     pshcpPremiumText: 'Survivor continuation coverage under Comprehensive Family.',
@@ -98,7 +97,7 @@ export const mockData: MockData = {
     totalBeforeTaxAmount: '$250.90',
   },
   deposit: {
-    defaultHolderName: 'Sarah Miller (In Trust for Jenny Miller)',
-    chequeName: 'Sarah Miller (Legal Guardian for Jenny Miller)',
+    defaultHolderName: 'Margaretha Byers (Power of Attorney for Jenny Miller)',
+    chequeName: 'Margaretha Byers (Power of Attorney for Jenny Miller)',
   },
 };

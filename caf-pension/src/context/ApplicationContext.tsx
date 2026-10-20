@@ -163,7 +163,7 @@ const defaultState: ApplicationState = {
   hasDependentChildren: 'yes',
   keepSdb: 'yes',
   beneficiaryName: 'Jenny Miller',
-  beneficiaryRelationship: 'Daughter (Age 20)',
+  beneficiaryRelationship: 'Daughter',
 
   // Step 5: Deductions
   province: 'Ontario',
@@ -194,18 +194,18 @@ const defaultState: ApplicationState = {
     sentAt: '18 April 2025',
     expiresAt: '18 May 2025',
     guardian: {
-      fullName: 'Sarah Miller',
-      role: 'guardian',
-      email: 'sarah.miller@example.com',
+      fullName: 'Margaretha Byers',
+      role: 'poa',
+      email: 'margaretha.byers@example.com',
       mobile: '6135551234',
       message:
-        'Receiving survivor pension benefits on behalf of Jenny Miller (age 20), surviving daughter of the late General Kelvin Miller who was killed in action in Damascus, Syria.',
+        'Receiving survivor pension benefits as Power of Attorney on behalf of Jenny Miller, surviving daughter of the late General Kelvin Miller who was killed in action in Damascus, Syria.',
     },
     memberConsent: true,
   },
 
   guardianProfile: {
-    fullName: 'Sarah Miller',
+    fullName: 'Margaretha Byers',
     dateOfBirth: '1988-04-12',
     address: {
       street: '120 Queen Street, Apt 4B',

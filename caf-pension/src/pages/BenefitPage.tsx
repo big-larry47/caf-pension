@@ -91,7 +91,7 @@ export const BenefitPage: React.FC<BenefitPageProps> = ({
   const guardianBenefitOptions = [
     {
       id: 'deferred' as const,
-      title: 'Monthly Survivor Annuity for Jenny Villa',
+      title: 'Monthly Survivor Annuity for Jenny Miller',
       amount: '$6,480.00 / month',
       desc: 'A full, regular monthly income deposited directly for Jenny’s living and educational needs.',
       note: 'Indexed annually to inflation (cost of living). Guaranteed monthly support for life.',
@@ -133,7 +133,7 @@ export const BenefitPage: React.FC<BenefitPageProps> = ({
         <StepLayout
           aside={
             isGuardian ? (
-              <HelpCard title="Choosing for Jenny Villa">
+              <HelpCard title="Choosing for Jenny Miller">
                 <p style={{ margin: '0 0 10px', fontSize: '15px', lineHeight: 1.5 }}>
                   <strong>Monthly Annuity ($6,480/mo):</strong> Best for steady, predictable monthly income that automatically adjusts for inflation each year.
                 </p>
@@ -171,11 +171,11 @@ export const BenefitPage: React.FC<BenefitPageProps> = ({
           {isLocked && <ReadOnlyNotice />}
 
           <h1 className="page-title">
-            {isGuardian ? `Choose survivor benefit for Jenny Villa` : 'Benefit option'}
+            {isGuardian ? `Choose survivor benefit for Jenny Miller` : 'Benefit option'}
           </h1>
           <p className="page-lead">
             {isGuardian
-              ? `As legal guardian, please choose how the late ${mockData.personal.fullName}'s pension benefits should be paid to Jenny Miller.`
+              ? `As Power of Attorney, please choose how the late ${mockData.personal.fullName}'s pension benefits should be paid to Jenny Miller.`
               : `Survivor benefit entitlement on file for the late ${mockData.personal.fullName}.`}
           </p>
 
@@ -330,7 +330,7 @@ export const BenefitPage: React.FC<BenefitPageProps> = ({
               {isGuardian ? (
                 <Callout variant="info" style={{ marginBottom: '24px' }}>
                   <div style={{ fontSize: '17px', lineHeight: 1.5 }}>
-                    <strong>You are choosing Jenny Villa's survivor pension benefit.</strong> As her legal guardian, select whether Jenny receives regular monthly payments or a single lump-sum payout. Take your time, or call <strong>1-800-267-0325</strong> if you'd like guidance from a pension counselor.
+                    <strong>You are choosing Jenny Miller's survivor pension benefit.</strong> As Power of Attorney, select whether Jenny receives regular monthly payments or a single lump-sum payout. Take your time, or call <strong>1-800-267-0325</strong> if you'd like guidance from a pension counselor.
                   </div>
                 </Callout>
               ) : (
@@ -403,7 +403,7 @@ export const BenefitPage: React.FC<BenefitPageProps> = ({
                     }}
                   />
                   <span style={{ fontSize: '17px', lineHeight: 1.5, color: '#1E293B' }}>
-                    <strong>I confirm this survivor benefit option for Jenny Villa.</strong> I understand this choice establishes the payment structure for her CAF survivor benefit once approved.
+                    <strong>I confirm this survivor benefit option for Jenny Miller.</strong> I understand this choice establishes the payment structure for her CAF survivor benefit once approved.
                   </span>
                 </label>
               ) : (

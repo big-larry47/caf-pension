@@ -122,8 +122,8 @@ export const MemberDepositChoicePage: React.FC = () => {
 
           <h1 className="page-title">Who will receive the pension deposit?</h1>
           <p className="page-lead">
-            Benefits are designated for surviving daughter Jenny Villa (age 20).
-            If a legal guardian or trustee manages finances on her behalf, they can finish
+            Benefits are designated for surviving daughter Jenny Miller.
+            If a Power of Attorney or legal representative manages finances on her behalf, they can finish
             the direct deposit and review steps.
           </p>
 
@@ -146,8 +146,8 @@ export const MemberDepositChoicePage: React.FC = () => {
                 setWho('guardian');
                 updateState({ depositChoice: 'guardian' });
               }}
-              title="A legal guardian or trustee will receive it for Jenny"
-              hint="We send them a secure link to enter banking details and legal proof of authority."
+              title="A Power of Attorney or legal representative will receive it for Jenny"
+              hint="We send them a secure link to enter banking details and proof of Power of Attorney."
             />
             <RadioCard
               id="who-me"
@@ -157,7 +157,7 @@ export const MemberDepositChoicePage: React.FC = () => {
                 setWho('me');
                 updateState({ depositChoice: 'me' });
               }}
-              title="Direct to Jenny Villa's personal bank account"
+              title="Direct to Jenny Miller's personal bank account"
               hint="Enter Jenny's Canadian bank details directly."
             />
           </fieldset>

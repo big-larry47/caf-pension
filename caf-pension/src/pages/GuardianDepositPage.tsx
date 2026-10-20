@@ -23,7 +23,7 @@ export const GuardianDepositPage: React.FC = () => {
   }
 
   const memberName = mockData.personal.fullName;
-  const guardianName = state.guardianProfile.fullName || 'Sarah Miller';
+  const guardianName = state.guardianProfile.fullName || 'Margaretha Byers';
 
   const [owner, setOwner] = useState<'guardian' | 'member' | 'joint' | 'trust'>(
     state.guardianDeposit.ownerType || 'guardian'

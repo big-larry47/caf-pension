@@ -448,7 +448,7 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
                       Designated Sole Survivor Beneficiary
                     </span>
                     <h2 style={{ margin: 0, fontSize: '22px', fontWeight: 800, color: '#78350F' }}>
-                      Jenny Miller (Daughter, Age 20)
+                      Jenny Miller (Daughter)
                     </h2>
                   </div>
                 </div>
@@ -456,7 +456,7 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
                   Spouse predeceased (General Kelvin Miller was widowed). Under the <strong>Canadian Forces Superannuation Act (CFSA)</strong>, Jenny Miller is the sole designated dependent child beneficiary entitled to all survivor pension annuities and capital death benefits.
                 </p>
                 <div style={{ fontSize: '14px', fontWeight: 600, color: '#B45309', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <span>✓</span> Authority verified: Sarah Miller acts as legal guardian/representative for disbursement.
+                  <span>✓</span> Authority verified: Margaretha Byers acts as Power of Attorney for disbursement.
                 </div>
               </div>
 
@@ -606,7 +606,7 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
                     </div>
                     <div style={{ background: '#F8FAFC', padding: '16px 18px', borderRadius: '8px', border: '1px solid #E2E8F0', fontSize: '16px', lineHeight: 1.6 }}>
                       <div style={{ fontWeight: 700, color: '#0F172A' }}>Estate of General Kelvin Miller</div>
-                      <div style={{ color: '#0B5CAD', fontWeight: 700 }}>c/o Sarah Miller (Legal Guardian for Jenny Miller)</div>
+                      <div style={{ color: '#0B5CAD', fontWeight: 700 }}>c/o Margaretha Byers (Power of Attorney for Jenny Miller)</div>
                       <div style={{ color: '#334155' }}>450 Sussex Drive</div>
                       <div style={{ color: '#334155' }}>Ottawa, Ontario K1N 1J9</div>
                     </div>

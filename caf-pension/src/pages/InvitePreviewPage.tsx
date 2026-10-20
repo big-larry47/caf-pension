@@ -6,9 +6,9 @@ import { mockData } from '../data/mockData';
 export const InvitePreviewPage: React.FC = () => {
   const { state } = useApplication();
   const token = state.invite.token || 'demo-token';
-  const guardianName = state.invite.guardian.fullName || 'Sarah Villa';
+  const guardianName = state.invite.guardian.fullName || 'Margaretha Byers';
   const memberName = mockData.personal.fullName;
-  const guardianEmail = state.invite.guardian.email || 'sarah.villa@example.com';
+  const guardianEmail = state.invite.guardian.email || 'margaretha.byers@example.com';
   const roleTitle =
     state.invite.guardian.role === 'poa'
       ? 'power of attorney'

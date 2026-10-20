@@ -145,7 +145,7 @@ export const ApplicantPage: React.FC = () => {
           style={{ marginTop: '24px', padding: '18px 20px', fontSize: '16px' }}
         >
           Applying for survivor and estate pension benefits on behalf of surviving daughter
-          Jenny Villa (child of the late General Felix Villa).
+          Jenny Miller (child of the late General Kelvin Miller).
         </Callout>
       )}
 

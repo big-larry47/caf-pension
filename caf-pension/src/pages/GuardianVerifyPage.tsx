@@ -24,7 +24,7 @@ export const GuardianVerifyPage: React.FC = () => {
   const [submittedPart1, setSubmittedPart1] = useState(false);
 
   // Section 2: Guardian Details
-  const [gName, setGName] = useState(state.guardianProfile.fullName || 'Sarah Villa');
+  const [gName, setGName] = useState(state.guardianProfile.fullName || 'Margaretha Byers');
   const [gDob, setGDob] = useState(state.guardianProfile.dateOfBirth || '1988-04-12');
   const [gStreet, setGStreet] = useState(state.guardianProfile.address.street || '120 Queen Street, Apt 4B');
   const [gCity, setGCity] = useState(state.guardianProfile.address.city || 'Ottawa');
@@ -245,10 +245,10 @@ export const GuardianVerifyPage: React.FC = () => {
         </h1>
         <p style={{ margin: '0 0 24px', color: 'var(--color-ink-2)', fontSize: '16px', lineHeight: 1.5 }}>
           {currentPart === 1
-            ? `You have been designated as legal representative to receive survivor benefits for Jenny Villa (daughter of the late ${memberName}). We check your identity in 3 short steps.`
+            ? `You have been designated as legal representative / Power of Attorney to receive survivor benefits for Jenny Miller (daughter of the late ${memberName}). We check your identity in 3 short steps.`
             : currentPart === 2
-            ? `We will send official correspondence and statements for Jenny Villa's pension to this address.`
-            : `Please confirm your legal authority to represent Jenny Villa and confirm the legal declaration.`}
+            ? `We will send official correspondence and statements for Jenny Miller's pension to this address.`
+            : `Please confirm your legal authority to represent Jenny Miller and confirm the legal declaration.`}
         </p>
 
         {/* Compact summary of completed parts for reassurance and easy editing */}
@@ -881,7 +881,7 @@ export const GuardianVerifyPage: React.FC = () => {
             >
               <div>
                 <h2 style={{ margin: '0 0 6px', fontSize: '20px', color: '#0B335E' }}>
-                  3. Proof you can act for Jenny Villa
+                  3. Proof you can act for Jenny Miller
                 </h2>
                 <p style={{ margin: 0, color: 'var(--color-ink-2)', fontSize: '15px' }}>
                   Indicate your legal role and upload authorization if available.
@@ -994,7 +994,7 @@ export const GuardianVerifyPage: React.FC = () => {
                 }}
               />
               <span style={{ fontSize: '16px', lineHeight: 1.5, color: '#1E293B' }}>
-                <strong>I declare</strong> that I am assisting Jenny Villa (surviving daughter of the late {memberName}) with this application, and that the information I have provided is true and accurate.
+                <strong>I declare</strong> that I am assisting Jenny Miller (surviving daughter of the late {memberName}) with this application, and that the information I have provided is true and accurate.
               </span>
             </label>
 
@@ -1012,7 +1012,7 @@ export const GuardianVerifyPage: React.FC = () => {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
                   <span className="spinner spinner--primary" style={{ width: '16px', height: '16px' }} />
                   <span style={{ fontSize: '15px', fontWeight: 600, color: '#1E40AF' }}>
-                    Authorizing legal representation for Jenny Villa with Canadian Armed Forces casualty registry...
+                    Authorizing legal representation for Jenny Miller with Canadian Armed Forces casualty registry...
                   </span>
                 </div>
                 <div className="indeterminate-progress">

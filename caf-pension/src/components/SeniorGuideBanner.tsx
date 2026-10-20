@@ -56,7 +56,7 @@ export const SeniorGuideBanner: React.FC<SeniorGuideBannerProps> = ({
           >
             {currentStep === 3
               ? 'Step 3: Choose Jenny’s survivor benefit option'
-              : 'Welcome! Here are your tasks for Jenny Villa'}
+              : 'Welcome! Here are your tasks for Jenny Miller'}
           </h2>
 
           <p
