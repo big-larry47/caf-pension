@@ -26,7 +26,9 @@ export const GuardianDonePage: React.FC = () => {
             <path d="M7 12.5l3.5 3.5L17 9" />
           </svg>
           <h1 className="text-3xl font-bold mb-2 leading-tight">Application submitted</h1>
-          <p className="text-lg text-emerald-100">for {memberName}</p>
+          <p className="text-lg text-emerald-100">
+            Survivor pension & benefits for <strong>Jenny Villa</strong> (surviving daughter of the late General Felix Villa)
+          </p>
           <div className="mt-4 pt-4 border-t border-emerald-600/50">
             <p className="text-sm text-emerald-200 uppercase tracking-wider font-semibold">Reference number</p>
             <p className="text-2xl font-bold tracking-wider mt-1">{refNumber}</p>
@@ -34,7 +36,7 @@ export const GuardianDonePage: React.FC = () => {
         </div>
 
         <p className="mt-6 text-[#14263C]">
-          We've emailed a confirmation to you and to {memberName}. This link no longer works.
+          We've emailed a confirmation to you as legal guardian for Jenny Villa. This link no longer works.
         </p>
 
         <h2 className="text-2xl font-bold mt-8 mb-4">What happens next</h2>

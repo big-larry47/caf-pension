@@ -46,19 +46,19 @@ export const GuardianDepositPage: React.FC = () => {
 
   const ownerOptions = [
     {
+      id: 'trust' as const,
+      title: 'A trust or guardianship account for Jenny Villa',
+      hint: 'An account held by you as legal guardian/trustee for Jenny Villa (age 20).',
+    },
+    {
       id: 'member' as const,
-      title: `${memberName}'s own account`,
-      hint: 'In their name only.',
+      title: "Jenny Villa's own personal account",
+      hint: 'In Jenny Villa’s name only.',
     },
     {
       id: 'joint' as const,
-      title: `A joint account with ${memberName}`,
-      hint: 'Both of your names are on the account.',
-    },
-    {
-      id: 'trust' as const,
-      title: 'A trust or guardianship account',
-      hint: 'An account you hold for their benefit.',
+      title: 'A joint account with Jenny Villa',
+      hint: 'Both your name and Jenny Villa are on the account.',
     },
   ];
 
@@ -157,11 +157,11 @@ export const GuardianDepositPage: React.FC = () => {
           )}
 
           <h1 className="page-title">
-            Where should we send {memberName}'s pension?
+            Where should we send the pension for Jenny Villa?
           </h1>
           <p className="page-lead">
-            Payments go by direct deposit only. The account must be held for{' '}
-            {memberName}'s benefit.
+            Payments go by direct deposit only. The account must be held for the
+            benefit of Jenny Villa (surviving daughter of the late General Felix Villa).
           </p>
 
           <fieldset style={{ border: 0, margin: '0 0 24px', padding: 0 }}>
@@ -472,8 +472,8 @@ export const GuardianDepositPage: React.FC = () => {
                   }}
                 />
                 <span>
-                  On behalf of {memberName}, I authorize the Canadian Armed
-                  Forces Pension Centre to deposit their pension payments into
+                  As legal guardian on behalf of Jenny Villa (beneficiary of the late General Felix Villa), I authorize the Canadian Armed
+                  Forces Pension Centre to deposit her pension payments into
                   this account until told otherwise.
                 </span>
               </label>

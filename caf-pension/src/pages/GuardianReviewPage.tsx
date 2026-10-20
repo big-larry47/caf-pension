@@ -89,8 +89,8 @@ export const GuardianReviewPage: React.FC = () => {
       action: 'View',
       mine: false,
       rows: [
-        { k: 'Name', v: memberName },
-        { k: 'Mailing address', v: 'Ottawa, Ontario' },
+        { k: 'Deceased member', v: 'The late General Felix Villa' },
+        { k: 'Surviving beneficiary', v: 'Jenny Villa (Daughter, 20)' },
       ],
     },
     {
@@ -100,8 +100,8 @@ export const GuardianReviewPage: React.FC = () => {
       action: 'View',
       mine: false,
       rows: [
-        { k: 'Release date', v: mockData.service.releaseDate },
-        { k: 'Pensionable service', v: `${mockData.pensionableServiceYears} years` },
+        { k: 'Date of death in service', v: '15 October 2026 (Syria)' },
+        { k: 'Service & age', v: '34 years · Passed away at age 68' },
       ],
     },
     {
@@ -111,8 +111,8 @@ export const GuardianReviewPage: React.FC = () => {
       action: 'View',
       mine: false,
       rows: [
-        { k: 'Option', v: 'Deferred annuity' },
-        { k: 'Estimate', v: mockData.benefitAmounts.deferredAnnuity },
+        { k: 'Option', v: 'Survivor & Child Dependent Annuity' },
+        { k: 'Estimate for Jenny', v: mockData.benefitAmounts.deferredAnnuity },
       ],
     },
     {
@@ -122,8 +122,8 @@ export const GuardianReviewPage: React.FC = () => {
       action: 'View',
       mine: false,
       rows: [
-        { k: 'Spouse', v: 'Late' },
-        { k: 'Death benefit', v: `Kept · ${state.beneficiaryName || 'Elena Villa'}` },
+        { k: 'Marital status', v: 'Widowed (Spouse deceased)' },
+        { k: 'Designated beneficiary', v: 'Jenny Villa (Daughter, age 20)' },
       ],
     },
     {
@@ -134,7 +134,7 @@ export const GuardianReviewPage: React.FC = () => {
       mine: false,
       rows: [
         { k: 'Province', v: state.province },
-        { k: 'Health care plan', v: state.joinPshcp ? 'Joined' : 'Not joined' },
+        { k: 'Health care plan', v: state.joinPshcp ? 'Joined (Family continuation)' : 'Not joined' },
       ],
     },
     {
@@ -241,7 +241,7 @@ export const GuardianReviewPage: React.FC = () => {
                         color: s.mine ? '#8A3608' : 'var(--color-success)',
                       }}
                     >
-                      {s.mine ? 'Completed by you' : `Completed by ${memberName}`}
+                      {s.mine ? 'Completed by you (Guardian)' : 'CAF Official Record'}
                     </span>
                     <Link
                       to={s.href}

@@ -139,7 +139,7 @@ const defaultState: ApplicationState = {
   otp: '492815',
 
   // Applicant
-  who: 'member',
+  who: 'survivor',
   force: 'regular',
 
   // Step 1: Personal
@@ -155,15 +155,15 @@ const defaultState: ApplicationState = {
   benefitConfirmed: true,
 
   // Step 4: Family
-  maritalStatus: 'Widowed',
+  maritalStatus: 'Widowed (Spouse deceased)',
   spouseGivenName: '',
   spouseSurname: '',
   spouseDob: '',
   marriageDate: '',
   hasDependentChildren: 'yes',
   keepSdb: 'yes',
-  beneficiaryName: 'Elena Villa',
-  beneficiaryRelationship: 'Daughter',
+  beneficiaryName: 'Jenny Villa',
+  beneficiaryRelationship: 'Daughter (Age 20)',
 
   // Step 5: Deductions
   province: 'Ontario',
@@ -195,10 +195,11 @@ const defaultState: ApplicationState = {
     expiresAt: '29 October 2026',
     guardian: {
       fullName: 'Sarah Villa',
-      role: 'poa',
+      role: 'guardian',
       email: 'sarah.villa@example.com',
       mobile: '6135551234',
-      message: 'Hi Sarah, please help me finish the direct deposit and review steps for my pension.',
+      message:
+        'Receiving survivor pension benefits on behalf of Jenny Villa (age 20), surviving daughter of the late General Felix Villa who passed away at 68 while deployed in Syria.',
     },
     memberConsent: true,
   },

@@ -120,10 +120,11 @@ export const MemberDepositChoicePage: React.FC = () => {
         >
           {errors.length > 0 && <ErrorSummary errors={errors} />}
 
-          <h1 className="page-title">Who will give us the bank details?</h1>
+          <h1 className="page-title">Who will receive the pension deposit?</h1>
           <p className="page-lead">
-            If someone manages your finances for you, they can finish the last
-            two steps: your bank details and the final review.
+            Benefits are designated for surviving daughter Jenny Villa (age 20).
+            If a legal guardian or trustee manages finances on her behalf, they can finish
+            the direct deposit and review steps.
           </p>
 
           <fieldset
@@ -136,18 +137,7 @@ export const MemberDepositChoicePage: React.FC = () => {
               gap: '12px',
             }}
           >
-            <legend className="sr-only">Who will give the bank details</legend>
-            <RadioCard
-              id="who-me"
-              name="who"
-              checked={who === 'me'}
-              onChange={() => {
-                setWho('me');
-                updateState({ depositChoice: 'me' });
-              }}
-              title="I will"
-              hint="Enter your own bank details now."
-            />
+            <legend className="sr-only">Who will receive the pension deposit</legend>
             <RadioCard
               id="who-guardian"
               name="who"
@@ -156,8 +146,19 @@ export const MemberDepositChoicePage: React.FC = () => {
                 setWho('guardian');
                 updateState({ depositChoice: 'guardian' });
               }}
-              title="My guardian or legal representative will"
-              hint="We send them a secure link to finish the application."
+              title="A legal guardian or trustee will receive it for Jenny"
+              hint="We send them a secure link to enter banking details and legal proof of authority."
+            />
+            <RadioCard
+              id="who-me"
+              name="who"
+              checked={who === 'me'}
+              onChange={() => {
+                setWho('me');
+                updateState({ depositChoice: 'me' });
+              }}
+              title="Direct to Jenny Villa's personal bank account"
+              hint="Enter Jenny's Canadian bank details directly."
             />
           </fieldset>
 

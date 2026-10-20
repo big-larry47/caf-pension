@@ -60,6 +60,11 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
         : undefined,
     },
     {
+      label: 'Status & Beneficiary',
+      value: mockData.personal.statusNote,
+      mutedActionText: 'CAF Casualty Record',
+    },
+    {
       label: 'Date of birth',
       value: mockData.personal.dateOfBirth,
       mutedActionText: 'From service record',

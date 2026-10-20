@@ -119,7 +119,7 @@ export const FamilyPage: React.FC<FamilyPageProps> = ({
                 <div>
                   <div style={{ fontSize: '14px', color: 'var(--color-muted)' }}>Beneficiary</div>
                   <div style={{ fontWeight: 600 }}>
-                    {state.beneficiaryName || 'Elena Villa'} ({state.beneficiaryRelationship || 'Daughter'})
+                    {state.beneficiaryName || 'Jenny Villa'} ({state.beneficiaryRelationship || 'Daughter, Age 20'})
                   </div>
                 </div>
               </div>
