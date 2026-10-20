@@ -215,39 +215,78 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
                     style={{
                       display: 'flex',
                       justifyContent: 'space-between',
-                      alignItems: 'flex-start',
+                      alignItems: 'center',
                       flexWrap: 'wrap',
-                      gap: '16px',
-                      marginBottom: '16px',
+                      gap: '20px',
+                      marginBottom: '20px',
                     }}
                   >
-                    <div>
-                      <div
-                        style={{
-                          fontSize: '12px',
-                          color: '#64748B',
-                          fontWeight: 700,
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.04em',
-                          marginBottom: '4px',
-                        }}
-                      >
-                        Deceased Member & Rank
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
+                      {/* Official Military ID / Passport Photo */}
+                      <div style={{ position: 'relative', flexShrink: 0 }}>
+                        <img
+                          src="/general_felix_villa.jpg"
+                          alt="Official military identification photograph of General Felix Villa"
+                          style={{
+                            width: '104px',
+                            height: '124px',
+                            objectFit: 'cover',
+                            borderRadius: '6px',
+                            border: '3px solid #E2E8F0',
+                            boxShadow: '0 4px 10px rgba(0, 0, 0, 0.08)',
+                            display: 'block',
+                          }}
+                        />
+                        <div
+                          style={{
+                            position: 'absolute',
+                            bottom: '-7px',
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            background: '#0F172A',
+                            color: '#FFFFFF',
+                            fontSize: '9px',
+                            fontWeight: 800,
+                            letterSpacing: '0.06em',
+                            textTransform: 'uppercase',
+                            padding: '2px 7px',
+                            borderRadius: '3px',
+                            whiteSpace: 'nowrap',
+                            boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                          }}
+                        >
+                          DND ID PHOTO
+                        </div>
                       </div>
-                      <h1
-                        style={{
-                          margin: '0 0 6px',
-                          fontSize: '28px',
-                          fontWeight: 800,
-                          letterSpacing: '-0.02em',
-                          color: '#0F172A',
-                          lineHeight: 1.2,
-                        }}
-                      >
-                        {mockData.personal.fullName}
-                      </h1>
-                      <div style={{ fontSize: '16px', color: '#475569', lineHeight: 1.4 }}>
-                        General · Regular Force · <strong style={{ color: '#0F172A' }}>34 Years 182 Days</strong> Pensionable Service
+
+                      <div style={{ flex: 1, minWidth: '220px' }}>
+                        <div
+                          style={{
+                            fontSize: '12px',
+                            color: '#64748B',
+                            fontWeight: 700,
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.04em',
+                            marginBottom: '4px',
+                          }}
+                        >
+                          Deceased Member & Rank
+                        </div>
+                        <h1
+                          style={{
+                            margin: '0 0 6px',
+                            fontSize: '28px',
+                            fontWeight: 800,
+                            letterSpacing: '-0.02em',
+                            color: '#0F172A',
+                            lineHeight: 1.2,
+                          }}
+                        >
+                          {mockData.personal.fullName}
+                        </h1>
+                        <div style={{ fontSize: '16px', color: '#475569', lineHeight: 1.4 }}>
+                          General · Regular Force · <strong style={{ color: '#0F172A' }}>34 Years 182 Days</strong> Pensionable Service
+                        </div>
                       </div>
                     </div>
 
@@ -256,7 +295,7 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
                         background: '#F8FAFC',
                         border: '1px solid #E2E8F0',
                         borderRadius: '8px',
-                        padding: '12px 18px',
+                        padding: '14px 20px',
                         textAlign: 'center',
                         minWidth: '150px',
                       }}
