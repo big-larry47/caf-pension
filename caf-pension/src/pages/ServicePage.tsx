@@ -11,6 +11,7 @@ import { StepLayout } from '../components/StepLayout';
 import { HelpCard } from '../components/HelpCard';
 import { Card } from '../components/Card';
 import { StepFooter } from '../components/StepFooter';
+import { SeniorGuideBanner } from '../components/SeniorGuideBanner';
 
 interface ServicePageProps {
   readOnly?: boolean;
@@ -58,6 +59,7 @@ export const ServicePage: React.FC<ServicePageProps> = ({
       )}
 
       <main className="container container--wide">
+        {isGuardian && <SeniorGuideBanner token={token} currentStep={2} />}
         <StepLayout
           aside={
             isGuardian ? (

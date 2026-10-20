@@ -12,6 +12,7 @@ import { HelpCard } from '../components/HelpCard';
 import { SummaryList, SummaryListItem } from '../components/SummaryList';
 import { StepFooter } from '../components/StepFooter';
 import { Card } from '../components/Card';
+import { SeniorGuideBanner } from '../components/SeniorGuideBanner';
 
 interface PersonalPageProps {
   readOnly?: boolean;
@@ -143,6 +144,7 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
       )}
 
       <main className="container container--wide">
+        {isGuardian && <SeniorGuideBanner token={token} currentStep={1} />}
         <StepLayout
           aside={
             isGuardian ? (

@@ -301,7 +301,7 @@ export const GuardianDepositPage: React.FC = () => {
                     style={fieldStyle(tErr)}
                   />
                 </div>
-                <div style={{ width: '160px' }}>
+                <div style={{ width: '220px' }}>
                   <label
                     htmlFor="inst"
                     style={{
@@ -343,6 +343,51 @@ export const GuardianDepositPage: React.FC = () => {
                     onChange={(e) => setI(e.target.value.replace(/\D/g, ''))}
                     style={fieldStyle(iErr)}
                   />
+                </div>
+              </div>
+
+              {/* Quick helper for common Canadian banks */}
+              <div
+                style={{
+                  background: '#F8FAFC',
+                  border: '1px solid #E2E8F0',
+                  borderRadius: '8px',
+                  padding: '14px 18px',
+                  maxWidth: '560px',
+                }}
+              >
+                <div style={{ fontSize: '15px', fontWeight: 600, color: '#334155', marginBottom: '8px' }}>
+                  Quick help: tap your bank to fill the 3-digit number
+                </div>
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                  {[
+                    { name: 'RBC Royal Bank', code: '003' },
+                    { name: 'TD Canada Trust', code: '004' },
+                    { name: 'Scotiabank', code: '002' },
+                    { name: 'BMO Bank of Montreal', code: '001' },
+                    { name: 'CIBC', code: '010' },
+                    { name: 'National Bank', code: '006' },
+                    { name: 'Desjardins', code: '815' },
+                  ].map((bank) => (
+                    <button
+                      key={bank.code}
+                      type="button"
+                      onClick={() => setI(bank.code)}
+                      style={{
+                        background: i === bank.code ? '#0B5CAD' : '#FFFFFF',
+                        color: i === bank.code ? '#FFFFFF' : '#1E293B',
+                        border: i === bank.code ? '1px solid #0B5CAD' : '1px solid #CBD5E1',
+                        borderRadius: '6px',
+                        padding: '6px 12px',
+                        fontSize: '14px',
+                        cursor: 'pointer',
+                        fontWeight: 500,
+                        transition: 'all 0.15s ease',
+                      }}
+                    >
+                      {bank.name} <strong>({bank.code})</strong>
+                    </button>
+                  ))}
                 </div>
               </div>
 

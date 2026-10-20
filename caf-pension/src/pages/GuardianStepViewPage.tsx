@@ -8,7 +8,7 @@ import { FamilyPage } from './FamilyPage';
 import { DeductionsPage } from './DeductionsPage';
 
 export const GuardianStepViewPage: React.FC = () => {
-  const { n, token } = useParams<{ n: string; token: string }>();
+  const { stepNumber: paramStep, n, token } = useParams<{ stepNumber?: string; n?: string; token: string }>();
   const { state } = useApplication();
 
   if (state.invite.status === 'submitted') {
@@ -19,7 +19,7 @@ export const GuardianStepViewPage: React.FC = () => {
     return <Navigate to={`/g/${token}`} replace />;
   }
 
-  const stepNumber = parseInt(n || '1', 10);
+  const stepNumber = parseInt(paramStep || n || '1', 10);
 
   switch (stepNumber) {
     case 1:

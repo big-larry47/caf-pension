@@ -12,6 +12,7 @@ import { HelpCard } from '../components/HelpCard';
 import { Callout } from '../components/Callout';
 import { RadioCard } from '../components/RadioCard';
 import { StepFooter } from '../components/StepFooter';
+import { SeniorGuideBanner } from '../components/SeniorGuideBanner';
 
 interface BenefitPageProps {
   readOnly?: boolean;
@@ -94,6 +95,7 @@ export const BenefitPage: React.FC<BenefitPageProps> = ({
       )}
 
       <main className="container container--wide">
+        {isGuardian && <SeniorGuideBanner token={token} currentStep={3} />}
         <StepLayout
           aside={
             isGuardian ? (

@@ -322,12 +322,15 @@ export const GuardianReviewPage: React.FC = () => {
                 gap: '18px',
               }}
             >
-              <h2 style={{ margin: 0, fontSize: '22px' }}>Declaration</h2>
+              <h2 style={{ margin: 0, fontSize: '24px' }}>Declaration and Signature</h2>
               <label
                 style={{
                   display: 'flex',
-                  gap: '12px',
+                  gap: '14px',
                   alignItems: 'flex-start',
+                  fontSize: '18px',
+                  lineHeight: 1.5,
+                  cursor: 'pointer',
                 }}
               >
                 <input
@@ -336,9 +339,9 @@ export const GuardianReviewPage: React.FC = () => {
                   checked={decl1}
                   onChange={(e) => setDecl1(e.target.checked)}
                   style={{
-                    width: '22px',
-                    height: '22px',
-                    margin: '2px 0 0',
+                    width: '26px',
+                    height: '26px',
+                    margin: '3px 0 0',
                     accentColor: 'var(--color-primary)',
                     flex: 'none',
                   }}
@@ -353,8 +356,11 @@ export const GuardianReviewPage: React.FC = () => {
               <label
                 style={{
                   display: 'flex',
-                  gap: '12px',
+                  gap: '14px',
                   alignItems: 'flex-start',
+                  fontSize: '18px',
+                  lineHeight: 1.5,
+                  cursor: 'pointer',
                 }}
               >
                 <input
@@ -363,9 +369,9 @@ export const GuardianReviewPage: React.FC = () => {
                   checked={decl2}
                   onChange={(e) => setDecl2(e.target.checked)}
                   style={{
-                    width: '22px',
-                    height: '22px',
-                    margin: '2px 0 0',
+                    width: '26px',
+                    height: '26px',
+                    margin: '3px 0 0',
                     accentColor: 'var(--color-primary)',
                     flex: 'none',
                   }}
@@ -376,26 +382,44 @@ export const GuardianReviewPage: React.FC = () => {
                 </span>
               </label>
 
-              <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
-                <div style={{ flex: '1 1 280px', maxWidth: '420px' }}>
+              <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', marginTop: '8px' }}>
+                <div style={{ flex: '1 1 320px', maxWidth: '460px' }}>
                   <label
                     htmlFor="sig"
                     style={{
                       display: 'block',
-                      fontWeight: 600,
-                      marginBottom: '2px',
+                      fontWeight: 700,
+                      fontSize: '18px',
+                      marginBottom: '4px',
                     }}
                   >
                     Type your full name to sign
                   </label>
                   <p
                     style={{
-                      margin: '0 0 8px',
-                      fontSize: '15px',
+                      margin: '0 0 10px',
+                      fontSize: '16px',
                       color: 'var(--color-muted)',
                     }}
                   >
-                    It must match: {guardianName}
+                    Expected name: <strong>{guardianName}</strong>{' '}
+                    <button
+                      type="button"
+                      onClick={() => setSignature(guardianName)}
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        color: 'var(--color-primary)',
+                        textDecoration: 'underline',
+                        cursor: 'pointer',
+                        padding: 0,
+                        fontSize: '15px',
+                        marginLeft: '8px',
+                        fontWeight: 600,
+                      }}
+                    >
+                      (Click here to fill automatically)
+                    </button>
                   </p>
                   <input
                     id="sig"
@@ -405,25 +429,26 @@ export const GuardianReviewPage: React.FC = () => {
                     style={{
                       width: '100%',
                       boxSizing: 'border-box',
-                      height: '48px',
-                      padding: '0 14px',
+                      height: '54px',
+                      padding: '0 16px',
                       font: 'inherit',
+                      fontSize: '20px',
                       border:
                         submitted && !sigMatches
                           ? '3px solid var(--color-error)'
                           : '2px solid var(--color-muted-2)',
-                      borderRadius: '6px',
+                      borderRadius: '8px',
                     }}
                   />
                 </div>
                 <div style={{ flex: '0 1 180px' }}>
-                  <div style={{ fontWeight: 600, marginBottom: '2px' }}>
+                  <div style={{ fontWeight: 700, fontSize: '18px', marginBottom: '4px' }}>
                     Date
                   </div>
                   <p
                     style={{
-                      margin: '0 0 8px',
-                      fontSize: '15px',
+                      margin: '0 0 10px',
+                      fontSize: '16px',
                       color: 'var(--color-muted)',
                     }}
                   >
@@ -431,10 +456,12 @@ export const GuardianReviewPage: React.FC = () => {
                   </p>
                   <div
                     style={{
-                      height: '48px',
+                      height: '54px',
                       display: 'flex',
                       alignItems: 'center',
                       fontWeight: 600,
+                      fontSize: '18px',
+                      color: '#334155',
                     }}
                   >
                     15 October 2026
@@ -469,11 +496,25 @@ export const GuardianReviewPage: React.FC = () => {
                   flexWrap: 'wrap',
                 }}
               >
-                <Link to="/dev/invite-preview" className="link">
+                <Link to="/dev/invite-preview" className="link" style={{ fontSize: '17px' }}>
                   Save and exit
                 </Link>
-                <button type="submit" className="btn btn--primary">
-                  Submit application
+                <button
+                  type="submit"
+                  className="btn btn--primary"
+                  style={{
+                    minHeight: '56px',
+                    padding: '0 36px',
+                    fontSize: '20px',
+                    fontWeight: 700,
+                    borderRadius: '8px',
+                    boxShadow: '0 2px 6px rgba(11, 92, 173, 0.35)',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                  }}
+                >
+                  <span aria-hidden="true">🔒</span> Submit Jenny's Application
                 </button>
               </div>
             </div>
