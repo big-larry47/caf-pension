@@ -32,12 +32,19 @@ export const GuardianStepper: React.FC<GuardianStepperProps> = ({
       <div className="progress-stepper__inner">
         <div className="progress-stepper__top">
           <span>
-            {currentStep <= 5 ? (
+            {currentStep === 3 ? (
+              <>
+                <b style={{ color: 'var(--color-ink)' }}>
+                  Step 3 of 7
+                </b>{' '}
+                · Benefit option (Your choice for Jenny)
+              </>
+            ) : currentStep <= 5 ? (
               <>
                 <b style={{ color: 'var(--color-ink)' }}>
                   Viewing step {currentStep} of 7
                 </b>{' '}
-                · Steps 1–5 on file for the late {memberName}
+                · Casualty records for the late {memberName}
               </>
             ) : (
               <>
@@ -49,8 +56,8 @@ export const GuardianStepper: React.FC<GuardianStepperProps> = ({
             )}
           </span>
           <span>
-            {currentStep <= 5
-              ? 'Your part: steps 6 and 7'
+            {currentStep <= 5 && currentStep !== 3
+              ? 'Your tasks: steps 3, 6, and 7'
               : 'All changes saved'}
           </span>
         </div>
@@ -61,23 +68,33 @@ export const GuardianStepper: React.FC<GuardianStepperProps> = ({
           {STEP_NAMES.map((name, i) => {
             const stepNum = i + 1;
             const isCurrent = i === currentIndex;
-            const locked = i < 5;
+            const locked = i < 5 && i !== 2;
 
             let href = `/g/${token}/step/${stepNum}`;
             if (i === 5) href = `/g/${token}/deposit`;
             if (i === 6) href = `/g/${token}/review`;
 
             let tag = 'CAF Official Record';
-            if (i === 5) {
+            if (i === 2) {
+              tag = isCurrent ? 'In progress' : (state.benefitConfirmed ? 'Chosen by you' : 'Your choice');
+            } else if (i === 5) {
               tag = isCurrent ? 'In progress' : (state.guardianDeposit.submitted ? 'Done by you' : 'Your turn');
             } else if (i === 6) {
               tag = isCurrent ? 'In progress' : 'Your turn';
             }
 
-            // On G5 (viewing a step 1-5), step 6's bar is --color-accent to point to next task
+            // Step bar color indicator
             let barColor = 'var(--color-border)';
             if (locked) {
               barColor = 'var(--color-success)';
+            } else if (i === 2) {
+              if (isCurrent) {
+                barColor = 'var(--color-primary)';
+              } else if (state.benefitConfirmed) {
+                barColor = 'var(--color-success)';
+              } else {
+                barColor = 'var(--color-accent)';
+              }
             } else if (i === 5) {
               if (isViewStep) {
                 barColor = 'var(--color-accent)';

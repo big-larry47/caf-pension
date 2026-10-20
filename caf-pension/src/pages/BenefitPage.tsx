@@ -32,7 +32,8 @@ export const BenefitPage: React.FC<BenefitPageProps> = ({
     state.invite.status === 'opened' ||
     state.invite.status === 'verified';
 
-  const isLocked = readOnly || isGuardian || inviteActive;
+  // Guardian can actively choose Jenny's benefit option on Step 3!
+  const isLocked = isGuardian ? false : (readOnly || inviteActive);
   const token = state.invite.token || 'demo-token';
 
   useEffect(() => {
@@ -40,15 +41,19 @@ export const BenefitPage: React.FC<BenefitPageProps> = ({
   }, []);
 
   const handleContinue = () => {
-    markStepComplete(3, 'member');
-    navigate('/application/family');
+    markStepComplete(3, isGuardian ? 'guardian' : 'member');
+    if (isGuardian) {
+      navigate(`/g/${token}/step/4`);
+    } else {
+      navigate('/application/family');
+    }
   };
 
   const nextHref = isGuardian ? `/g/${token}/step/4` : '/application/family';
   const prevHref = isGuardian ? `/g/${token}/step/2` : '/application/service';
   const bankHref = isGuardian ? `/g/${token}/deposit` : '/application/deposit';
 
-  const benefitOptions = [
+  const memberBenefitOptions = [
     {
       id: 'deferred' as const,
       title: 'Deferred annuity',
@@ -83,12 +88,41 @@ export const BenefitPage: React.FC<BenefitPageProps> = ({
     },
   ];
 
+  const guardianBenefitOptions = [
+    {
+      id: 'deferred' as const,
+      title: 'Monthly Survivor Annuity for Jenny Villa',
+      amount: '$6,480.00 / month',
+      desc: 'A full, regular monthly income deposited directly for Jenny’s living and educational needs.',
+      note: 'Indexed annually to inflation (cost of living). Guaranteed monthly support for life.',
+      disabled: false,
+    },
+    {
+      id: 'transfer' as const,
+      title: 'Lump-Sum Capital Death Benefit',
+      amount: '$1,240,500.00 one-time payout',
+      desc: 'A single, one-time full settlement payment transferred directly to Jenny’s trust or locked-in investment account.',
+      note: 'Paid in full as a lump sum. No further monthly pension payments.',
+      disabled: false,
+    },
+    {
+      id: 'allowance' as const,
+      title: 'Annual Allowance (Reduced Monthly Income)',
+      amount: '$5,120.00 / month',
+      desc: 'A lower monthly payment starting immediately, designed to provide immediate flexible liquidity.',
+      note: 'Reduced monthly amount calculated for early emergency and transition costs.',
+      disabled: false,
+    },
+  ];
+
+  const benefitOptions = isGuardian ? guardianBenefitOptions : memberBenefitOptions;
+
   return (
     <>
       {isGuardian ? (
         <>
           <ActingForBanner />
-          <GuardianStepper currentStep={3} isViewStep />
+          <GuardianStepper currentStep={3} />
         </>
       ) : (
         <ProgressStepper currentStep={3} />
@@ -99,11 +133,15 @@ export const BenefitPage: React.FC<BenefitPageProps> = ({
         <StepLayout
           aside={
             isGuardian ? (
-              <HelpCard title="Do I need to read every step?">
-                <p>
-                  No, you can go straight to the bank details. But you'll confirm
-                  the whole application before you submit in step 7, so it helps
-                  to look now.
+              <HelpCard title="Choosing for Jenny Villa">
+                <p style={{ margin: '0 0 10px', fontSize: '15px', lineHeight: 1.5 }}>
+                  <strong>Monthly Annuity ($6,480/mo):</strong> Best for steady, predictable monthly income that automatically adjusts for inflation each year.
+                </p>
+                <p style={{ margin: '0 0 10px', fontSize: '15px', lineHeight: 1.5 }}>
+                  <strong>Lump-Sum ($1,240,500):</strong> Best if you wish to manage funds within a trust or locked-in investment portfolio.
+                </p>
+                <p style={{ margin: 0, fontSize: '14px', color: '#64748B' }}>
+                  Need advice? Call toll-free <strong>1-800-267-0325</strong> to speak directly with a pension counselor.
                 </p>
               </HelpCard>
             ) : (
@@ -133,11 +171,11 @@ export const BenefitPage: React.FC<BenefitPageProps> = ({
           {isLocked && <ReadOnlyNotice />}
 
           <h1 className="page-title">
-            {isGuardian ? `Survivor pension options for Jenny Villa` : 'Benefit option'}
+            {isGuardian ? `Choose survivor benefit for Jenny Villa` : 'Benefit option'}
           </h1>
           <p className="page-lead">
             {isGuardian
-              ? `Survivor annuity and dependent child benefits designated for Jenny Villa based on the late ${mockData.personal.fullName}'s service.`
+              ? `As legal guardian, please choose how the late ${mockData.personal.fullName}'s pension benefits should be paid to Jenny Villa (age 20).`
               : `Survivor benefit entitlement on file for the late ${mockData.personal.fullName}.`}
           </p>
 
@@ -289,14 +327,22 @@ export const BenefitPage: React.FC<BenefitPageProps> = ({
             </>
           ) : (
             <>
-              <Callout variant="warning" style={{ marginBottom: '24px' }}>
-                <b>This choice is final once payments start.</b> Choose by{' '}
-                <b>{mockData.deadline}</b>. Not sure?{' '}
-                <a href="#" onClick={(e) => e.preventDefault()}>
-                  Book a call with a pension officer
-                </a>
-                .
-              </Callout>
+              {isGuardian ? (
+                <Callout variant="info" style={{ marginBottom: '24px' }}>
+                  <div style={{ fontSize: '17px', lineHeight: 1.5 }}>
+                    <strong>You are choosing Jenny Villa's survivor pension benefit.</strong> As her legal guardian, select whether Jenny receives regular monthly payments or a single lump-sum payout. Take your time, or call <strong>1-800-267-0325</strong> if you'd like guidance from a pension counselor.
+                  </div>
+                </Callout>
+              ) : (
+                <Callout variant="warning" style={{ marginBottom: '24px' }}>
+                  <b>This choice is final once payments start.</b> Choose by{' '}
+                  <b>{mockData.deadline}</b>. Not sure?{' '}
+                  <a href="#" onClick={(e) => e.preventDefault()}>
+                    Book a call with a pension officer
+                  </a>
+                  .
+                </Callout>
+              )}
 
               <fieldset
                 style={{
@@ -308,7 +354,9 @@ export const BenefitPage: React.FC<BenefitPageProps> = ({
                   gap: '12px',
                 }}
               >
-                <legend className="legend-title">Your options</legend>
+                <legend className="legend-title">
+                  {isGuardian ? 'Survivor Benefit Options' : 'Your options'}
+                </legend>
                 {benefitOptions.map((opt) => (
                   <RadioCard
                     key={opt.id}
@@ -325,42 +373,127 @@ export const BenefitPage: React.FC<BenefitPageProps> = ({
                 ))}
               </fieldset>
 
-              <label
-                style={{
-                  display: 'flex',
-                  gap: '12px',
-                  alignItems: 'flex-start',
-                  marginTop: '24px',
-                  padding: '16px 20px',
-                  background: '#FFFFFF',
-                  border: '1px solid var(--color-border)',
-                  borderRadius: 'var(--radius-card)',
-                }}
-              >
-                <input
-                  type="checkbox"
-                  checked={state.benefitConfirmed}
-                  onChange={(e) =>
-                    updateState({ benefitConfirmed: e.target.checked })
-                  }
+              {isGuardian ? (
+                <label
                   style={{
-                    width: '22px',
-                    height: '22px',
-                    margin: '2px 0 0',
-                    accentColor: 'var(--color-primary)',
-                    flex: 'none',
+                    display: 'flex',
+                    gap: '14px',
+                    alignItems: 'flex-start',
+                    marginTop: '24px',
+                    padding: '18px 20px',
+                    background: '#FFFFFF',
+                    border: state.benefitConfirmed ? '2px solid var(--color-success)' : '1px solid var(--color-border)',
+                    borderRadius: 'var(--radius-card)',
+                    cursor: 'pointer',
                   }}
-                />
-                <span>
-                  I understand that I can't change my benefit option after my
-                  first payment, or after my transfer value is paid.
-                </span>
-              </label>
+                >
+                  <input
+                    type="checkbox"
+                    id="guardian-benefit-confirm"
+                    checked={state.benefitConfirmed}
+                    onChange={(e) =>
+                      updateState({ benefitConfirmed: e.target.checked })
+                    }
+                    style={{
+                      width: '24px',
+                      height: '24px',
+                      margin: '2px 0 0',
+                      accentColor: 'var(--color-primary)',
+                      flex: 'none',
+                    }}
+                  />
+                  <span style={{ fontSize: '17px', lineHeight: 1.5, color: '#1E293B' }}>
+                    <strong>I confirm this survivor benefit option for Jenny Villa.</strong> I understand this choice establishes the payment structure for her CAF survivor benefit once approved.
+                  </span>
+                </label>
+              ) : (
+                <label
+                  style={{
+                    display: 'flex',
+                    gap: '12px',
+                    alignItems: 'flex-start',
+                    marginTop: '24px',
+                    padding: '16px 20px',
+                    background: '#FFFFFF',
+                    border: '1px solid var(--color-border)',
+                    borderRadius: 'var(--radius-card)',
+                  }}
+                >
+                  <input
+                    type="checkbox"
+                    checked={state.benefitConfirmed}
+                    onChange={(e) =>
+                      updateState({ benefitConfirmed: e.target.checked })
+                    }
+                    style={{
+                      width: '22px',
+                      height: '22px',
+                      margin: '2px 0 0',
+                      accentColor: 'var(--color-primary)',
+                      flex: 'none',
+                    }}
+                  />
+                  <span>
+                    I understand that I can't change my benefit option after my
+                    first payment, or after my transfer value is paid.
+                  </span>
+                </label>
+              )}
 
-              <StepFooter
-                backTo="/application/service"
-                onContinue={handleContinue}
-              />
+              {isGuardian ? (
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    gap: '16px',
+                    flexWrap: 'wrap',
+                    marginTop: '36px',
+                    paddingTop: '24px',
+                    borderTop: '1px solid var(--color-border)',
+                  }}
+                >
+                  <Link to={prevHref} className="btn btn--secondary" style={{ fontSize: '16px' }}>
+                    ← Back to Step 2
+                  </Link>
+                  <div
+                    style={{
+                      display: 'flex',
+                      gap: '16px',
+                      alignItems: 'center',
+                      flexWrap: 'wrap',
+                    }}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => {
+                        markStepComplete(3, 'guardian');
+                        navigate(nextHref);
+                      }}
+                      className="btn btn--secondary"
+                      style={{ fontSize: '16px' }}
+                    >
+                      Save & Continue to Step 4 →
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        markStepComplete(3, 'guardian');
+                        navigate(bankHref);
+                      }}
+                      className="btn btn--primary"
+                      style={{ fontSize: '18px', padding: '12px 24px', fontWeight: 700 }}
+                    >
+                      Save Choice & Go to Bank Details (Step 6) ➔
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <StepFooter
+                  backTo="/application/service"
+                  onContinue={handleContinue}
+                />
+              )}
             </>
           )}
 

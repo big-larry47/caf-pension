@@ -27,7 +27,7 @@ export const GuardianStepViewPage: React.FC = () => {
     case 2:
       return <ServicePage readOnly isGuardian />;
     case 3:
-      return <BenefitPage readOnly isGuardian />;
+      return <BenefitPage readOnly={false} isGuardian />;
     case 4:
       return <FamilyPage readOnly isGuardian />;
     case 5:

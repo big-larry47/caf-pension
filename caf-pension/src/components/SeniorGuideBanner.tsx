@@ -53,7 +53,9 @@ export const SeniorGuideBanner: React.FC<SeniorGuideBannerProps> = ({
               lineHeight: 1.3,
             }}
           >
-            Welcome! You only have 2 quick steps to complete for Jenny
+            {currentStep === 3
+              ? 'Step 3: Choose Jenny’s survivor benefit option'
+              : 'Welcome! Here are your tasks for Jenny Villa'}
           </h2>
 
           <p
@@ -64,7 +66,9 @@ export const SeniorGuideBanner: React.FC<SeniorGuideBannerProps> = ({
               color: '#1E293B',
             }}
           >
-            The military service details below (steps 1 to 5) are <strong>already approved and completed</strong> from official records. You do not need to fill them out.
+            {currentStep === 3
+              ? 'As legal guardian, select whether Jenny receives guaranteed monthly payments or a single lump sum. Official casualty records for Steps 1, 2, 4, and 5 are already locked in.'
+              : 'The military service records (steps 1, 2, 4, and 5) are already approved from official casualty files.'}
           </p>
 
           <div
@@ -77,36 +81,65 @@ export const SeniorGuideBanner: React.FC<SeniorGuideBannerProps> = ({
             }}
           >
             <div style={{ fontWeight: 600, fontSize: '17px', color: '#0F172A', marginBottom: '6px' }}>
-              Your two tasks:
+              Your tasks as legal guardian:
             </div>
             <ul style={{ margin: 0, paddingLeft: '22px', fontSize: '16px', color: '#334155', lineHeight: 1.6 }}>
-              <li><strong>Step 6:</strong> Enter the bank account where Jenny's monthly money should be deposited</li>
-              <li><strong>Step 7:</strong> Type your name to sign and finish</li>
+              <li>
+                <strong>Step 3 {currentStep === 3 ? '(Current)' : ''}:</strong> Choose Jenny's survivor benefit (Monthly annuity or lump-sum)
+              </li>
+              <li>
+                <strong>Step 6:</strong> Enter the bank wire account where payments should be deposited
+              </li>
+              <li>
+                <strong>Step 7:</strong> Type your name to sign and finish
+              </li>
             </ul>
           </div>
 
           <div style={{ display: 'flex', gap: '14px', alignItems: 'center', flexWrap: 'wrap' }}>
+            {currentStep !== 3 && (
+              <Link
+                to={`/g/${token}/step/3`}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  background: '#0B5CAD',
+                  color: '#FFFFFF',
+                  padding: '12px 22px',
+                  fontSize: '17px',
+                  fontWeight: 700,
+                  borderRadius: '8px',
+                  textDecoration: 'none',
+                  boxShadow: '0 2px 4px rgba(11, 92, 173, 0.3)',
+                }}
+              >
+                Go to Step 3: Benefit Choice ➔
+              </Link>
+            )}
+
             <Link
               to={`/g/${token}/deposit`}
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '8px',
-                background: '#0B5CAD',
-                color: '#FFFFFF',
-                padding: '14px 24px',
-                fontSize: '18px',
+                background: currentStep === 3 ? '#0B5CAD' : '#F1F5F9',
+                color: currentStep === 3 ? '#FFFFFF' : '#0B5CAD',
+                padding: '12px 22px',
+                fontSize: '17px',
                 fontWeight: 700,
                 borderRadius: '8px',
                 textDecoration: 'none',
-                boxShadow: '0 2px 4px rgba(11, 92, 173, 0.3)',
+                border: currentStep === 3 ? 'none' : '1px solid #CBD5E1',
+                boxShadow: currentStep === 3 ? '0 2px 4px rgba(11, 92, 173, 0.3)' : 'none',
               }}
             >
-              Skip straight to Bank Details (Step 6) ➔
+              {currentStep === 3 ? 'Skip to Bank Details (Step 6) ➔' : 'Go to Bank Details (Step 6) ➔'}
             </Link>
 
             <span style={{ fontSize: '15px', color: '#64748B' }}>
-              (Or review the record below at your own pace)
+              (Or review the records below at your own pace)
             </span>
           </div>
 

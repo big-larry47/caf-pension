@@ -108,11 +108,27 @@ export const GuardianReviewPage: React.FC = () => {
       n: 3,
       name: 'Benefit option',
       href: `/g/${token}/step/3`,
-      action: 'View',
-      mine: false,
+      action: 'Change',
+      mine: true,
       rows: [
-        { k: 'Option', v: 'Survivor & Child Dependent Annuity' },
-        { k: 'Estimate for Jenny', v: mockData.benefitAmounts.deferredAnnuity },
+        {
+          k: 'Option chosen',
+          v:
+            state.benefitOption === 'transfer'
+              ? 'Lump-Sum Capital Death Benefit'
+              : state.benefitOption === 'allowance'
+              ? 'Annual Allowance (Reduced Monthly Income)'
+              : 'Monthly Survivor Annuity for Jenny Villa',
+        },
+        {
+          k: 'Benefit amount',
+          v:
+            state.benefitOption === 'transfer'
+              ? '$1,240,500.00 one-time payout'
+              : state.benefitOption === 'allowance'
+              ? '$5,120.00 / month'
+              : '$6,480.00 / month (indexed to inflation)',
+        },
       ],
     },
     {
@@ -165,6 +181,20 @@ export const GuardianReviewPage: React.FC = () => {
     },
   ];
 
+  const chosenBenefitTitle =
+    state.benefitOption === 'transfer'
+      ? 'Lump-Sum Capital Death Benefit'
+      : state.benefitOption === 'allowance'
+      ? 'Annual Allowance (Reduced Monthly Income)'
+      : 'Monthly Survivor Annuity for Jenny Villa';
+
+  const chosenBenefitAmount =
+    state.benefitOption === 'transfer'
+      ? '$1,240,500.00 one-time payout'
+      : state.benefitOption === 'allowance'
+      ? '$5,120.00 / month'
+      : '$6,480.00 / month (indexed to inflation)';
+
   return (
     <>
       <ActingForBanner />
@@ -194,10 +224,77 @@ export const GuardianReviewPage: React.FC = () => {
 
           <h1 className="page-title">Check the application, then submit</h1>
           <p className="page-lead">
-            This is everything we'll send to the Pension Centre for {memberName}.
+            Review your choices for Jenny and the official records before signing.
           </p>
 
-          {/* Guardian's Direct Deposit Card - Highlighted first */}
+          {/* Guardian's Benefit Choice (Step 3) - Spotlighted */}
+          <div style={{ marginBottom: '20px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+              <span style={{ fontSize: '15px', fontWeight: 700, color: 'var(--color-primary)' }}>
+                Your Choice (Step 3)
+              </span>
+              <Link to={`/g/${token}/step/3`} style={{ fontSize: '15px', fontWeight: 600 }}>
+                Edit benefit choice
+              </Link>
+            </div>
+            <section
+              style={{
+                background: '#FFFFFF',
+                borderRadius: '10px',
+                border: '2px solid var(--color-primary)',
+                boxShadow: '0 2px 6px rgba(11, 92, 173, 0.1)',
+                overflow: 'hidden',
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  padding: '16px 20px',
+                  background: '#F0F7FF',
+                  borderBottom: '1px solid #D0E4FA',
+                }}
+              >
+                <div>
+                  <h2 style={{ margin: 0, fontSize: '19px', color: '#0B335E' }}>
+                    Jenny’s Survivor Benefit Plan
+                  </h2>
+                  <span style={{ fontSize: '14px', color: '#475569' }}>
+                    Payout option selected by you as legal guardian
+                  </span>
+                </div>
+                <span
+                  style={{
+                    fontSize: '13px',
+                    fontWeight: 700,
+                    padding: '4px 10px',
+                    borderRadius: '999px',
+                    background: '#E9F5EE',
+                    color: '#1F6F4A',
+                  }}
+                >
+                  ✓ Chosen
+                </span>
+              </div>
+              <dl style={{ margin: 0, padding: '12px 20px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', fontSize: '16px' }}>
+                  <dt style={{ color: 'var(--color-muted)' }}>Selected option</dt>
+                  <dd style={{ margin: 0, fontWeight: 700 }}>
+                    {chosenBenefitTitle}
+                  </dd>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', fontSize: '16px' }}>
+                  <dt style={{ color: 'var(--color-muted)' }}>Payment amount</dt>
+                  <dd style={{ margin: 0, fontWeight: 700, color: '#0B5CAD' }}>
+                    {chosenBenefitAmount}
+                  </dd>
+                </div>
+              </dl>
+            </section>
+          </div>
+
+          {/* Guardian's Direct Deposit Card (Step 6) - Highlighted */}
           <div style={{ marginBottom: '20px' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
               <span style={{ fontSize: '15px', fontWeight: 700, color: 'var(--color-primary)' }}>
@@ -228,7 +325,7 @@ export const GuardianReviewPage: React.FC = () => {
               >
                 <div>
                   <h2 style={{ margin: 0, fontSize: '19px', color: '#0B335E' }}>
-                    Direct Deposit Account
+                    Direct Deposit Wire Account
                   </h2>
                   <span style={{ fontSize: '14px', color: '#475569' }}>
                     Where Jenny’s pension will be wired
@@ -268,7 +365,7 @@ export const GuardianReviewPage: React.FC = () => {
             </section>
           </div>
 
-          {/* Progressive disclosure for official records (Steps 1 to 5) */}
+          {/* Progressive disclosure for official records (Steps 1, 2, 4, 5) */}
           <details
             style={{
               background: '#FFFFFF',
@@ -291,7 +388,7 @@ export const GuardianReviewPage: React.FC = () => {
               }}
             >
               <span>
-                📋 Review Official Military Records (Steps 1–5)
+                📋 Review Official Casualty Records (Steps 1, 2, 4, 5)
               </span>
               <span style={{ fontSize: '14px', color: '#0B5CAD', fontWeight: 600 }}>
                 Tap to expand
