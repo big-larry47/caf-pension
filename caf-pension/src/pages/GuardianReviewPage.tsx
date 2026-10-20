@@ -104,8 +104,8 @@ export const GuardianReviewPage: React.FC = () => {
       action: 'View',
       mine: false,
       rows: [
-        { k: 'Deceased member', v: 'The late General Felix Villa' },
-        { k: 'Surviving beneficiary', v: 'Jenny Villa (Daughter, 20)' },
+        { k: 'Deceased member', v: 'The late General Kelvin Miller' },
+        { k: 'Surviving beneficiary', v: 'Jenny Miller (Daughter, 20)' },
       ],
     },
     {
@@ -115,8 +115,8 @@ export const GuardianReviewPage: React.FC = () => {
       action: 'View',
       mine: false,
       rows: [
-        { k: 'Date of death in service', v: '15 October 2026 (Syria)' },
-        { k: 'Service & age', v: '34 years · Passed away at age 68' },
+        { k: 'Date of death in service', v: '18 April 2025 (Damascus, Syria)' },
+        { k: 'Service & age', v: '34 years · Passed away at age 65 (Reg #554321)' },
       ],
     },
     {
@@ -133,7 +133,7 @@ export const GuardianReviewPage: React.FC = () => {
               ? 'Lump-Sum Capital Death Benefit'
               : state.benefitOption === 'allowance'
               ? 'Annual Allowance (Reduced Monthly Income)'
-              : 'Monthly Survivor Annuity for Jenny Villa',
+              : 'Monthly Survivor Annuity for Jenny Miller',
         },
         {
           k: 'Benefit amount',
@@ -154,7 +154,7 @@ export const GuardianReviewPage: React.FC = () => {
       mine: false,
       rows: [
         { k: 'Marital status', v: 'Widowed (Spouse deceased)' },
-        { k: 'Designated beneficiary', v: 'Jenny Villa (Daughter, age 20)' },
+        { k: 'Designated beneficiary', v: 'Jenny Miller (Daughter, age 20)' },
       ],
     },
     {
@@ -201,7 +201,7 @@ export const GuardianReviewPage: React.FC = () => {
       ? 'Lump-Sum Capital Death Benefit'
       : state.benefitOption === 'allowance'
       ? 'Annual Allowance (Reduced Monthly Income)'
-      : 'Monthly Survivor Annuity for Jenny Villa';
+      : 'Monthly Survivor Annuity for Jenny Miller';
 
   const chosenBenefitAmount =
     state.benefitOption === 'transfer'
@@ -456,7 +456,7 @@ export const GuardianReviewPage: React.FC = () => {
               </h2>
               <p style={{ margin: '0 0 4px', fontSize: '16px' }}>
                 <b style={{ color: 'var(--color-success)' }}>Status:</b>{' '}
-                Authorized representative for Jenny Villa
+                Authorized representative for Jenny Miller
               </p>
               <p style={{ margin: 0, fontSize: '15px', color: 'var(--color-muted)' }}>
                 {state.guardianProfile.authorityFile?.name
@@ -519,7 +519,7 @@ export const GuardianReviewPage: React.FC = () => {
                 <span>
                   I have reviewed this application. To the best of my knowledge,
                   the information on file for the late {memberName} and provided for
-                  beneficiary Jenny Villa is true and complete.
+                  beneficiary Jenny Miller is true and complete.
                 </span>
               </label>
 
@@ -547,7 +547,7 @@ export const GuardianReviewPage: React.FC = () => {
                   }}
                 />
                 <span>
-                  I am submitting this application on behalf of Jenny Villa
+                  I am submitting this application on behalf of Jenny Miller
                   (daughter of the late {memberName}).
                 </span>
               </label>

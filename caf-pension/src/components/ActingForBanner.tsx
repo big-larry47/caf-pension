@@ -33,7 +33,7 @@ export const ActingForBanner: React.FC<ActingForBannerProps> = ({ dateText }) =>
           fontSize: '15px',
         }}
       >
-        You are acting for <b>Jenny Villa</b> (daughter & beneficiary of the late <b>General Felix Villa</b>)
+        You are acting for <b>{mockData.beneficiary.fullName}</b> (daughter & beneficiary of the late <b>{memberName}</b>)
         {dateText ? ` · ${dateText}` : ` as their ${roleTitle}`}
       </div>
     </div>

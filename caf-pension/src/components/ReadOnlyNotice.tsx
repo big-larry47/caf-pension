@@ -40,7 +40,7 @@ export const ReadOnlyNotice: React.FC<ReadOnlyNoticeProps> = ({
         <path d="M8 11V7a4 4 0 0 1 8 0v4" />
       </svg>
       <span>
-        <b>View only.</b> Official CAF service & estate record for the late {memberName} (survivor benefits designated for Jenny Villa). You can check it, but not change it.
+        <b>View only.</b> Official CAF service & estate record for the late {memberName} (survivor benefits designated for {mockData.beneficiary.fullName}). You can check it, but not change it.
       </span>
     </div>
   );

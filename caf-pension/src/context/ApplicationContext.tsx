@@ -162,7 +162,7 @@ const defaultState: ApplicationState = {
   marriageDate: '',
   hasDependentChildren: 'yes',
   keepSdb: 'yes',
-  beneficiaryName: 'Jenny Villa',
+  beneficiaryName: 'Jenny Miller',
   beneficiaryRelationship: 'Daughter (Age 20)',
 
   // Step 5: Deductions
@@ -171,7 +171,7 @@ const defaultState: ApplicationState = {
   extraTaxMonthly: '150.00',
   joinPshcp: true,
   joinPdsp: true,
-
+  
   // Step 6: Deposit Choice
   depositChoice: 'guardian',
 
@@ -191,21 +191,21 @@ const defaultState: ApplicationState = {
   invite: {
     token: 'demo-token',
     status: 'none',
-    sentAt: '15 October 2026',
-    expiresAt: '29 October 2026',
+    sentAt: '18 April 2025',
+    expiresAt: '18 May 2025',
     guardian: {
-      fullName: 'Sarah Villa',
+      fullName: 'Sarah Miller',
       role: 'guardian',
-      email: 'sarah.villa@example.com',
+      email: 'sarah.miller@example.com',
       mobile: '6135551234',
       message:
-        'Receiving survivor pension benefits on behalf of Jenny Villa (age 20), surviving daughter of the late General Felix Villa who passed away at 68 while deployed in Syria.',
+        'Receiving survivor pension benefits on behalf of Jenny Miller (age 20), surviving daughter of the late General Kelvin Miller who was killed in action in Damascus, Syria.',
     },
     memberConsent: true,
   },
 
   guardianProfile: {
-    fullName: 'Sarah Villa',
+    fullName: 'Sarah Miller',
     dateOfBirth: '1988-04-12',
     address: {
       street: '120 Queen Street, Apt 4B',

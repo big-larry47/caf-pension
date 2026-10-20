@@ -122,7 +122,7 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
             isGuardian ? (
               <HelpCard title="Official casualty file">
                 <p style={{ margin: '0 0 10px', fontSize: '15px', lineHeight: 1.5 }}>
-                  This casualty file was compiled by the Department of National Defence following General Felix Villa's active operational service in Syria.
+                  This casualty file was compiled by the Department of National Defence following General Kelvin Miller's active operational service in Damascus, Syria.
                 </p>
                 <p style={{ margin: 0, fontSize: '14px', color: '#64748B' }}>
                   If you spot an error in the spelling of Jenny's name or contact address, notify a pension counselor below.
@@ -217,8 +217,8 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
                       {/* Portrait Photo */}
                       <div style={{ position: 'relative', width: '100%', marginBottom: '14px' }}>
                         <img
-                          src="/general_felix_villa.jpg"
-                          alt="Official military identification photograph of General Felix Villa"
+                          src="/general_kelvin_miller.jpg"
+                          alt="Official military identification photograph of General Kelvin Miller"
                           style={{
                             width: '100%',
                             aspectRatio: '4 / 5',
@@ -343,7 +343,7 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
                             fontFamily: "'Public Sans', -apple-system, BlinkMacSystemFont, sans-serif",
                           }}
                         >
-                          Felix Villa
+                          Kelvin Miller
                         </h1>
                       </div>
 
@@ -351,7 +351,11 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
                       <div style={{ marginBottom: '10px' }}>
                         <div className="military-dossier-kv">
                           <span className="military-dossier-key">Service ID</span>
-                          <span className="military-dossier-val" style={{ fontFamily: "'IBM Plex Mono', monospace" }}>{mockData.serviceNumber}</span>
+                          <span className="military-dossier-val" style={{ fontFamily: "'IBM Plex Mono', monospace" }}>M554321</span>
+                        </div>
+                        <div className="military-dossier-kv">
+                          <span className="military-dossier-key">Reg Number</span>
+                          <span className="military-dossier-val" style={{ fontFamily: "'IBM Plex Mono', monospace" }}>554321</span>
                         </div>
                         <div className="military-dossier-kv">
                           <span className="military-dossier-key">Rank</span>
@@ -362,19 +366,15 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
                           <span className="military-dossier-val">Canadian Army</span>
                         </div>
                         <div className="military-dossier-kv">
-                          <span className="military-dossier-key">Unit</span>
-                          <span className="military-dossier-val">Joint Task Force (Syria)</span>
-                        </div>
-                        <div className="military-dossier-kv">
                           <span className="military-dossier-key">Status</span>
-                          <span className="military-dossier-val" style={{ color: '#B91C1C' }}>Casualty (Active Duty)</span>
+                          <span className="military-dossier-val" style={{ color: '#B91C1C' }}>Killed in action</span>
                         </div>
                       </div>
 
                       {/* Divider */}
                       <hr style={{ border: 'none', borderTop: '1px solid #E2E8F0', margin: '10px 0 12px' }} />
 
-                      {/* Section 2: Service Information */}
+                      {/* Section 2: Service & Casualty Information from Certificate */}
                       <div style={{ marginBottom: '10px' }}>
                         <div
                           style={{
@@ -386,28 +386,30 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
                             marginBottom: '6px',
                           }}
                         >
-                          Service Information
+                          Casualty & Record Details
                         </div>
 
                         <div className="military-dossier-kv">
-                          <span className="military-dossier-key">Enlistment</span>
-                          <span className="military-dossier-val">June 1992</span>
+                          <span className="military-dossier-key">Date of Birth</span>
+                          <span className="military-dossier-val">1959-10-07 (Chicoutimi, QC)</span>
                         </div>
                         <div className="military-dossier-kv">
-                          <span className="military-dossier-key">Years of Service</span>
+                          <span className="military-dossier-key">Date of Death</span>
+                          <span className="military-dossier-val">2025-04-18 (Damascus, Syria)</span>
+                        </div>
+                        <div className="military-dossier-kv">
+                          <span className="military-dossier-key">Cause of Death</span>
+                          <span className="military-dossier-val" style={{ color: '#B91C1C' }}>Killed in action</span>
+                        </div>
+                        <div className="military-dossier-kv">
+                          <span className="military-dossier-key">Date of Issue</span>
+                          <span className="military-dossier-val">2025-04-20</span>
+                        </div>
+                        <div className="military-dossier-kv">
+                          <span className="military-dossier-key">Total Service</span>
                           <span className="military-dossier-val">34 Years 182 Days</span>
                         </div>
-                        <div className="military-dossier-kv">
-                          <span className="military-dossier-key">Current Posting</span>
-                          <span className="military-dossier-val">Syria (Op IMPACT)</span>
-                        </div>
-                        <div className="military-dossier-kv">
-                          <span className="military-dossier-key">Clearance Level</span>
-                          <span className="military-dossier-val">Top Secret / DND Sealed</span>
-                        </div>
                       </div>
-
-
                     </div>
                   </div>
                 </div>
@@ -446,15 +448,15 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
                       Designated Sole Survivor Beneficiary
                     </span>
                     <h2 style={{ margin: 0, fontSize: '22px', fontWeight: 800, color: '#78350F' }}>
-                      Jenny Villa (Daughter, Age 20)
+                      Jenny Miller (Daughter, Age 20)
                     </h2>
                   </div>
                 </div>
                 <p style={{ margin: '0 0 10px', fontSize: '16px', color: '#92400E', lineHeight: 1.5 }}>
-                  Spouse predeceased (General Felix Villa was widowed). Under the <strong>Canadian Forces Superannuation Act (CFSA)</strong>, Jenny Villa is the sole designated dependent child beneficiary entitled to all survivor pension annuities and capital death benefits.
+                  Spouse predeceased (General Kelvin Miller was widowed). Under the <strong>Canadian Forces Superannuation Act (CFSA)</strong>, Jenny Miller is the sole designated dependent child beneficiary entitled to all survivor pension annuities and capital death benefits.
                 </p>
                 <div style={{ fontSize: '14px', fontWeight: 600, color: '#B45309', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <span>✓</span> Authority verified: Sarah Villa acts as legal guardian/representative for disbursement.
+                  <span>✓</span> Authority verified: Sarah Miller acts as legal guardian/representative for disbursement.
                 </div>
               </div>
 
@@ -486,32 +488,56 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
                     </span>
                   </div>
                   <span style={{ fontSize: '12px', background: '#E2E8F0', color: '#334155', padding: '4px 10px', borderRadius: '4px', fontWeight: 700 }}>
-                    Official CAF File
+                    Official Certificate File #554321
                   </span>
                 </div>
 
                 <div style={{ padding: '20px 22px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: '20px' }}>
                   <div style={{ background: '#F8FAFC', padding: '14px 16px', borderRadius: '8px', border: '1px solid #E2E8F0' }}>
                     <div style={{ fontSize: '12px', color: '#64748B', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-                      Military Service Number
+                      Registration & Service No.
                     </div>
                     <div style={{ fontSize: '20px', fontWeight: 800, color: '#0B335E', fontFamily: "'IBM Plex Mono', monospace", marginTop: '4px' }}>
-                      {mockData.serviceNumber}
+                      554321
                     </div>
                     <div style={{ fontSize: '13px', color: '#64748B', marginTop: '2px' }}>
-                      Regular Force · Commissioned
+                      Service ID: M554321 · Regular Force
                     </div>
                   </div>
 
                   <div style={{ background: '#F8FAFC', padding: '14px 16px', borderRadius: '8px', border: '1px solid #E2E8F0' }}>
                     <div style={{ fontSize: '12px', color: '#64748B', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-                      Date of Birth
+                      Date & Place of Birth
                     </div>
                     <div style={{ fontSize: '18px', fontWeight: 800, color: '#0F172A', marginTop: '4px' }}>
-                      {mockData.personal.dateOfBirth}
+                      1959-10-07
                     </div>
                     <div style={{ fontSize: '13px', color: '#64748B', marginTop: '2px' }}>
-                      Age 68 at time of casualty
+                      Chicoutimi, Quebec · Age 65
+                    </div>
+                  </div>
+
+                  <div style={{ background: '#F8FAFC', padding: '14px 16px', borderRadius: '8px', border: '1px solid #E2E8F0' }}>
+                    <div style={{ fontSize: '12px', color: '#64748B', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                      Date, Place & Cause of Death
+                    </div>
+                    <div style={{ fontSize: '18px', fontWeight: 800, color: '#B91C1C', marginTop: '4px' }}>
+                      2025-04-18
+                    </div>
+                    <div style={{ fontSize: '13px', color: '#64748B', marginTop: '2px' }}>
+                      Damascus, Syria · Killed in action
+                    </div>
+                  </div>
+
+                  <div style={{ background: '#F8FAFC', padding: '14px 16px', borderRadius: '8px', border: '1px solid #E2E8F0' }}>
+                    <div style={{ fontSize: '12px', color: '#64748B', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                      Certificate Issue & Origin
+                    </div>
+                    <div style={{ fontSize: '18px', fontWeight: 800, color: '#0F172A', marginTop: '4px' }}>
+                      2025-04-20
+                    </div>
+                    <div style={{ fontSize: '13px', color: '#64748B', marginTop: '2px' }}>
+                      Canadian · Christian (Father: Kelvin)
                     </div>
                   </div>
 
@@ -520,7 +546,7 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
                       Social Insurance Number (Masked)
                     </div>
                     <div style={{ fontSize: '18px', fontWeight: 800, color: '#0F172A', fontFamily: "'IBM Plex Mono', monospace", marginTop: '4px' }}>
-                      {mockData.personal.maskedSin}
+                      ••• ••• 321
                     </div>
                     <div style={{ fontSize: '13px', color: '#64748B', marginTop: '2px' }}>
                       Validated with CRA
@@ -579,8 +605,8 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
                       Mailing Address for Pension Correspondence
                     </div>
                     <div style={{ background: '#F8FAFC', padding: '16px 18px', borderRadius: '8px', border: '1px solid #E2E8F0', fontSize: '16px', lineHeight: 1.6 }}>
-                      <div style={{ fontWeight: 700, color: '#0F172A' }}>Estate of General Felix Villa</div>
-                      <div style={{ color: '#0B5CAD', fontWeight: 700 }}>c/o Sarah Villa (Legal Guardian for Jenny Villa)</div>
+                      <div style={{ fontWeight: 700, color: '#0F172A' }}>Estate of General Kelvin Miller</div>
+                      <div style={{ color: '#0B5CAD', fontWeight: 700 }}>c/o Sarah Miller (Legal Guardian for Jenny Miller)</div>
                       <div style={{ color: '#334155' }}>450 Sussex Drive</div>
                       <div style={{ color: '#334155' }}>Ottawa, Ontario K1N 1J9</div>
                     </div>
