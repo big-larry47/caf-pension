@@ -674,13 +674,13 @@ export const GuardianPaperFormPage: React.FC = () => {
             >
               SECTION 6 — WHERE TO SEND YOUR COMPLETED PAPER FORM
             </div>
-            <div className="p-grid p-grid--2col" style={{ padding: '10px 14px' }}>
+            <div style={{ padding: '10px 14px', display: 'grid', gridTemplateColumns: '1.05fr 1fr', gap: '28px', alignItems: 'start' }}>
               <div>
                 <p
                   className="edit-target"
                   contentEditable={isEditMode}
                   suppressContentEditableWarning
-                  style={{ margin: '0 0 4px', fontWeight: 700, fontSize: '12px' }}
+                  style={{ margin: '0 0 6px', fontWeight: 700, fontSize: '11.5px', color: '#0F172A' }}
                 >
                   BY MAIL (Send Pages 1 &amp; 2 + Copy of Photo ID):
                 </p>
@@ -688,14 +688,15 @@ export const GuardianPaperFormPage: React.FC = () => {
                   className="p-mail-address edit-target"
                   contentEditable={isEditMode}
                   suppressContentEditableWarning
+                  style={{ maxWidth: '270px', width: 'fit-content' }}
                 >
-                  <strong>Government of Canada Pension Centre – Mail Facility</strong><br />
-                  PO Box 9500<br />
+                  <strong>Government of Canada Pension Centre</strong><br />
+                  Mail Facility – PO Box 9500<br />
                   Matane QC G4W 0H3<br />
                   CANADA
                 </div>
               </div>
-              <div style={{ fontSize: '12px', lineHeight: 1.45 }}>
+              <div style={{ fontSize: '11.5px', lineHeight: 1.45 }}>
                 <p
                   className="edit-target"
                   contentEditable={isEditMode}

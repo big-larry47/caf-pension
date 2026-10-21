@@ -1162,10 +1162,14 @@ a:hover { color: var(--color-primary-hover); }
   background: #F1F5F9;
   border: 1px solid #CBD5E1;
   padding: 8px 12px;
-  font-size: 12px;
-  line-height: 1.5;
+  font-size: 11px;
+  line-height: 1.45;
   color: #0F172A;
-  font-family: 'IBM Plex Mono', monospace, sans-serif;
+  font-family: inherit;
+  max-width: 280px;
+  width: fit-content;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
 .p-footer {
