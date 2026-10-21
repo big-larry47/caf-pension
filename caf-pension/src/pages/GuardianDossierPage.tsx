@@ -8,7 +8,7 @@ export const GuardianDossierPage: React.FC = () => {
   const { token } = useParams<{ token: string }>();
   const { state } = useApplication();
   const guardianName = state.guardianProfile.fullName || 'Margaretha Byers';
-  const downloadLink = `/g/${token || 'demo-token'}/form-package`;
+  const benefitLink = `/g/${token || 'demo-token'}/benefit-option`;
 
   useEffect(() => {
     document.title = 'Military Casualty Dossier - CAF Pension Centre';
@@ -87,12 +87,12 @@ export const GuardianDossierPage: React.FC = () => {
           }}
         >
           <div style={{ fontSize: '14px', color: '#1E293B', fontWeight: 600 }}>
-            <span>📄 Step 1 of 2: Review General's Dossier</span>
-            <span style={{ color: '#64748B', fontWeight: 400 }}> &rarr; Next: Download Form CF-FC 2489</span>
+            <span>📄 Step 1 of 3: Review General's Dossier</span>
+            <span style={{ color: '#64748B', fontWeight: 400 }}> &rarr; Next: Step 2 Benefit Option</span>
           </div>
 
           <Link
-            to={downloadLink}
+            to={benefitLink}
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -107,7 +107,7 @@ export const GuardianDossierPage: React.FC = () => {
               boxShadow: '0 2px 4px rgba(11, 56, 102, 0.2)',
             }}
           >
-            <span>Proceed to Download Form</span>
+            <span>Proceed to Benefit Option</span>
             <span>&rarr;</span>
           </Link>
         </div>
@@ -575,10 +575,10 @@ export const GuardianDossierPage: React.FC = () => {
           </div>
         </div>
 
-        {/* ── Primary Action Button to Proceed to Download Page ── */}
+        {/* ── Primary Action Button to Proceed to Benefit Option Step ── */}
         <div style={{ textAlign: 'center' }}>
           <Link
-            to={downloadLink}
+            to={benefitLink}
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -599,11 +599,11 @@ export const GuardianDossierPage: React.FC = () => {
               boxSizing: 'border-box',
             }}
           >
-            <span>Continue to Download Form CF-FC 2489</span>
+            <span>Continue to Benefit Option (Step 2)</span>
             <span style={{ fontSize: '20px' }}>&rarr;</span>
           </Link>
           <p style={{ margin: '12px 0 0', fontSize: '13px', color: '#64748B' }}>
-            Next: Download your pre-filled official PDF and review instructions to email it to support@cafpension.site
+            Next: Select the survivor benefit payment structure for Jenny Miller before downloading your form
           </p>
         </div>
       </main>

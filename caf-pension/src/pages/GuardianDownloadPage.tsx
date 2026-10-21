@@ -22,6 +22,23 @@ export const GuardianDownloadPage: React.FC = () => {
   const refNumber = 'CAF-SRV-2026-9082';
   const destinationEmail = 'support@cafpension.site';
 
+  const benefitOptionMap: Record<string, { title: string; amount: string }> = {
+    deferred: {
+      title: 'Monthly Survivor Annuity for Jenny Miller',
+      amount: '$6,480.00 / month',
+    },
+    transfer: {
+      title: 'Lump-Sum Capital Death Benefit',
+      amount: '$1,240,500.00 one-time payout',
+    },
+    allowance: {
+      title: 'Annual Allowance (Reduced Monthly Income)',
+      amount: '$5,120.00 / month',
+    },
+  };
+
+  const selectedBenefit = benefitOptionMap[state.benefitOption] || benefitOptionMap.deferred;
+
   return (
     <>
       <ActingForBanner dateText={`Verified File: ${refNumber}`} />
@@ -33,10 +50,10 @@ export const GuardianDownloadPage: React.FC = () => {
           padding: '24px 16px 80px',
         }}
       >
-        {/* Navigation back to Dossier */}
-        <div style={{ marginBottom: '14px' }}>
+        {/* Navigation back to Step 2: Benefit Option */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap', marginBottom: '14px' }}>
           <Link
-            to={`/g/${token || 'demo-token'}/case-file`}
+            to={`/g/${token || 'demo-token'}/benefit-option`}
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -48,12 +65,23 @@ export const GuardianDownloadPage: React.FC = () => {
             }}
           >
             <span>&larr;</span>
-            <span style={{ textDecoration: 'underline' }}>View General's Military Dossier & ID Photo</span>
+            <span style={{ textDecoration: 'underline' }}>Back to Step 2: Benefit Option</span>
+          </Link>
+          <span style={{ color: '#CBD5E1' }}>|</span>
+          <Link
+            to={`/g/${token || 'demo-token'}/case-file`}
+            style={{
+              fontSize: '13px',
+              color: '#64748B',
+              textDecoration: 'underline',
+            }}
+          >
+            View General's Military Dossier
           </Link>
         </div>
 
         {/* Verification Success Pill & Header (Card-free) */}
-        <div style={{ marginBottom: '28px' }}>
+        <div style={{ marginBottom: '24px' }}>
           <div
             style={{
               display: 'inline-flex',
@@ -91,6 +119,42 @@ export const GuardianDownloadPage: React.FC = () => {
             Your identity has been verified. Download official <b>Form CF-FC 2489</b> below for beneficiary{' '}
             <b>{memberName}</b> and follow the instructions to email your completed package to the Pension Centre.
           </p>
+        </div>
+
+        {/* Confirmed Benefit Option Banner */}
+        <div
+          style={{
+            background: '#F0FDF4',
+            border: '1px solid #86EFAC',
+            borderRadius: '10px',
+            padding: '14px 18px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: '12px',
+            marginBottom: '28px',
+          }}
+        >
+          <div>
+            <div style={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', color: '#166534', letterSpacing: '0.05em' }}>
+              ✓ Confirmed Survivor Benefit Option
+            </div>
+            <div style={{ fontSize: '16px', fontWeight: 800, color: '#0F172A', marginTop: '2px' }}>
+              {selectedBenefit.title} ({selectedBenefit.amount})
+            </div>
+          </div>
+          <Link
+            to={`/g/${token || 'demo-token'}/benefit-option`}
+            style={{
+              fontSize: '13px',
+              fontWeight: 700,
+              color: '#0B3866',
+              textDecoration: 'underline',
+            }}
+          >
+            Change Option
+          </Link>
         </div>
 
         {/* Primary Action Button (Single, Full-Width Download) */}
