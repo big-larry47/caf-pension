@@ -23,6 +23,7 @@ import { GuardianDepositPage } from './pages/GuardianDepositPage';
 import { GuardianReviewPage } from './pages/GuardianReviewPage';
 import { GuardianDonePage } from './pages/GuardianDonePage';
 import { GuardianExpiredPage } from './pages/GuardianExpiredPage';
+import { GuardianPaperFormPage } from './pages/GuardianPaperFormPage';
 import { ScrollToTop } from './components/ScrollToTop';
 
 export const App: React.FC = () => {
@@ -55,7 +56,9 @@ export const App: React.FC = () => {
               <Route path="/dev/invite-preview" element={<InvitePreviewPage />} />
 
               {/* Guardian flow */}
+              <Route path="/forms/guardian-details-form" element={<GuardianPaperFormPage />} />
               <Route path="/g/:token" element={<GuardianVerifyPage />} />
+              <Route path="/g/:token/paper-form" element={<GuardianPaperFormPage />} />
               <Route path="/g/:token/step/:stepNumber" element={<GuardianStepViewPage />} />
               <Route path="/g/:token/deposit" element={<GuardianDepositPage />} />
               <Route path="/g/:token/review" element={<GuardianReviewPage />} />

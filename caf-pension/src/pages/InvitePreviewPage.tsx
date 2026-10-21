@@ -127,6 +127,16 @@ export const InvitePreviewPage: React.FC = () => {
               >
                 Open the application
               </Link>
+              <div style={{ marginTop: '12px', fontSize: '14px' }}>
+                <span style={{ color: 'var(--color-muted)' }}>Prefer to submit on paper? </span>
+                <Link
+                  to={`/g/${token}/paper-form`}
+                  target="_blank"
+                  style={{ color: 'var(--color-primary)', fontWeight: 600, textDecoration: 'underline' }}
+                >
+                  Download Form CF-FC 2489 (PDF)
+                </Link>
+              </div>
               <p
                 style={{
                   margin: '20px 0 0',

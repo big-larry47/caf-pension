@@ -270,6 +270,88 @@ export const GuardianVerifyPage: React.FC = () => {
           </div>
         </div>
 
+        {/* Fill Online vs Paper Form Option */}
+        <div
+          style={{
+            background: '#F8FAFC',
+            border: '1.5px solid #CBD5E1',
+            borderRadius: '10px',
+            padding: '16px 20px',
+            marginBottom: '24px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '16px',
+            flexWrap: 'wrap',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '14px', maxWidth: '620px' }}>
+            <div
+              style={{
+                width: '38px',
+                height: '38px',
+                borderRadius: '8px',
+                background: '#0B335E',
+                color: '#FFFFFF',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0,
+                fontSize: '18px',
+              }}
+            >
+              📋
+            </div>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                <span style={{ fontWeight: 700, fontSize: '15px', color: '#0F172A' }}>
+                  Option: Fill online or complete on paper
+                </span>
+                <span
+                  style={{
+                    fontSize: '11px',
+                    fontWeight: 700,
+                    letterSpacing: '0.04em',
+                    padding: '2px 6px',
+                    background: '#E2E8F0',
+                    color: '#334155',
+                    borderRadius: '4px',
+                  }}
+                >
+                  FORM CF-FC 2489 (PDF)
+                </span>
+              </div>
+              <p style={{ margin: '4px 0 0', fontSize: '14px', color: '#475569', lineHeight: 1.45 }}>
+                You have the option to complete your details online below, or download and print the official paper PDF form to complete by hand and mail to the Pension Centre.
+              </p>
+            </div>
+          </div>
+          <Link
+            to={`/g/${token}/paper-form`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '10px 18px',
+              background: '#FFFFFF',
+              color: '#0B5CAD',
+              border: '2px solid #0B5CAD',
+              borderRadius: '6px',
+              fontWeight: 700,
+              fontSize: '14px',
+              textDecoration: 'none',
+              whiteSpace: 'nowrap',
+              boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
+              transition: 'all 0.15s ease',
+            }}
+          >
+            <span>📄 Download / Print Paper Form</span>
+            <span style={{ fontSize: '12px' }}>↗</span>
+          </Link>
+        </div>
+
         <h1 style={{ margin: '0 0 8px', fontSize: '28px', lineHeight: 1.25, color: '#0F172A' }}>
           {currentPart === 1
             ? "Before you start, confirm it's you"
@@ -624,13 +706,34 @@ export const GuardianVerifyPage: React.FC = () => {
                 gap: '18px',
               }}
             >
-              <div>
-                <h2 style={{ margin: '0 0 6px', fontSize: '20px', color: '#0B335E' }}>
-                  2. Your contact information
-                </h2>
-                <p style={{ margin: 0, color: 'var(--color-ink-2)', fontSize: '15px' }}>
-                  We'll mail official pension statements and letters to you here.
-                </p>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '8px' }}>
+                <div>
+                  <h2 style={{ margin: '0 0 6px', fontSize: '20px', color: '#0B335E' }}>
+                    2. Your contact information
+                  </h2>
+                  <p style={{ margin: 0, color: 'var(--color-ink-2)', fontSize: '15px' }}>
+                    We'll mail official pension statements and letters to you here.
+                  </p>
+                </div>
+                <Link
+                  to={`/g/${token}/paper-form`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    fontSize: '13px',
+                    color: '#0B5CAD',
+                    fontWeight: 600,
+                    textDecoration: 'none',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    padding: '4px 8px',
+                    borderRadius: '4px',
+                    background: '#F1F5F9',
+                  }}
+                >
+                  📄 Prefer paper? Download Form (PDF) ↗
+                </Link>
               </div>
 
               <div
