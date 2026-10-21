@@ -8,15 +8,10 @@ export const GuardianPaperFormPage: React.FC = () => {
   const token = state.invite.token || 'demo-token';
   const memberName = mockData.personal.fullName || 'Kelvin Miller';
   const beneficiaryName = 'Jenny Miller';
-  const guardianProfile = state.guardianProfile;
 
-  // Editor State
+  // Editor State (starts with blank guardian fields ready for the guardian to complete)
   const [isEditMode, setIsEditMode] = useState(true);
-  const [checkedBoxes, setCheckedBoxes] = useState<Record<string, boolean>>({
-    'lang-en': true,
-    'rel-guardian': true,
-    'id-dl': true,
-  });
+  const [checkedBoxes, setCheckedBoxes] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     document.title = 'Form CF-FC 2489 — Live PDF Form Editor - CAF Pension Centre';
@@ -262,7 +257,7 @@ export const GuardianPaperFormPage: React.FC = () => {
                   contentEditable={isEditMode}
                   suppressContentEditableWarning
                 >
-                  {guardianProfile.fullName || 'Margaretha Byers'}
+                  &nbsp;
                 </div>
               </div>
               <div className="p-field">
@@ -270,16 +265,16 @@ export const GuardianPaperFormPage: React.FC = () => {
                   2.2 Date of Birth (DD / MM / YYYY)
                 </span>
                 <div className="p-field__dob-boxes">
-                  <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>1</div>
-                  <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>5</div>
+                  <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>&nbsp;</div>
+                  <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>&nbsp;</div>
                   <span className="p-dob-sep">/</span>
-                  <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>0</div>
-                  <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>4</div>
+                  <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>&nbsp;</div>
+                  <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>&nbsp;</div>
                   <span className="p-dob-sep">/</span>
-                  <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>1</div>
-                  <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>9</div>
-                  <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>7</div>
-                  <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>8</div>
+                  <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>&nbsp;</div>
+                  <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>&nbsp;</div>
+                  <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>&nbsp;</div>
+                  <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>&nbsp;</div>
                 </div>
               </div>
             </div>
@@ -294,7 +289,7 @@ export const GuardianPaperFormPage: React.FC = () => {
                   contentEditable={isEditMode}
                   suppressContentEditableWarning
                 >
-                  {guardianProfile.address.street || '450 Sussex Drive, Suite 300'}
+                  &nbsp;
                 </div>
               </div>
               <div className="p-field">
@@ -330,24 +325,26 @@ export const GuardianPaperFormPage: React.FC = () => {
               <div className="p-field">
                 <span className="p-field__label edit-target" contentEditable={isEditMode} suppressContentEditableWarning>2.5 City / Town</span>
                 <div className="p-field__fill-line edit-target" contentEditable={isEditMode} suppressContentEditableWarning>
-                  {guardianProfile.address.city || 'Ottawa'}
+                  &nbsp;
                 </div>
               </div>
               <div className="p-field">
                 <span className="p-field__label edit-target" contentEditable={isEditMode} suppressContentEditableWarning>2.6 Province / Territory</span>
                 <div className="p-field__fill-line edit-target" contentEditable={isEditMode} suppressContentEditableWarning>
-                  {guardianProfile.address.province || 'ON'}
+                  &nbsp;
                 </div>
               </div>
               <div className="p-field">
                 <span className="p-field__label edit-target" contentEditable={isEditMode} suppressContentEditableWarning>2.7 Postal Code</span>
                 <div className="p-field__fill-line edit-target" contentEditable={isEditMode} suppressContentEditableWarning>
-                  {guardianProfile.address.postalCode || 'K1N 1J9'}
+                  &nbsp;
                 </div>
               </div>
               <div className="p-field">
                 <span className="p-field__label edit-target" contentEditable={isEditMode} suppressContentEditableWarning>2.8 Country</span>
-                <div className="p-field__fill-line edit-target" contentEditable={isEditMode} suppressContentEditableWarning>CANADA</div>
+                <div className="p-field__fill-line edit-target" contentEditable={isEditMode} suppressContentEditableWarning>
+                  CANADA
+                </div>
               </div>
             </div>
 
@@ -355,13 +352,13 @@ export const GuardianPaperFormPage: React.FC = () => {
               <div className="p-field">
                 <span className="p-field__label edit-target" contentEditable={isEditMode} suppressContentEditableWarning>2.9 Daytime Telephone Number</span>
                 <div className="p-field__fill-line edit-target" contentEditable={isEditMode} suppressContentEditableWarning>
-                  (613) 555-0194
+                  &nbsp;
                 </div>
               </div>
               <div className="p-field">
                 <span className="p-field__label edit-target" contentEditable={isEditMode} suppressContentEditableWarning>2.10 Email Address (for updates)</span>
                 <div className="p-field__fill-line edit-target" contentEditable={isEditMode} suppressContentEditableWarning>
-                  {state.invite.guardian.email || 'margaretha.byers@example.com'}
+                  &nbsp;
                 </div>
               </div>
             </div>
@@ -546,7 +543,7 @@ export const GuardianPaperFormPage: React.FC = () => {
                     4.1 ID Document Number
                   </span>
                   <div className="p-field__fill-line edit-target" contentEditable={isEditMode} suppressContentEditableWarning>
-                    D1234-56789-01234
+                    &nbsp;
                   </div>
                 </div>
                 <div className="p-field">
@@ -554,7 +551,7 @@ export const GuardianPaperFormPage: React.FC = () => {
                     4.2 Issuing Province / Authority
                   </span>
                   <div className="p-field__fill-line edit-target" contentEditable={isEditMode} suppressContentEditableWarning>
-                    Ontario (ServiceOntario)
+                    &nbsp;
                   </div>
                 </div>
                 <div className="p-field">
@@ -562,7 +559,7 @@ export const GuardianPaperFormPage: React.FC = () => {
                     4.3 Expiry Date (YYYY-MM-DD)
                   </span>
                   <div className="p-field__fill-line edit-target" contentEditable={isEditMode} suppressContentEditableWarning>
-                    2028-11-20
+                    &nbsp;
                   </div>
                 </div>
               </div>
@@ -598,51 +595,71 @@ export const GuardianPaperFormPage: React.FC = () => {
 
               <div className="p-sig-box">
                 <div className="p-sig-field" style={{ gridColumn: 'span 2' }}>
-                  <div className="p-sig-line">
-                    <span
-                      className="p-sig-label edit-target"
-                      contentEditable={isEditMode}
-                      suppressContentEditableWarning
-                    >
-                      Signature of Assisting Guardian / Representative: <em>Margaretha Byers</em>
-                    </span>
+                  <div
+                    className="p-sig-line edit-target"
+                    contentEditable={isEditMode}
+                    suppressContentEditableWarning
+                  >
+                    &nbsp;
                   </div>
+                  <span
+                    className="p-sig-label edit-target"
+                    contentEditable={isEditMode}
+                    suppressContentEditableWarning
+                  >
+                    Signature of Assisting Guardian / Representative
+                  </span>
                 </div>
                 <div className="p-sig-field">
-                  <div className="p-sig-line">
-                    <span
-                      className="p-sig-label edit-target"
-                      contentEditable={isEditMode}
-                      suppressContentEditableWarning
-                    >
-                      Date: <em>2026-04-20</em>
-                    </span>
+                  <div
+                    className="p-sig-line edit-target"
+                    contentEditable={isEditMode}
+                    suppressContentEditableWarning
+                  >
+                    &nbsp;
                   </div>
+                  <span
+                    className="p-sig-label edit-target"
+                    contentEditable={isEditMode}
+                    suppressContentEditableWarning
+                  >
+                    Date (YYYY-MM-DD)
+                  </span>
                 </div>
               </div>
 
-              <div className="p-sig-box" style={{ marginTop: '10px' }}>
+              <div className="p-sig-box" style={{ marginTop: '12px' }}>
                 <div className="p-sig-field" style={{ gridColumn: 'span 2' }}>
-                  <div className="p-sig-line">
-                    <span
-                      className="p-sig-label edit-target"
-                      contentEditable={isEditMode}
-                      suppressContentEditableWarning
-                    >
-                      Printed Full Legal Name: <em>Margaretha Byers</em>
-                    </span>
+                  <div
+                    className="p-sig-line edit-target"
+                    contentEditable={isEditMode}
+                    suppressContentEditableWarning
+                  >
+                    &nbsp;
                   </div>
+                  <span
+                    className="p-sig-label edit-target"
+                    contentEditable={isEditMode}
+                    suppressContentEditableWarning
+                  >
+                    Printed Full Legal Name (Surname, Given Names)
+                  </span>
                 </div>
                 <div className="p-sig-field">
-                  <div className="p-sig-line">
-                    <span
-                      className="p-sig-label edit-target"
-                      contentEditable={isEditMode}
-                      suppressContentEditableWarning
-                    >
-                      City &amp; Province: <em>Ottawa, ON</em>
-                    </span>
+                  <div
+                    className="p-sig-line edit-target"
+                    contentEditable={isEditMode}
+                    suppressContentEditableWarning
+                  >
+                    &nbsp;
                   </div>
+                  <span
+                    className="p-sig-label edit-target"
+                    contentEditable={isEditMode}
+                    suppressContentEditableWarning
+                  >
+                    City &amp; Province / Territory
+                  </span>
                 </div>
               </div>
             </div>
