@@ -12,7 +12,7 @@ export const GuardianPaperFormPage: React.FC = () => {
   const guardianProfile = state.guardianProfile;
 
   useEffect(() => {
-    document.title = 'Form CF-FC 2489 — Guardian / Representative Form (PDF Paper Copy) - CAF Pension Centre';
+    document.title = 'Form CF-FC 2489 — Guardian & Assisting Contact Form - CAF Pension Centre';
   }, []);
 
   const handlePrint = () => {
@@ -28,7 +28,7 @@ export const GuardianPaperFormPage: React.FC = () => {
             <span className="paper-form-toolbar__badge">OFFICIAL PDF FORM</span>
             <div>
               <h1 className="paper-form-toolbar__title">
-                Form CF-FC 2489 — Guardian Information &amp; Declaration
+                Form CF-FC 2489 — Guardian &amp; Assisting Contact Form
               </h1>
               <p className="paper-form-toolbar__subtitle">
                 Print on standard 8.5&quot; × 11&quot; letter paper to fill by hand and mail, or save as PDF.
@@ -99,26 +99,26 @@ export const GuardianPaperFormPage: React.FC = () => {
           <div className="p-title-box">
             <div className="p-title-box__code">FORM CF-FC 2489 E (2026/04)</div>
             <h2 className="p-title-box__title">
-              GUARDIAN AND AUTHORIZED REPRESENTATIVE INFORMATION AND DECLARATION
+              GUARDIAN &amp; ASSISTING CONTACT INFORMATION FORM
             </h2>
             <div className="p-title-box__acts">
-              Canadian Forces Superannuation Act (CFSA) · Pension Act · Survivor &amp; Children Benefits
+              Canadian Armed Forces Pension Plans · Surviving Child Benefits (Jenny Miller)
             </div>
           </div>
 
-          {/* Notice banner */}
-          <div className="p-notice">
-            <strong>NOTICE TO REPRESENTATIVE:</strong> Use this paper form if you prefer not to submit your information online. Print in dark blue or black ink. Complete all sections, attach a photocopy of your valid government-issued photo ID (see Section 4), sign the declaration on Page 2, and mail both pages to the Pension Centre address shown in Section 6.
+          {/* Friendly notice banner */}
+          <div className="p-notice" style={{ background: '#F0FDF4', borderColor: '#86EFAC', borderLeftColor: '#16A34A', color: '#166534' }}>
+            <strong>HOW THIS WORKS:</strong> Jenny Miller has chosen you as her guardian or assisting contact. <strong>You do NOT need a lawyer, court order, or formal legal document to help Jenny.</strong> If you prefer to submit by mail instead of online, simply fill out this 2-page form in ink, attach a photocopy of your valid photo ID, sign Page 2, and mail it to the Pension Centre.
           </div>
 
           {/* ── SECTION 1: Member & Beneficiary ── */}
           <div className="p-section">
             <div className="p-section__header">
-              SECTION 1 — DECEASED PENSION PLAN MEMBER AND SURVIVING BENEFICIARY
+              SECTION 1 — PENSION PLAN MEMBER AND SURVIVING CHILD
             </div>
             <div className="p-grid p-grid--3col">
               <div className="p-field">
-                <span className="p-field__label">1.1 Deceased Member Full Legal Name</span>
+                <span className="p-field__label">1.1 Deceased Member Full Name</span>
                 <span className="p-field__value p-field__value--prefilled">{memberName}</span>
               </div>
               <div className="p-field">
@@ -132,11 +132,11 @@ export const GuardianPaperFormPage: React.FC = () => {
             </div>
             <div className="p-grid p-grid--2col" style={{ borderTop: '1px solid #1E293B' }}>
               <div className="p-field">
-                <span className="p-field__label">1.4 Surviving Child / Beneficiary Name</span>
+                <span className="p-field__label">1.4 Surviving Child Name</span>
                 <span className="p-field__value p-field__value--prefilled">{beneficiaryName}</span>
               </div>
               <div className="p-field">
-                <span className="p-field__label">1.5 Beneficiary Relationship &amp; Status</span>
+                <span className="p-field__label">1.5 Benefit Status</span>
                 <span className="p-field__value p-field__value--prefilled">Surviving Dependent Child (Survivor Pension Entitlement)</span>
               </div>
             </div>
@@ -145,16 +145,16 @@ export const GuardianPaperFormPage: React.FC = () => {
           {/* ── SECTION 2: Guardian Details ── */}
           <div className="p-section">
             <div className="p-section__header">
-              SECTION 2 — GUARDIAN / AUTHORIZED REPRESENTATIVE PERSONAL DETAILS
+              SECTION 2 — YOUR CONTACT DETAILS (GUARDIAN / ASSISTING CONTACT)
             </div>
             <div className="p-grid p-grid--3col">
               <div className="p-field" style={{ gridColumn: 'span 2' }}>
-                <span className="p-field__label">2.1 Full Legal Name (Surname, Given Names)</span>
+                <span className="p-field__label">2.1 Your Full Name (First and Last Name)</span>
                 <div className="p-field__fill-line">
                   {guardianProfile.fullName ? (
                     <span className="p-field__value">{guardianProfile.fullName}</span>
                   ) : (
-                    <span className="p-field__hint">Print legal surname and first name in block letters</span>
+                    <span className="p-field__hint">Print your name clearly</span>
                   )}
                 </div>
               </div>
@@ -177,7 +177,7 @@ export const GuardianPaperFormPage: React.FC = () => {
 
             <div className="p-grid p-grid--3col" style={{ borderTop: '1px solid #1E293B' }}>
               <div className="p-field" style={{ gridColumn: 'span 2' }}>
-                <span className="p-field__label">2.3 Street Address (including Apt / Suite / Unit / PO Box)</span>
+                <span className="p-field__label">2.3 Mailing Address (include Apt / Suite if applicable)</span>
                 <div className="p-field__fill-line">
                   {guardianProfile.address.street || ''}
                 </div>
@@ -212,45 +212,45 @@ export const GuardianPaperFormPage: React.FC = () => {
 
             <div className="p-grid p-grid--2col" style={{ borderTop: '1px solid #1E293B' }}>
               <div className="p-field">
-                <span className="p-field__label">2.9 Daytime Telephone Number</span>
+                <span className="p-field__label">2.9 Telephone Number</span>
                 <div className="p-field__fill-line">(___) ___-____</div>
               </div>
               <div className="p-field">
-                <span className="p-field__label">2.10 Email Address (for electronic status notifications)</span>
+                <span className="p-field__label">2.10 Email Address (optional, for updates)</span>
                 <div className="p-field__fill-line">{state.invite.guardian.email || ''}</div>
               </div>
             </div>
           </div>
 
-          {/* ── SECTION 3: Legal Capacity ── */}
+          {/* ── SECTION 3: Relationship to Jenny ── */}
           <div className="p-section">
             <div className="p-section__header">
-              SECTION 3 — LEGAL CAPACITY AND AUTHORITY TO ACT
+              SECTION 3 — YOUR RELATIONSHIP TO JENNY MILLER
             </div>
-            <div style={{ padding: '8px 12px', fontSize: '12px', lineHeight: 1.4 }}>
-              <p style={{ margin: '0 0 6px', fontWeight: 600 }}>
-                Indicate the legal capacity in which you are representing Jenny Miller (check one):
+            <div style={{ padding: '10px 14px', fontSize: '12px', lineHeight: 1.45 }}>
+              <p style={{ margin: '0 0 8px', fontWeight: 600 }}>
+                Jenny Miller has chosen or requested you to assist her with her survivor benefits. Please indicate your relationship (check one):
               </p>
               <div className="p-checkboxes-grid">
                 <label className="p-check">
-                  <span className="p-box" /> <strong>Power of Attorney (POA)</strong> for property / personal care
+                  <span className="p-box" /> <strong>Chosen Guardian / Trusted Adult</strong> selected by Jenny
                 </label>
                 <label className="p-check">
-                  <span className="p-box" /> <strong>Court-Appointed Legal Guardian</strong> of minor child
+                  <span className="p-box" /> <strong>Family Member / Relative</strong> (Aunt, Uncle, Grandparent, Sibling, etc.)
                 </label>
                 <label className="p-check">
-                  <span className="p-box" /> <strong>Assisting Family Member / Parent</strong> (non-court appointed)
+                  <span className="p-box" /> <strong>Family Friend or Community Supporter</strong> helping Jenny
                 </label>
                 <label className="p-check">
-                  <span className="p-box" /> <strong>Trustee, Executor, or Estate Representative</strong>
+                  <span className="p-box" /> <strong>Power of Attorney or Legal Guardian</strong> (Optional — only if you already have one)
                 </label>
                 <label className="p-check" style={{ gridColumn: 'span 2' }}>
-                  <span className="p-box" /> <strong>Other authorized contact</strong> (specify relationship): ________________________________
+                  <span className="p-box" /> <strong>Other assisting contact</strong> (specify relationship): ________________________________
                 </label>
               </div>
-              <p style={{ margin: '8px 0 0', fontSize: '11px', color: '#475569', fontStyle: 'italic' }}>
-                Note: If court order, letters probate, or power of attorney document is available, please attach a copy. If assisting as parent/custodian, completion of Sections 4 and 5 is sufficient.
-              </p>
+              <div style={{ marginTop: '10px', padding: '8px 12px', background: '#EFF6FF', border: '1px solid #BFDBFE', borderRadius: '4px', fontSize: '11.5px', color: '#1E40AF', lineHeight: 1.4 }}>
+                <strong>✓ No formal court appointment required:</strong> Anyone Jenny trusts and selects can act as her guardian to receive communications and assist with her survivor pension. If you do not have a formal legal document, do not worry — none is needed.
+              </div>
             </div>
           </div>
 
@@ -273,43 +273,43 @@ export const GuardianPaperFormPage: React.FC = () => {
             <span>PAGE 2 OF 2</span>
           </div>
 
-          {/* ── SECTION 4: Mandatory Photo ID ── */}
+          {/* ── SECTION 4: Photo ID ── */}
           <div className="p-section">
-            <div className="p-section__header p-section__header--alert">
-              SECTION 4 — MANDATORY GOVERNMENT-ISSUED PHOTO IDENTIFICATION (REQUIRED)
+            <div className="p-section__header" style={{ background: '#0B335E' }}>
+              SECTION 4 — YOUR PHOTO IDENTIFICATION (PHOTOCOPY ATTACHMENT)
             </div>
-            <div style={{ padding: '10px 12px', fontSize: '12px', lineHeight: 1.45 }}>
-              <p style={{ margin: '0 0 8px', fontWeight: 700, color: '#991B1B' }}>
-                ATTACHMENT MANDATORY: Under Government of Canada Pension Centre identity standards, you MUST attach a legible photocopy of ONE (1) valid, unexpired government-issued photo identification document.
+            <div style={{ padding: '10px 14px', fontSize: '12px', lineHeight: 1.45 }}>
+              <p style={{ margin: '0 0 8px', fontWeight: 600, color: '#0F172A' }}>
+                To protect Jenny&apos;s pension payments and verify who we are corresponding with, please attach a clear photocopy of <strong>ONE (1)</strong> valid piece of photo ID.
               </p>
               <p style={{ margin: '0 0 6px', fontWeight: 600 }}>
-                Indicate which type of photo ID photocopy is attached to this form:
+                Indicate which type of photo ID photocopy you are attaching:
               </p>
               <div className="p-checkboxes-grid">
                 <label className="p-check">
                   <span className="p-box" /> Canadian Provincial / Territorial Driver’s Licence
                 </label>
                 <label className="p-check">
-                  <span className="p-box" /> Canadian Passport (photo and signature page)
+                  <span className="p-box" /> Canadian Passport (photo page)
                 </label>
                 <label className="p-check">
-                  <span className="p-box" /> Provincial / Territorial Photo Card (e.g. Photo ID, Age of Majority)
+                  <span className="p-box" /> Provincial / Territorial Photo ID Card
                 </label>
                 <label className="p-check">
                   <span className="p-box" /> Canadian Permanent Resident (PR) Card
                 </label>
                 <label className="p-check" style={{ gridColumn: 'span 2' }}>
-                  <span className="p-box" /> Secure Certificate of Indian Status (SCIS) / Other official photo ID
+                  <span className="p-box" /> Other valid government-issued photo card
                 </label>
               </div>
 
               <div className="p-grid p-grid--3col" style={{ marginTop: '10px', border: '1px solid #CBD5E1', borderRadius: '4px' }}>
                 <div className="p-field">
-                  <span className="p-field__label">4.1 ID Document Number</span>
+                  <span className="p-field__label">4.1 ID Number</span>
                   <div className="p-field__fill-line">___________________________</div>
                 </div>
                 <div className="p-field">
-                  <span className="p-field__label">4.2 Issuing Province / Authority</span>
+                  <span className="p-field__label">4.2 Issuing Province / Country</span>
                   <div className="p-field__fill-line">___________________________</div>
                 </div>
                 <div className="p-field">
@@ -320,29 +320,23 @@ export const GuardianPaperFormPage: React.FC = () => {
             </div>
           </div>
 
-          {/* ── SECTION 5: Declaration & Signature ── */}
+          {/* ── SECTION 5: Confirmation & Signature ── */}
           <div className="p-section">
             <div className="p-section__header">
-              SECTION 5 — REPRESENTATIVE’S SOLEMN DECLARATION AND SIGNATURE
+              SECTION 5 — CONFIRMATION AND SIGNATURE
             </div>
-            <div style={{ padding: '10px 12px', fontSize: '11.5px', lineHeight: 1.45, background: '#F8FAFC' }}>
-              <div style={{ marginBottom: '8px', padding: '6px 8px', background: '#F1F5F9', borderLeft: '3px solid #0284C7', fontSize: '11px' }}>
-                <strong>Privacy Act Statement:</strong> The personal information provided on this form is collected under the authority of the <em>Canadian Forces Superannuation Act</em> (CFSA) and <em>Pension Act</em>. Information is stored in Personal Information Bank PWGSC PPU 005. It is protected from unauthorized disclosure under the provisions of the <em>Privacy Act</em>.
-              </div>
-              <p style={{ margin: '0 0 6px' }}>
-                <strong>I solemnly declare that:</strong>
+            <div style={{ padding: '12px 14px', fontSize: '12px', lineHeight: 1.5, background: '#F8FAFC' }}>
+              <p style={{ margin: '0 0 8px', fontWeight: 600 }}>
+                Please review and sign below:
               </p>
-              <ol style={{ margin: '0 0 10px', paddingLeft: '20px' }}>
-                <li>I am authorized to assist and act on behalf of the surviving dependent child named in Section 1 (<strong>Jenny Miller</strong>).</li>
-                <li>All statements and information entered on this form and any attached documentation are true, complete, and accurate to the best of my knowledge and belief.</li>
-                <li>The attached photocopy of my government-issued photo identification is a true and unaltered copy of my valid identity document.</li>
-                <li>I acknowledge that knowingly providing false, misleading, or deceptive information constitutes an offence under the <em>Criminal Code of Canada</em> and may invalidate pension benefit claims.</li>
-              </ol>
+              <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', padding: '10px 14px', borderRadius: '4px', marginBottom: '12px', fontSize: '12px', lineHeight: 1.55 }}>
+                &ldquo;I confirm that Jenny Miller (or her family) has chosen me to act as her guardian or assisting contact for her Canadian Armed Forces pension benefits. The contact information I have provided on this form is correct, the attached photocopy of photo ID is mine, and I will assist Jenny in good faith.&rdquo;
+              </div>
 
               <div className="p-sig-box">
                 <div className="p-sig-field" style={{ gridColumn: 'span 2' }}>
                   <div className="p-sig-line">
-                    <span className="p-sig-label">Signature of Guardian / Authorized Representative</span>
+                    <span className="p-sig-label">Signature of Guardian / Assisting Contact</span>
                   </div>
                 </div>
                 <div className="p-sig-field">
@@ -352,15 +346,15 @@ export const GuardianPaperFormPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="p-sig-box" style={{ marginTop: '8px' }}>
+              <div className="p-sig-box" style={{ marginTop: '10px' }}>
                 <div className="p-sig-field" style={{ gridColumn: 'span 2' }}>
                   <div className="p-sig-line">
-                    <span className="p-sig-label">Print Legal Name in Block Letters</span>
+                    <span className="p-sig-label">Print Your Full Legal Name</span>
                   </div>
                 </div>
                 <div className="p-sig-field">
                   <div className="p-sig-line">
-                    <span className="p-sig-label">City and Province of Signing</span>
+                    <span className="p-sig-label">City and Province</span>
                   </div>
                 </div>
               </div>
@@ -372,7 +366,7 @@ export const GuardianPaperFormPage: React.FC = () => {
             <div className="p-section__header">
               SECTION 6 — WHERE TO SEND YOUR COMPLETED PAPER FORM
             </div>
-            <div className="p-grid p-grid--2col" style={{ padding: '8px 12px' }}>
+            <div className="p-grid p-grid--2col" style={{ padding: '10px 14px' }}>
               <div>
                 <p style={{ margin: '0 0 4px', fontWeight: 700, fontSize: '12px' }}>
                   BY MAIL (Send Pages 1 &amp; 2 + Copy of Photo ID):
@@ -386,14 +380,13 @@ export const GuardianPaperFormPage: React.FC = () => {
               </div>
               <div style={{ fontSize: '12px', lineHeight: 1.45 }}>
                 <p style={{ margin: '0 0 4px', fontWeight: 700 }}>
-                  TELEPHONE / FAX CONTACT:
+                  QUESTIONS OR ASSISTANCE:
                 </p>
                 <div><strong>Toll-free Help Line:</strong> 1-800-267-0325</div>
                 <div style={{ fontSize: '11px', color: '#64748B' }}>Monday to Friday: 8:00 to 16:00 (Eastern Time)</div>
                 <div style={{ marginTop: '4px' }}><strong>Toll-free Fax:</strong> 1-855-683-1662</div>
-                <div><strong>Outside Canada &amp; US:</strong> 1-418-566-6298</div>
                 <div style={{ marginTop: '6px', fontSize: '11px', color: '#0369A1' }}>
-                  ✓ Keep a copy of this form for your records before mailing.
+                  ✓ Please keep a copy or photo of this completed form for your records.
                 </div>
               </div>
             </div>

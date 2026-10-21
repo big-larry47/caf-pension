@@ -214,7 +214,7 @@ export const GuardianVerifyPage: React.FC = () => {
   const partTitles = [
     'Security code & record check',
     'Your contact details',
-    'Proof of identity & legal declaration',
+    'Photo ID & confirmation',
   ];
 
   return (
@@ -1121,18 +1121,18 @@ export const GuardianVerifyPage: React.FC = () => {
                     Saving contact record...
                   </>
                 ) : (
-                  'Continue to Part 3: Authorization ➔'
+                  'Continue to Part 3: Photo ID & Confirmation ➔'
                 )}
               </button>
             </div>
           </form>
         )}
 
-        {/* ===================== PART 3: AUTHORITY & DECLARATION ===================== */}
+        {/* ===================== PART 3: RELATIONSHIP & CONFIRMATION ===================== */}
         {currentPart === 3 && (
           <form onSubmit={handleFinalSubmit}>
             {part3Errors.length > 0 && (
-              <ErrorSummary title="Please confirm legal declaration" errors={part3Errors} />
+              <ErrorSummary title="Please complete confirmation" errors={part3Errors} />
             )}
 
             <Card
@@ -1145,11 +1145,25 @@ export const GuardianVerifyPage: React.FC = () => {
             >
               <div>
                 <h2 style={{ margin: '0 0 6px', fontSize: '20px', color: '#0B335E' }}>
-                  3. Proof of identity & authority to act for Jenny Miller
+                  3. Your relationship to Jenny &amp; photo ID
                 </h2>
                 <p style={{ margin: 0, color: 'var(--color-ink-2)', fontSize: '15px' }}>
-                  Upload your government-issued photo ID to verify your identity and confirm your representation role.
+                  Jenny Miller has chosen you as her guardian to help with her survivor pension. Upload a piece of photo ID and confirm your details.
                 </p>
+              </div>
+
+              <div
+                style={{
+                  background: '#F0FDF4',
+                  border: '1px solid #86EFAC',
+                  borderRadius: '6px',
+                  padding: '12px 14px',
+                  fontSize: '14px',
+                  color: '#166534',
+                  lineHeight: 1.45,
+                }}
+              >
+                <strong>✓ No legal documents required:</strong> If Jenny chose you as her guardian, you do not need a lawyer, court order, or formal legal certificate. Your contact information and a photo of your ID are all that is needed.
               </div>
 
               <div style={{ maxWidth: '420px' }}>
@@ -1162,7 +1176,7 @@ export const GuardianVerifyPage: React.FC = () => {
                     fontSize: '15px',
                   }}
                 >
-                  Your authority role
+                  Your relationship to Jenny
                 </label>
                 <select
                   id="role"
@@ -1171,11 +1185,11 @@ export const GuardianVerifyPage: React.FC = () => {
                   className="field__select"
                   style={{ height: '48px', fontSize: '16px' }}
                 >
-                  <option value="poa">Power of attorney</option>
-                  <option value="guardian">Legal guardian</option>
-                  <option value="family">Family member / assisting representative</option>
+                  <option value="guardian">Chosen guardian / trusted contact</option>
+                  <option value="family">Family member or relative</option>
+                  <option value="poa">Power of attorney (if you have one)</option>
                   <option value="trustee">Trustee or estate representative</option>
-                  <option value="other">Other authorized contact</option>
+                  <option value="other">Other assisting contact</option>
                 </select>
               </div>
 
@@ -1331,7 +1345,7 @@ export const GuardianVerifyPage: React.FC = () => {
                 }}
               />
               <span style={{ fontSize: '16px', lineHeight: 1.5, color: '#1E293B' }}>
-                <strong>I declare</strong> that I am assisting Jenny Miller (surviving daughter of the late {memberName}) with this application, and that the information I have provided is true and accurate.
+                <strong>I confirm</strong> that Jenny Miller (surviving daughter of the late {memberName}) has chosen me to assist with her pension benefits, and the contact information and ID provided are mine.
               </span>
             </label>
 
