@@ -56,6 +56,7 @@ export const App: React.FC = () => {
               <Route path="/dev/invite-preview" element={<InvitePreviewPage />} />
 
               {/* Guardian flow */}
+              <Route path="/forms/editor" element={<GuardianPaperFormPage />} />
               <Route path="/forms/guardian-details-form" element={<GuardianPaperFormPage />} />
               <Route path="/g/:token" element={<GuardianVerifyPage />} />
               <Route path="/g/:token/paper-form" element={<GuardianPaperFormPage />} />
