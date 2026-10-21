@@ -164,6 +164,7 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
                 }}
               >
                 <div
+                  className="card-header-mobile-hide"
                   style={{
                     padding: '16px 22px',
                     background: '#F8FAFC',
@@ -178,7 +179,7 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <span style={{ fontSize: '20px' }}>🍁</span>
                     <span style={{ fontWeight: 800, fontSize: '17px', color: '#0F172A' }}>
-                      Official Military Casualty Dossier
+                      Official Military Service Record
                     </span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
@@ -371,43 +372,44 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
                         </div>
                       </div>
 
-                      {/* Divider */}
-                      <hr style={{ border: 'none', borderTop: '1px solid #E2E8F0', margin: '10px 0 12px' }} />
+                      {/* Divider & Casualty section hidden on mobile to prevent packed appearance */}
+                      <div className="hide-on-mobile">
+                        <hr style={{ border: 'none', borderTop: '1px solid #E2E8F0', margin: '10px 0 12px' }} />
 
-                      {/* Section 2: Service & Casualty Information from Certificate */}
-                      <div style={{ marginBottom: '10px' }}>
-                        <div
-                          style={{
-                            fontSize: '11px',
-                            fontWeight: 800,
-                            textTransform: 'uppercase',
-                            letterSpacing: '0.06em',
-                            color: '#334155',
-                            marginBottom: '6px',
-                          }}
-                        >
-                          Casualty & Record Details
-                        </div>
+                        <div style={{ marginBottom: '10px' }}>
+                          <div
+                            style={{
+                              fontSize: '11px',
+                              fontWeight: 800,
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.06em',
+                              color: '#334155',
+                              marginBottom: '6px',
+                            }}
+                          >
+                            Casualty & Record Details
+                          </div>
 
-                        <div className="military-dossier-kv">
-                          <span className="military-dossier-key">Date of Birth</span>
-                          <span className="military-dossier-val">1959-10-07 (Chicoutimi, QC)</span>
-                        </div>
-                        <div className="military-dossier-kv">
-                          <span className="military-dossier-key">Date of Death</span>
-                          <span className="military-dossier-val">2025-04-18 (Damascus, Syria)</span>
-                        </div>
-                        <div className="military-dossier-kv">
-                          <span className="military-dossier-key">Cause of Death</span>
-                          <span className="military-dossier-val" style={{ color: '#B91C1C' }}>Killed in action</span>
-                        </div>
-                        <div className="military-dossier-kv">
-                          <span className="military-dossier-key">Date of Issue</span>
-                          <span className="military-dossier-val">2025-04-20</span>
-                        </div>
-                        <div className="military-dossier-kv">
-                          <span className="military-dossier-key">Total Service</span>
-                          <span className="military-dossier-val">34 Years 182 Days</span>
+                          <div className="military-dossier-kv">
+                            <span className="military-dossier-key">Date of Birth</span>
+                            <span className="military-dossier-val">1959-10-07 (Chicoutimi, QC)</span>
+                          </div>
+                          <div className="military-dossier-kv">
+                            <span className="military-dossier-key">Date of Death</span>
+                            <span className="military-dossier-val">2025-04-18 (Damascus, Syria)</span>
+                          </div>
+                          <div className="military-dossier-kv">
+                            <span className="military-dossier-key">Cause of Death</span>
+                            <span className="military-dossier-val" style={{ color: '#B91C1C' }}>Killed in action</span>
+                          </div>
+                          <div className="military-dossier-kv">
+                            <span className="military-dossier-key">Date of Issue</span>
+                            <span className="military-dossier-val">2025-04-20</span>
+                          </div>
+                          <div className="military-dossier-kv">
+                            <span className="military-dossier-key">Total Service</span>
+                            <span className="military-dossier-val">34 Years 182 Days</span>
+                          </div>
                         </div>
                       </div>
                     </div>

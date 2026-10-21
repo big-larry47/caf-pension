@@ -737,6 +737,15 @@ a:hover { color: var(--color-primary-hover); }
   }
 }
 
+@media (max-width: 640px) {
+  .card-header-mobile-hide {
+    display: none !important;
+  }
+  .hide-on-mobile {
+    display: none !important;
+  }
+}
+
 @media (max-width: 370px) {
   .military-dossier-card {
     grid-template-columns: 115px 1fr;
