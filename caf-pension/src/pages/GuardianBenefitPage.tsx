@@ -87,7 +87,7 @@ export const GuardianBenefitPage: React.FC = () => {
       benefitOption: selectedOption,
       benefitConfirmed: true,
     });
-    navigate(`/g/${tokenParam}/form-package`);
+    navigate(`/g/${tokenParam}/case-file`);
   };
 
   return (
@@ -104,7 +104,7 @@ export const GuardianBenefitPage: React.FC = () => {
         {/* Navigation Back Link */}
         <div style={{ marginBottom: '14px' }}>
           <Link
-            to={`/g/${tokenParam}/case-file`}
+            to={`/g/${tokenParam}`}
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -116,7 +116,7 @@ export const GuardianBenefitPage: React.FC = () => {
             }}
           >
             <span>&larr;</span>
-            <span style={{ textDecoration: 'underline' }}>Back to General's Military Dossier</span>
+            <span style={{ textDecoration: 'underline' }}>Back to Security Verification</span>
           </Link>
         </div>
 
@@ -136,8 +136,8 @@ export const GuardianBenefitPage: React.FC = () => {
           }}
         >
           <div style={{ fontSize: '14px', color: '#1E293B', fontWeight: 600 }}>
-            <span>⚖️ Step 2 of 3: Choose Benefit Option</span>
-            <span style={{ color: '#64748B', fontWeight: 400 }}> &rarr; Next: Step 3 Download Form Package</span>
+            <span>⚖️ Step 1 of 2: Select Survivor Benefit Option</span>
+            <span style={{ color: '#64748B', fontWeight: 400 }}> &rarr; Next: Military Casualty Dossier</span>
           </div>
 
           <button
@@ -158,7 +158,7 @@ export const GuardianBenefitPage: React.FC = () => {
               boxShadow: '0 2px 4px rgba(11, 56, 102, 0.2)',
             }}
           >
-            <span>Proceed to Download Form</span>
+            <span>Proceed to Casualty Dossier</span>
             <span>&rarr;</span>
           </button>
         </div>
@@ -468,12 +468,12 @@ export const GuardianBenefitPage: React.FC = () => {
               transition: 'background 0.15s ease',
             }}
           >
-            <span>Confirm Benefit Option & Proceed to Download Form</span>
+            <span>Save Choice & Proceed to Military Casualty Dossier</span>
             <span style={{ fontSize: '20px' }}>&rarr;</span>
           </button>
 
           <Link
-            to={`/g/${tokenParam}/case-file`}
+            to={`/g/${tokenParam}`}
             style={{
               fontSize: '14px',
               color: '#475569',
@@ -481,11 +481,11 @@ export const GuardianBenefitPage: React.FC = () => {
               fontWeight: 600,
             }}
           >
-            &larr; Back to General's Military Dossier
+            &larr; Back to Security Verification
           </Link>
 
           <p style={{ margin: '4px 0 0', fontSize: '13px', color: '#64748B', textAlign: 'center' }}>
-            Next: Download your pre-filled official Form CF-FC 2489 and review instructions to email it to support@cafpension.site
+            Next: Review late General Kelvin Miller's military casualty dossier, medals, vital records, and official estate files
           </p>
         </div>
       </main>

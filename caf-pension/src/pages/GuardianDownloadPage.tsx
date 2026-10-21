@@ -50,10 +50,10 @@ export const GuardianDownloadPage: React.FC = () => {
           padding: '24px 16px 80px',
         }}
       >
-        {/* Navigation back to Step 2: Benefit Option */}
+        {/* Navigation back to Military Casualty Dossier */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap', marginBottom: '14px' }}>
           <Link
-            to={`/g/${token || 'guardian-token'}/benefit-option`}
+            to={`/g/${token || 'guardian-token'}/case-file`}
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -65,18 +65,18 @@ export const GuardianDownloadPage: React.FC = () => {
             }}
           >
             <span>&larr;</span>
-            <span style={{ textDecoration: 'underline' }}>Back to Step 2: Benefit Option</span>
+            <span style={{ textDecoration: 'underline' }}>Back to Military Casualty Dossier &amp; ID Photo</span>
           </Link>
           <span style={{ color: '#CBD5E1' }}>|</span>
           <Link
-            to={`/g/${token || 'guardian-token'}/case-file`}
+            to={`/g/${token || 'guardian-token'}/benefit-option`}
             style={{
               fontSize: '13px',
               color: '#64748B',
               textDecoration: 'underline',
             }}
           >
-            View General's Military Dossier
+            Review Benefit Option
           </Link>
         </div>
 

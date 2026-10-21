@@ -10,6 +10,23 @@ export const GuardianDossierPage: React.FC = () => {
   const guardianName = state.guardianProfile.fullName || 'Margaretha Byers';
   const benefitLink = `/g/${token || 'guardian-token'}/benefit-option`;
 
+  const benefitOptionMap: Record<string, { title: string; amount: string }> = {
+    deferred: {
+      title: 'Monthly Survivor Annuity for Jenny Miller',
+      amount: '$6,480.00 / month',
+    },
+    transfer: {
+      title: 'Lump-Sum Capital Death Benefit',
+      amount: '$1,240,500.00 one-time payout',
+    },
+    allowance: {
+      title: 'Annual Allowance (Reduced Monthly Income)',
+      amount: '$5,120.00 / month',
+    },
+  };
+
+  const selectedBenefit = benefitOptionMap[state.benefitOption] || benefitOptionMap.deferred;
+
   useEffect(() => {
     document.title = 'Military Casualty Dossier - CAF Pension Centre';
     window.scrollTo(0, 0);
@@ -26,8 +43,63 @@ export const GuardianDossierPage: React.FC = () => {
           padding: '24px 16px 80px',
         }}
       >
+        {/* Navigation back to Step 1: Benefit Option */}
+        <div style={{ marginBottom: '14px' }}>
+          <Link
+            to={benefitLink}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              fontSize: '14px',
+              fontWeight: 600,
+              color: '#0B3866',
+              textDecoration: 'none',
+            }}
+          >
+            <span>&larr;</span>
+            <span style={{ textDecoration: 'underline' }}>Back to Step 1: Benefit Option Selection</span>
+          </Link>
+        </div>
+
+        {/* Step Indicator & Confirmed Option Banner */}
+        <div
+          style={{
+            background: '#F0FDF4',
+            border: '1px solid #86EFAC',
+            borderRadius: '10px',
+            padding: '14px 18px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: '12px',
+            marginBottom: '24px',
+          }}
+        >
+          <div>
+            <div style={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', color: '#166534', letterSpacing: '0.05em' }}>
+              ✓ Step 1 Confirmed: Selected Survivor Benefit
+            </div>
+            <div style={{ fontSize: '16px', fontWeight: 800, color: '#0F172A', marginTop: '2px' }}>
+              {selectedBenefit.title} ({selectedBenefit.amount})
+            </div>
+          </div>
+          <Link
+            to={benefitLink}
+            style={{
+              fontSize: '13px',
+              fontWeight: 700,
+              color: '#0B3866',
+              textDecoration: 'underline',
+            }}
+          >
+            Change Option
+          </Link>
+        </div>
+
         {/* Header with Case Reference & Status */}
-        <header style={{ marginBottom: '24px' }}>
+        <header style={{ marginBottom: '28px' }}>
           <div
             style={{
               display: 'inline-flex',
@@ -67,50 +139,9 @@ export const GuardianDossierPage: React.FC = () => {
               lineHeight: 1.5,
             }}
           >
-            Department of National Defence service credentials and casualty record for late <b>General Kelvin Miller</b>. Review the dossier information below before proceeding to your official pension form package.
+            Department of National Defence service credentials and casualty record for late <b>General Kelvin Miller</b>. Review the full dossier information below. Your official pre-filled form package is ready for download at the bottom of this record.
           </p>
         </header>
-
-        {/* Action Callout Bar */}
-        <div
-          style={{
-            background: '#F1F5F9',
-            border: '1px solid #CBD5E1',
-            borderRadius: '10px',
-            padding: '14px 18px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '14px',
-            flexWrap: 'wrap',
-            marginBottom: '24px',
-          }}
-        >
-          <div style={{ fontSize: '14px', color: '#1E293B', fontWeight: 600 }}>
-            <span>📄 Step 1 of 3: Review General's Dossier</span>
-            <span style={{ color: '#64748B', fontWeight: 400 }}> &rarr; Next: Step 2 Benefit Option</span>
-          </div>
-
-          <Link
-            to={benefitLink}
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              background: '#0B3866',
-              color: '#FFFFFF',
-              fontSize: '14px',
-              fontWeight: 700,
-              padding: '9px 18px',
-              borderRadius: '6px',
-              textDecoration: 'none',
-              boxShadow: '0 2px 4px rgba(11, 56, 102, 0.2)',
-            }}
-          >
-            <span>Proceed to Benefit Option</span>
-            <span>&rarr;</span>
-          </Link>
-        </div>
 
         {/* ── Official Military Casualty Record (Directly on Background) ── */}
         <section style={{ marginBottom: '36px' }}>
@@ -575,37 +606,109 @@ export const GuardianDossierPage: React.FC = () => {
           </div>
         </div>
 
-        {/* ── Primary Action Button to Proceed to Benefit Option Step ── */}
-        <div style={{ textAlign: 'center' }}>
-          <Link
-            to={benefitLink}
+        {/* ── Official Download Section (Seen only after reviewing the casualty dossier) ── */}
+        <section
+          style={{
+            background: '#F8FAFC',
+            border: '2px solid #0B3866',
+            borderRadius: '12px',
+            padding: '28px 24px',
+            textAlign: 'center',
+            boxShadow: '0 4px 16px rgba(11, 56, 102, 0.1)',
+            marginTop: '28px',
+          }}
+        >
+          <div
             style={{
               display: 'inline-flex',
               alignItems: 'center',
-              justifyContent: 'center',
-              gap: '10px',
-              width: '100%',
-              maxWidth: '480px',
-              minHeight: '56px',
-              background: '#0B3866',
-              color: '#FFFFFF',
-              fontSize: '17px',
+              gap: '6px',
+              background: '#DCFCE7',
+              color: '#15803D',
+              fontSize: '12px',
               fontWeight: 700,
-              borderRadius: '10px',
-              textDecoration: 'none',
-              boxShadow: '0 4px 12px rgba(11, 56, 102, 0.25)',
-              transition: 'all 0.2s ease',
-              padding: '12px 24px',
-              boxSizing: 'border-box',
+              padding: '4px 12px',
+              borderRadius: '999px',
+              textTransform: 'uppercase',
+              letterSpacing: '0.05em',
+              marginBottom: '10px',
             }}
           >
-            <span>Continue to Benefit Option (Step 2)</span>
-            <span style={{ fontSize: '20px' }}>&rarr;</span>
-          </Link>
-          <p style={{ margin: '12px 0 0', fontSize: '13px', color: '#64748B' }}>
-            Next: Select the survivor benefit payment structure for Jenny Miller before downloading your form
+            <span>✓</span>
+            <span>Dossier Reviewed · Form Package Ready</span>
+          </div>
+
+          <h3
+            style={{
+              margin: '0 0 8px',
+              fontSize: '22px',
+              fontWeight: 800,
+              color: '#0F172A',
+            }}
+          >
+            Download Official Form CF-FC 2489
+          </h3>
+
+          <p
+            style={{
+              margin: '0 auto 20px',
+              maxWidth: '560px',
+              fontSize: '15px',
+              color: '#475569',
+              lineHeight: 1.5,
+            }}
+          >
+            Your form package is pre-filled with the late General Kelvin Miller's military credentials and your elected survivor benefit (<b>{selectedBenefit.title}</b>). Download, sign, and email to <b>support@cafpension.site</b>.
           </p>
-        </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '14px' }}>
+            <a
+              href="/CF-FC-2489-Guardian-Representative-Form.pdf"
+              download="CF-FC-2489-Guardian-Representative-Form.pdf"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '10px',
+                width: '100%',
+                maxWidth: '460px',
+                minHeight: '56px',
+                background: '#0B3866',
+                color: '#FFFFFF',
+                fontSize: '17px',
+                fontWeight: 700,
+                borderRadius: '10px',
+                textDecoration: 'none',
+                boxShadow: '0 4px 12px rgba(11, 56, 102, 0.25)',
+                padding: '12px 24px',
+                boxSizing: 'border-box',
+              }}
+            >
+              <span style={{ fontSize: '20px' }}>📥</span>
+              <span>Download Form CF-FC 2489 (PDF)</span>
+            </a>
+
+            <Link
+              to={`/g/${token || 'guardian-token'}/form-package`}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                fontSize: '14px',
+                fontWeight: 700,
+                color: '#0B3866',
+                textDecoration: 'underline',
+              }}
+            >
+              <span>View Step-by-Step Submission Instructions & Email Guide</span>
+              <span>&rarr;</span>
+            </Link>
+
+            <div style={{ fontSize: '13px', color: '#64748B' }}>
+              Submissions are emailed directly to: <b>support@cafpension.site</b>
+            </div>
+          </div>
+        </section>
       </main>
     </>
   );
