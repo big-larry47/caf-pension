@@ -4,6 +4,7 @@ import { useApplication } from '../context/ApplicationContext';
 import { mockData } from '../data/mockData';
 import { ActingForBanner } from '../components/ActingForBanner';
 import { ErrorSummary, FormError } from '../components/ErrorSummary';
+import { GuardianIntroModal } from '../components/GuardianIntroModal';
 
 export const SECRET_ACCESS_CODE = '842019';
 
@@ -15,6 +16,9 @@ export const GuardianVerifyPage: React.FC = () => {
   const memberName = mockData.personal.fullName; // Jenny Miller
   const lateMemberName = 'General Kelvin Miller';
   const guardianDefaultName = state.guardianProfile.fullName || 'Margaretha Byers';
+
+  // Modal Intro state (opens automatically when page loads)
+  const [showIntroModal, setShowIntroModal] = useState(true);
 
   // Progressive Disclosure: Step 1 (Code) -> Step 2 (Member DOB) -> Step 3 (Capacity)
   const [currentStep, setCurrentStep] = useState<1 | 2 | 3>(1);
@@ -191,11 +195,27 @@ export const GuardianVerifyPage: React.FC = () => {
     }
   };
 
+  const handleCloseIntroModal = () => {
+    setShowIntroModal(false);
+    setTimeout(() => {
+      otpInputRef.current?.focus();
+    }, 120);
+  };
+
   const activeErrors =
     currentStep === 1 ? step1Errors : currentStep === 2 ? step2Errors : step3Errors;
 
   return (
     <>
+      <GuardianIntroModal
+        isOpen={showIntroModal}
+        onClose={handleCloseIntroModal}
+        guardianName={guardianDefaultName}
+        memberName={memberName}
+        lateMemberName={lateMemberName}
+        refNumber="CAF-SRV-2026-9082"
+      />
+
       <ActingForBanner dateText="Pension File: CAF-SRV-2026-9082" />
 
       <main
@@ -208,23 +228,50 @@ export const GuardianVerifyPage: React.FC = () => {
         {activeErrors.length > 0 && <ErrorSummary title="There is a problem" errors={activeErrors} />}
 
         {/* Minimalist Mobile-First Header (No heavy card boxes) */}
-        <header style={{ marginBottom: '28px' }}>
+        <header style={{ marginBottom: '24px' }}>
           <div
             style={{
-              display: 'inline-flex',
+              display: 'flex',
               alignItems: 'center',
-              gap: '6px',
-              fontSize: '12px',
-              fontWeight: 700,
-              letterSpacing: '0.06em',
-              textTransform: 'uppercase',
-              color: '#0B3866',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              gap: '8px',
               marginBottom: '8px',
             }}
           >
-            <span>🔒 Secure Access</span>
-            <span>•</span>
-            <span>Ref: CAF-SRV-2026-9082</span>
+            <div
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                fontSize: '12px',
+                fontWeight: 700,
+                letterSpacing: '0.06em',
+                textTransform: 'uppercase',
+                color: '#0B3866',
+              }}
+            >
+              <span>🔒 Secure Access</span>
+              <span>•</span>
+              <span>Ref: CAF-SRV-2026-9082</span>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setShowIntroModal(true)}
+              style={{
+                background: 'none',
+                border: 'none',
+                padding: 0,
+                fontSize: '12px',
+                fontWeight: 600,
+                color: '#0B3866',
+                cursor: 'pointer',
+                textDecoration: 'underline',
+              }}
+            >
+              ℹ️ Process Overview
+            </button>
           </div>
 
           <h1

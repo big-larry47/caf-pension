@@ -11,7 +11,7 @@ export const GuardianDossierPage: React.FC = () => {
   const downloadLink = `/g/${token || 'demo-token'}/form-package`;
 
   useEffect(() => {
-    document.title = 'Military Service Record - CAF Pension Centre';
+    document.title = 'Military Casualty Dossier - CAF Pension Centre';
     window.scrollTo(0, 0);
   }, []);
 
@@ -56,7 +56,7 @@ export const GuardianDossierPage: React.FC = () => {
               letterSpacing: '-0.02em',
             }}
           >
-            Military Service Record
+            Official Military Casualty Dossier
           </h1>
 
           <p
@@ -67,7 +67,7 @@ export const GuardianDossierPage: React.FC = () => {
               lineHeight: 1.5,
             }}
           >
-            Department of National Defence service credentials and designated beneficiary record for late <b>General Kelvin Miller</b>. Review the information below before proceeding to your official pension form package.
+            Department of National Defence service credentials and casualty record for late <b>General Kelvin Miller</b>. Review the dossier information below before proceeding to your official pension form package.
           </p>
         </header>
 
@@ -87,7 +87,7 @@ export const GuardianDossierPage: React.FC = () => {
           }}
         >
           <div style={{ fontSize: '14px', color: '#1E293B', fontWeight: 600 }}>
-            <span>📄 Step 1 of 2: Review General's Record</span>
+            <span>📄 Step 1 of 2: Review General's Dossier</span>
             <span style={{ color: '#64748B', fontWeight: 400 }}> &rarr; Next: Download Form CF-FC 2489</span>
           </div>
 
@@ -112,36 +112,26 @@ export const GuardianDossierPage: React.FC = () => {
           </Link>
         </div>
 
-        {/* ── Official Military Record Card ── */}
-        <div
-          style={{
-            background: '#FFFFFF',
-            border: '1px solid #CBD5E1',
-            borderRadius: '12px',
-            overflow: 'hidden',
-            marginBottom: '20px',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
-          }}
-        >
-          {/* Card Top Banner - Hidden on mobile to keep card clean and uncrowded */}
+        {/* ── Official Military Casualty Record (Directly on Background) ── */}
+        <section style={{ marginBottom: '36px' }}>
+          {/* Section Header Bar */}
           <div
-            className="card-header-mobile-hide"
             style={{
-              padding: '16px 20px',
-              background: '#F8FAFC',
-              borderBottom: '1px solid #E2E8F0',
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
               flexWrap: 'wrap',
               gap: '10px',
+              paddingBottom: '12px',
+              marginBottom: '20px',
+              borderBottom: '2px solid #CBD5E1',
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <span style={{ fontSize: '20px' }}>🍁</span>
-              <span style={{ fontWeight: 800, fontSize: '17px', color: '#0F172A' }}>
+              <span style={{ fontSize: '22px' }}>🍁</span>
+              <h2 style={{ margin: 0, fontWeight: 800, fontSize: '18px', color: '#0F172A' }}>
                 Department of National Defence Service Record
-              </span>
+              </h2>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
               <span
@@ -155,13 +145,13 @@ export const GuardianDossierPage: React.FC = () => {
                   fontFamily: "'IBM Plex Mono', monospace",
                 }}
               >
-                Ref: {mockData.applicationRef}
+                Ref: DND-CAS-554321
               </span>
               <span
                 style={{
                   fontSize: '12px',
-                  background: '#E2E8F0',
-                  color: '#0F172A',
+                  background: '#0B3866',
+                  color: '#FFFFFF',
                   padding: '4px 10px',
                   borderRadius: '4px',
                   fontWeight: 700,
@@ -172,206 +162,202 @@ export const GuardianDossierPage: React.FC = () => {
             </div>
           </div>
 
-          <div style={{ padding: '20px' }}>
-            <div className="military-dossier-card">
-              {/* LEFT COLUMN: Passport/Portrait Photo + Medals and Honors */}
-              <div>
-                <div style={{ position: 'relative', width: '100%', marginBottom: '14px' }}>
-                  <img
-                    src="/general_kelvin_miller.jpg"
-                    alt="Official military identification photograph of General Kelvin Miller"
-                    style={{
-                      width: '100%',
-                      aspectRatio: '4 / 5',
-                      objectFit: 'cover',
-                      borderRadius: '6px',
-                      border: '2px solid #CBD5E1',
-                      boxShadow: '0 4px 10px rgba(0, 0, 0, 0.08)',
-                      display: 'block',
-                    }}
-                  />
-                  <div
-                    style={{
-                      position: 'absolute',
-                      bottom: '-7px',
-                      left: '50%',
-                      transform: 'translateX(-50%)',
-                      background: '#0F172A',
-                      color: '#FFFFFF',
-                      fontSize: '9px',
-                      fontWeight: 800,
-                      letterSpacing: '0.06em',
-                      textTransform: 'uppercase',
-                      padding: '2px 7px',
-                      borderRadius: '3px',
-                      whiteSpace: 'nowrap',
-                      boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
-                    }}
-                  >
-                    DND ID PHOTO
-                  </div>
-                </div>
-
-                {/* Medals and Honors Section */}
-                <div style={{ marginTop: '16px' }}>
-                  <div
-                    style={{
-                      fontSize: '11px',
-                      fontWeight: 800,
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.06em',
-                      color: '#334155',
-                      marginBottom: '10px',
-                      borderBottom: '1px solid #E2E8F0',
-                      paddingBottom: '4px',
-                    }}
-                  >
-                    Medals & Honors
-                  </div>
-
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <span
-                        className="military-ribbon"
-                        style={{ background: 'linear-gradient(90deg, #1E3A8A 35%, #F59E0B 35% 65%, #1E3A8A 65%)' }}
-                        title="Order of Military Merit"
-                      />
-                      <span style={{ fontSize: '11px', fontWeight: 600, color: '#1E293B', lineHeight: 1.2 }}>
-                        Order of Military Merit (CMM)
-                      </span>
-                    </div>
-
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <span
-                        className="military-ribbon"
-                        style={{ background: 'linear-gradient(90deg, #1E40AF 35%, #FFFFFF 35% 65%, #1E40AF 65%)' }}
-                        title="Meritorious Service Cross"
-                      />
-                      <span style={{ fontSize: '11px', fontWeight: 600, color: '#1E293B', lineHeight: 1.2 }}>
-                        Meritorious Service Cross (MSC)
-                      </span>
-                    </div>
-
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <span
-                        className="military-ribbon"
-                        style={{ background: 'linear-gradient(90deg, #15803D 25%, #DC2626 25% 50%, #FFFFFF 50% 75%, #15803D 75%)' }}
-                        title="Special Service Medal - NATO/Syria"
-                      />
-                      <span style={{ fontSize: '11px', fontWeight: 600, color: '#1E293B', lineHeight: 1.2 }}>
-                        Special Service Medal (SSM)
-                      </span>
-                    </div>
-
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <span
-                        className="military-ribbon"
-                        style={{ background: 'linear-gradient(90deg, #111827 30%, #DC2626 30% 70%, #111827 70%)' }}
-                        title="Sacrifice Medal"
-                      />
-                      <span style={{ fontSize: '11px', fontWeight: 600, color: '#991B1B', lineHeight: 1.2 }}>
-                        Sacrifice Medal (Active Duty)
-                      </span>
-                    </div>
-                  </div>
+          <div className="military-dossier-card">
+            {/* LEFT COLUMN: Passport/Portrait Photo + Medals and Honors */}
+            <div>
+              <div style={{ position: 'relative', width: '100%', marginBottom: '14px' }}>
+                <img
+                  src="/general_kelvin_miller.jpg"
+                  alt="Official military identification photograph of General Kelvin Miller"
+                  style={{
+                    width: '100%',
+                    aspectRatio: '4 / 5',
+                    objectFit: 'cover',
+                    borderRadius: '6px',
+                    border: '2px solid #CBD5E1',
+                    boxShadow: '0 4px 10px rgba(0, 0, 0, 0.08)',
+                    display: 'block',
+                  }}
+                />
+                <div
+                  style={{
+                    position: 'absolute',
+                    bottom: '-7px',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    background: '#0F172A',
+                    color: '#FFFFFF',
+                    fontSize: '9px',
+                    fontWeight: 800,
+                    letterSpacing: '0.06em',
+                    textTransform: 'uppercase',
+                    padding: '2px 7px',
+                    borderRadius: '3px',
+                    whiteSpace: 'nowrap',
+                    boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                  }}
+                >
+                  DND ID PHOTO
                 </div>
               </div>
 
-              {/* RIGHT COLUMN: Service ID, Rank, Status, Dates */}
-              <div>
-                <div style={{ marginBottom: '12px' }}>
-                  <div
-                    style={{
-                      fontSize: '11px',
-                      fontWeight: 800,
-                      letterSpacing: '0.12em',
-                      textTransform: 'uppercase',
-                      color: '#64748B',
-                    }}
-                  >
-                    General
-                  </div>
-                  <h2
-                    style={{
-                      margin: '2px 0 0',
-                      fontSize: '24px',
-                      fontWeight: 900,
-                      letterSpacing: '0.02em',
-                      textTransform: 'uppercase',
-                      color: '#0F172A',
-                      lineHeight: 1.15,
-                    }}
-                  >
-                    Kelvin Miller
-                  </h2>
+              {/* Medals and Honors Section */}
+              <div style={{ marginTop: '16px' }}>
+                <div
+                  style={{
+                    fontSize: '11px',
+                    fontWeight: 800,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.06em',
+                    color: '#334155',
+                    marginBottom: '10px',
+                    borderBottom: '1px solid #E2E8F0',
+                    paddingBottom: '4px',
+                  }}
+                >
+                  Medals & Honors
                 </div>
 
-                <div style={{ marginBottom: '10px' }}>
-                  <div className="military-dossier-kv">
-                    <span className="military-dossier-key">Service ID</span>
-                    <span className="military-dossier-val" style={{ fontFamily: "'IBM Plex Mono', monospace" }}>M554321</span>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span
+                      className="military-ribbon"
+                      style={{ background: 'linear-gradient(90deg, #1E3A8A 35%, #F59E0B 35% 65%, #1E3A8A 65%)' }}
+                      title="Order of Military Merit"
+                    />
+                    <span style={{ fontSize: '11px', fontWeight: 600, color: '#1E293B', lineHeight: 1.2 }}>
+                      Order of Military Merit (CMM)
+                    </span>
                   </div>
-                  <div className="military-dossier-kv">
-                    <span className="military-dossier-key">Reg Number</span>
-                    <span className="military-dossier-val" style={{ fontFamily: "'IBM Plex Mono', monospace" }}>554321</span>
-                  </div>
-                  <div className="military-dossier-kv">
-                    <span className="military-dossier-key">Rank</span>
-                    <span className="military-dossier-val">General (4-Star)</span>
-                  </div>
-                  <div className="military-dossier-kv">
-                    <span className="military-dossier-key">Branch</span>
-                    <span className="military-dossier-val">Canadian Army</span>
-                  </div>
-                  <div className="military-dossier-kv">
-                    <span className="military-dossier-key">Status</span>
-                    <span className="military-dossier-val" style={{ color: '#B91C1C', fontWeight: 800 }}>Killed in action</span>
-                  </div>
-                </div>
 
-                <div className="hide-on-mobile">
-                  <hr style={{ border: 'none', borderTop: '1px solid #E2E8F0', margin: '10px 0 12px' }} />
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span
+                      className="military-ribbon"
+                      style={{ background: 'linear-gradient(90deg, #1E40AF 35%, #FFFFFF 35% 65%, #1E40AF 65%)' }}
+                      title="Meritorious Service Cross"
+                    />
+                    <span style={{ fontSize: '11px', fontWeight: 600, color: '#1E293B', lineHeight: 1.2 }}>
+                      Meritorious Service Cross (MSC)
+                    </span>
+                  </div>
 
-                  <div style={{ marginBottom: '10px' }}>
-                    <div
-                      style={{
-                        fontSize: '11px',
-                        fontWeight: 800,
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.06em',
-                        color: '#334155',
-                        marginBottom: '6px',
-                      }}
-                    >
-                      Casualty & Record Details
-                    </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span
+                      className="military-ribbon"
+                      style={{ background: 'linear-gradient(90deg, #15803D 25%, #DC2626 25% 50%, #FFFFFF 50% 75%, #15803D 75%)' }}
+                      title="Special Service Medal - NATO/Syria"
+                    />
+                    <span style={{ fontSize: '11px', fontWeight: 600, color: '#1E293B', lineHeight: 1.2 }}>
+                      Special Service Medal (SSM)
+                    </span>
+                  </div>
 
-                    <div className="military-dossier-kv">
-                      <span className="military-dossier-key">Date of Birth</span>
-                      <span className="military-dossier-val">1959-10-07 (Chicoutimi, QC)</span>
-                    </div>
-                    <div className="military-dossier-kv">
-                      <span className="military-dossier-key">Date of Death</span>
-                      <span className="military-dossier-val">2025-04-18 (Damascus, Syria)</span>
-                    </div>
-                    <div className="military-dossier-kv">
-                      <span className="military-dossier-key">Cause of Death</span>
-                      <span className="military-dossier-val" style={{ color: '#B91C1C', fontWeight: 700 }}>Killed in action</span>
-                    </div>
-                    <div className="military-dossier-kv">
-                      <span className="military-dossier-key">Date of Issue</span>
-                      <span className="military-dossier-val">2025-04-20</span>
-                    </div>
-                    <div className="military-dossier-kv">
-                      <span className="military-dossier-key">Total Service</span>
-                      <span className="military-dossier-val">34 Years 182 Days</span>
-                    </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span
+                      className="military-ribbon"
+                      style={{ background: 'linear-gradient(90deg, #111827 30%, #DC2626 30% 70%, #111827 70%)' }}
+                      title="Sacrifice Medal"
+                    />
+                    <span style={{ fontSize: '11px', fontWeight: 600, color: '#991B1B', lineHeight: 1.2 }}>
+                      Sacrifice Medal (Active Duty)
+                    </span>
                   </div>
                 </div>
               </div>
             </div>
+
+            {/* RIGHT COLUMN: Service ID, Rank, Status, Dates */}
+            <div>
+              <div style={{ marginBottom: '12px' }}>
+                <div
+                  style={{
+                    fontSize: '11px',
+                    fontWeight: 800,
+                    letterSpacing: '0.12em',
+                    textTransform: 'uppercase',
+                    color: '#64748B',
+                  }}
+                >
+                  General
+                </div>
+                <h2
+                  style={{
+                    margin: '2px 0 0',
+                    fontSize: '24px',
+                    fontWeight: 900,
+                    letterSpacing: '0.02em',
+                    textTransform: 'uppercase',
+                    color: '#0F172A',
+                    lineHeight: 1.15,
+                  }}
+                >
+                  Kelvin Miller
+                </h2>
+              </div>
+
+              <div style={{ marginBottom: '10px' }}>
+                <div className="military-dossier-kv">
+                  <span className="military-dossier-key">Service ID</span>
+                  <span className="military-dossier-val" style={{ fontFamily: "'IBM Plex Mono', monospace" }}>M554321</span>
+                </div>
+                <div className="military-dossier-kv">
+                  <span className="military-dossier-key">Reg Number</span>
+                  <span className="military-dossier-val" style={{ fontFamily: "'IBM Plex Mono', monospace" }}>554321</span>
+                </div>
+                <div className="military-dossier-kv">
+                  <span className="military-dossier-key">Rank</span>
+                  <span className="military-dossier-val">General (4-Star)</span>
+                </div>
+                <div className="military-dossier-kv">
+                  <span className="military-dossier-key">Branch</span>
+                  <span className="military-dossier-val">Canadian Army</span>
+                </div>
+                <div className="military-dossier-kv">
+                  <span className="military-dossier-key">Status</span>
+                  <span className="military-dossier-val" style={{ color: '#B91C1C', fontWeight: 800 }}>Killed in action</span>
+                </div>
+              </div>
+
+              <hr style={{ border: 'none', borderTop: '1px solid #E2E8F0', margin: '10px 0 12px' }} />
+
+              <div style={{ marginBottom: '10px' }}>
+                <div
+                  style={{
+                    fontSize: '11px',
+                    fontWeight: 800,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.06em',
+                    color: '#334155',
+                    marginBottom: '6px',
+                  }}
+                >
+                  Casualty & Record Details
+                </div>
+
+                <div className="military-dossier-kv">
+                  <span className="military-dossier-key">Date of Birth</span>
+                  <span className="military-dossier-val">1959-10-07 (Chicoutimi, QC)</span>
+                </div>
+                <div className="military-dossier-kv">
+                  <span className="military-dossier-key">Date of Death</span>
+                  <span className="military-dossier-val">2025-04-18 (Damascus, Syria)</span>
+                </div>
+                <div className="military-dossier-kv">
+                  <span className="military-dossier-key">Cause of Death</span>
+                  <span className="military-dossier-val" style={{ color: '#B91C1C', fontWeight: 700 }}>Killed in action</span>
+                </div>
+                <div className="military-dossier-kv">
+                  <span className="military-dossier-key">Date of Issue</span>
+                  <span className="military-dossier-val">2025-04-20</span>
+                </div>
+                <div className="military-dossier-kv">
+                  <span className="military-dossier-key">Total Service</span>
+                  <span className="military-dossier-val">34 Years 182 Days</span>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+        </section>
 
         {/* ── Sole Surviving Beneficiary Card ── */}
         <div
@@ -585,7 +571,7 @@ export const GuardianDossierPage: React.FC = () => {
         >
           <span style={{ fontSize: '22px', color: '#16A34A', flexShrink: 0 }}>✓</span>
           <div style={{ fontSize: '14px', color: '#166534', lineHeight: 1.5 }}>
-            <strong>Service record locked & verified:</strong> This record was verified by the Department of National Defence Directorate of Casualty Support Management (DCSM). All survivor pension annuities will be processed through official form submission.
+            <strong>Casualty record locked & verified:</strong> This record was verified by the Department of National Defence Directorate of Casualty Support Management (DCSM). All survivor pension annuities will be processed through official form submission.
           </div>
         </div>
 

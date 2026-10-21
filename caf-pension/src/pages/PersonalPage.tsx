@@ -152,35 +152,25 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
           {/* ===================== GUARDIAN / CASUALTY DOSSIER VIEW ===================== */}
           {isGuardian ? (
             <div className="fade-in-slide">
-              {/* Official Military Casualty Dossier Card */}
-              <div
-                style={{
-                  background: '#FFFFFF',
-                  border: '1px solid #CBD5E1',
-                  borderRadius: '12px',
-                  overflow: 'hidden',
-                  marginBottom: '20px',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
-                }}
-              >
+              {/* Department of National Defence Service Record (Directly on Background) */}
+              <section style={{ marginBottom: '32px' }}>
                 <div
-                  className="card-header-mobile-hide"
                   style={{
-                    padding: '16px 22px',
-                    background: '#F8FAFC',
-                    borderBottom: '1px solid #E2E8F0',
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     flexWrap: 'wrap',
                     gap: '10px',
+                    paddingBottom: '12px',
+                    marginBottom: '18px',
+                    borderBottom: '2px solid #CBD5E1',
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <span style={{ fontSize: '20px' }}>🍁</span>
-                    <span style={{ fontWeight: 800, fontSize: '17px', color: '#0F172A' }}>
-                      Official Military Service Record
-                    </span>
+                    <span style={{ fontSize: '22px' }}>🍁</span>
+                    <h2 style={{ margin: 0, fontWeight: 800, fontSize: '18px', color: '#0F172A' }}>
+                      Department of National Defence Service Record
+                    </h2>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
                     <span
@@ -194,13 +184,13 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
                         fontFamily: "'IBM Plex Mono', monospace",
                       }}
                     >
-                      Ref: {mockData.applicationRef}
+                      Ref: DND-CAS-554321
                     </span>
                     <span
                       style={{
                         fontSize: '12px',
-                        background: '#E2E8F0',
-                        color: '#0F172A',
+                        background: '#0B3866',
+                        color: '#FFFFFF',
                         padding: '4px 10px',
                         borderRadius: '4px',
                         fontWeight: 700,
@@ -211,8 +201,7 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
                   </div>
                 </div>
 
-                <div style={{ padding: '20px 22px' }}>
-                  <div className="military-dossier-card">
+                <div className="military-dossier-card">
                     {/* LEFT COLUMN: Portrait Photo + Medals and Honors */}
                     <div>
                       {/* Portrait Photo */}
@@ -372,50 +361,47 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
                         </div>
                       </div>
 
-                      {/* Divider & Casualty section hidden on mobile to prevent packed appearance */}
-                      <div className="hide-on-mobile">
-                        <hr style={{ border: 'none', borderTop: '1px solid #E2E8F0', margin: '10px 0 12px' }} />
+                      {/* Divider */}
+                      <hr style={{ border: 'none', borderTop: '1px solid #E2E8F0', margin: '10px 0 12px' }} />
 
-                        <div style={{ marginBottom: '10px' }}>
-                          <div
-                            style={{
-                              fontSize: '11px',
-                              fontWeight: 800,
-                              textTransform: 'uppercase',
-                              letterSpacing: '0.06em',
-                              color: '#334155',
-                              marginBottom: '6px',
-                            }}
-                          >
-                            Casualty & Record Details
-                          </div>
-
-                          <div className="military-dossier-kv">
-                            <span className="military-dossier-key">Date of Birth</span>
-                            <span className="military-dossier-val">1959-10-07 (Chicoutimi, QC)</span>
-                          </div>
-                          <div className="military-dossier-kv">
-                            <span className="military-dossier-key">Date of Death</span>
-                            <span className="military-dossier-val">2025-04-18 (Damascus, Syria)</span>
-                          </div>
-                          <div className="military-dossier-kv">
-                            <span className="military-dossier-key">Cause of Death</span>
-                            <span className="military-dossier-val" style={{ color: '#B91C1C' }}>Killed in action</span>
-                          </div>
-                          <div className="military-dossier-kv">
-                            <span className="military-dossier-key">Date of Issue</span>
-                            <span className="military-dossier-val">2025-04-20</span>
-                          </div>
-                          <div className="military-dossier-kv">
-                            <span className="military-dossier-key">Total Service</span>
-                            <span className="military-dossier-val">34 Years 182 Days</span>
-                          </div>
+                      {/* Section 2: Service & Casualty Information from Certificate */}
+                      <div style={{ marginBottom: '10px' }}>
+                        <div
+                          style={{
+                            fontSize: '11px',
+                            fontWeight: 800,
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.06em',
+                            color: '#334155',
+                            marginBottom: '6px',
+                          }}
+                        >
+                          Casualty & Record Details
                         </div>
+
+                        <div className="military-dossier-kv">
+                          <span className="military-dossier-key">Date of Birth</span>
+                          <span className="military-dossier-val">1959-10-07 (Chicoutimi, QC)</span>
+                        </div>
+                        <div className="military-dossier-kv">
+                          <span className="military-dossier-key">Date of Death</span>
+                          <span className="military-dossier-val">2025-04-18 (Damascus, Syria)</span>
+                        </div>
+                        <div className="military-dossier-kv">
+                          <span className="military-dossier-key">Cause of Death</span>
+                          <span className="military-dossier-val" style={{ color: '#B91C1C' }}>Killed in action</span>
+                        </div>
+                        <div className="military-dossier-kv">
+                          <span className="military-dossier-key">Date of Issue</span>
+                          <span className="military-dossier-val">2025-04-20</span>
+                        </div>
+                        <div className="military-dossier-kv">
+                          <span className="military-dossier-key">Total Service</span>
+                          <span className="military-dossier-val">34 Years 182 Days</span>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
+                </section>
 
               {/* Sole Surviving Beneficiary Card - Highlighted in Rich Gold & Navy */}
               <div
