@@ -12,7 +12,7 @@ interface ErrorSummaryProps {
 }
 
 export const ErrorSummary: React.FC<ErrorSummaryProps> = ({
-  title = 'Check your bank details',
+  title = 'There is a problem',
   errors,
   focusOnMount = true,
 }) => {

@@ -137,7 +137,7 @@ export const MemberBankDepositPage: React.FC = () => {
             </>
           }
         >
-          {errorList.length > 0 && <ErrorSummary errors={errorList} />}
+          {errorList.length > 0 && <ErrorSummary title="Check your bank details" errors={errorList} />}
 
           <h1 className="page-title">Where should we send your pension?</h1>
           <p className="page-lead">

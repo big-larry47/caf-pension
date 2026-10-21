@@ -205,7 +205,7 @@ export const GuardianVerifyPage: React.FC = () => {
           padding: '20px 16px 80px',
         }}
       >
-        {activeErrors.length > 0 && <ErrorSummary errors={activeErrors} />}
+        {activeErrors.length > 0 && <ErrorSummary title="There is a problem" errors={activeErrors} />}
 
         {/* Minimalist Mobile-First Header (No heavy card boxes) */}
         <header style={{ marginBottom: '28px' }}>
@@ -386,11 +386,11 @@ export const GuardianVerifyPage: React.FC = () => {
                   marginBottom: '8px',
                 }}
               >
-                Enter your 6-digit access code
+                Enter your 6-digit security access code
               </label>
 
               <p style={{ margin: '0 0 14px', fontSize: '14px', color: '#64748B' }}>
-                Provided via your invitation email or text message.
+                Enter the one-time security code sent to you via SMS / text message.
               </p>
 
               <input
