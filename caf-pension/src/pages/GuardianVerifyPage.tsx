@@ -379,14 +379,14 @@ export const GuardianVerifyPage: React.FC = () => {
             ? "Before you start, confirm it's you"
             : currentPart === 2
             ? 'Your contact information'
-            : 'Your representation authority'}
+            : 'Relationship to the beneficiary & photo ID'}
         </h1>
         <p style={{ margin: '0 0 24px', color: 'var(--color-ink-2)', fontSize: '16px', lineHeight: 1.5 }}>
           {currentPart === 1
-            ? `You have been designated as legal representative / Power of Attorney to receive survivor benefits for Jenny Miller (daughter of the late ${memberName}). We check your identity in 3 short steps.`
+            ? `You have been designated to assist the pension beneficiary, Jenny Miller (dependent child of the late ${memberName}). We verify your contact record in 3 short steps.`
             : currentPart === 2
-            ? `We will send official correspondence and statements for Jenny Miller's pension to this address.`
-            : `Please confirm your legal authority to represent Jenny Miller and confirm the legal declaration.`}
+            ? `Official correspondence and statements regarding the beneficiary's pension will be sent to this address.`
+            : `Please confirm your relationship to the beneficiary (Jenny Miller) and submit your photo ID.`}
         </p>
 
         {/* Compact summary of completed parts for reassurance and easy editing */}
@@ -1145,10 +1145,10 @@ export const GuardianVerifyPage: React.FC = () => {
             >
               <div>
                 <h2 style={{ margin: '0 0 6px', fontSize: '20px', color: '#0B335E' }}>
-                  3. Your relationship to Jenny &amp; photo ID
+                  3. Your relationship to the beneficiary &amp; photo ID
                 </h2>
                 <p style={{ margin: 0, color: 'var(--color-ink-2)', fontSize: '15px' }}>
-                  Jenny Miller has chosen you as her guardian to help with her survivor pension. Upload a piece of photo ID and confirm your details.
+                  You have been designated to assist the pension beneficiary, Jenny Miller. Please confirm your relationship and upload a piece of photo ID.
                 </p>
               </div>
 
@@ -1163,7 +1163,7 @@ export const GuardianVerifyPage: React.FC = () => {
                   lineHeight: 1.45,
                 }}
               >
-                <strong>✓ No legal documents required:</strong> If Jenny chose you as her guardian, you do not need a lawyer, court order, or formal legal certificate. Your contact information and a photo of your ID are all that is needed.
+                <strong>✓ No formal court appointment required:</strong> Anyone designated to assist the beneficiary can submit this form. You do not need a lawyer, court order, or formal legal certificate. Your contact information and a photo of your ID are all that is needed.
               </div>
 
               <div style={{ maxWidth: '420px' }}>
@@ -1176,7 +1176,7 @@ export const GuardianVerifyPage: React.FC = () => {
                     fontSize: '15px',
                   }}
                 >
-                  Your relationship to Jenny
+                  Your relationship to the beneficiary
                 </label>
                 <select
                   id="role"
@@ -1185,11 +1185,11 @@ export const GuardianVerifyPage: React.FC = () => {
                   className="field__select"
                   style={{ height: '48px', fontSize: '16px' }}
                 >
-                  <option value="guardian">Chosen guardian / trusted contact</option>
+                  <option value="guardian">Designated guardian / trusted adult</option>
                   <option value="family">Family member or relative</option>
                   <option value="poa">Power of attorney (if you have one)</option>
                   <option value="trustee">Trustee or estate representative</option>
-                  <option value="other">Other assisting contact</option>
+                  <option value="other">Other assisting representative</option>
                 </select>
               </div>
 
@@ -1236,7 +1236,7 @@ export const GuardianVerifyPage: React.FC = () => {
                     lineHeight: 1.5,
                   }}
                 >
-                  To act on behalf of Jenny Miller, please upload a clear image or scan of your valid government-issued photo ID (e.g. Canadian Driver’s Licence, Canadian Passport, Provincial/Territorial Photo ID card, or Permanent Resident Card).
+                  To safeguard the beneficiary&apos;s pension entitlements and verify the representative on file, please upload a clear image or scan of your valid photo ID (e.g. Canadian Driver’s Licence, Canadian Passport, Provincial/Territorial Photo ID card, or Permanent Resident Card).
                 </p>
                 <label
                   id="file-upload"
