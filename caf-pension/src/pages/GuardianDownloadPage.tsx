@@ -7,9 +7,6 @@ import { ActingForBanner } from '../components/ActingForBanner';
 export const GuardianDownloadPage: React.FC = () => {
   const { state } = useApplication();
   const { token } = useParams<{ token: string }>();
-  const [copiedEmail, setCopiedEmail] = useState(false);
-  const [copiedSubject, setCopiedSubject] = useState(false);
-
   useEffect(() => {
     document.title = 'Guardian Form Download & Instructions - CAF Pension Centre';
     window.scrollTo(0, 0);
@@ -24,19 +21,6 @@ export const GuardianDownloadPage: React.FC = () => {
   const memberName = mockData.personal.fullName; // Jenny Miller
   const refNumber = 'CAF-SRV-2026-9082';
   const destinationEmail = 'support@cafpension.site';
-  const emailSubject = `Guardian Form CF-FC 2489 — ${memberName} — Ref ${refNumber}`;
-
-  const handleCopyEmail = () => {
-    navigator.clipboard?.writeText(destinationEmail);
-    setCopiedEmail(true);
-    setTimeout(() => setCopiedEmail(false), 2500);
-  };
-
-  const handleCopySubject = () => {
-    navigator.clipboard?.writeText(emailSubject);
-    setCopiedSubject(true);
-    setTimeout(() => setCopiedSubject(false), 2500);
-  };
 
   return (
     <>
@@ -245,76 +229,21 @@ export const GuardianDownloadPage: React.FC = () => {
               <h3 style={{ margin: '0 0 6px', fontSize: '17px', fontWeight: 700, color: '#0F172A' }}>
                 Email to the CAF Pension Centre
               </h3>
-              <p style={{ margin: '0 0 14px', fontSize: '14px', color: '#475569', lineHeight: 1.5 }}>
-                Send your completed form and ID to our dedicated inbox:
+              <p style={{ margin: 0, fontSize: '15px', color: '#475569', lineHeight: 1.6 }}>
+                Email your completed and signed form and photo ID directly to{' '}
+                <a
+                  href={`mailto:${destinationEmail}`}
+                  style={{
+                    fontWeight: 700,
+                    color: '#0B3866',
+                    textDecoration: 'underline',
+                    wordBreak: 'break-all',
+                  }}
+                >
+                  {destinationEmail}
+                </a>
+                .
               </p>
-
-              {/* Clean flat copyable box (no heavy card) */}
-              <div
-                style={{
-                  background: '#F8FAFC',
-                  border: '1px solid #E2E8F0',
-                  borderRadius: '8px',
-                  padding: '14px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '12px',
-                }}
-              >
-                <div>
-                  <div style={{ fontSize: '11px', fontWeight: 700, color: '#64748B', textTransform: 'uppercase', marginBottom: '2px' }}>
-                    Email Address
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', flexWrap: 'wrap' }}>
-                    <code style={{ fontSize: '14px', fontWeight: 700, color: '#0B3866', wordBreak: 'break-all' }}>
-                      {destinationEmail}
-                    </code>
-                    <button
-                      type="button"
-                      onClick={handleCopyEmail}
-                      style={{
-                        background: '#FFFFFF',
-                        border: '1px solid #CBD5E1',
-                        borderRadius: '6px',
-                        padding: '4px 10px',
-                        fontSize: '12px',
-                        fontWeight: 600,
-                        cursor: 'pointer',
-                        color: copiedEmail ? '#16A34A' : '#334155',
-                      }}
-                    >
-                      {copiedEmail ? '✓ Copied' : '📋 Copy'}
-                    </button>
-                  </div>
-                </div>
-
-                <div style={{ borderTop: '1px solid #E2E8F0', paddingTop: '10px' }}>
-                  <div style={{ fontSize: '11px', fontWeight: 700, color: '#64748B', textTransform: 'uppercase', marginBottom: '2px' }}>
-                    Subject Line
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', flexWrap: 'wrap' }}>
-                    <span style={{ fontSize: '13px', color: '#334155', fontWeight: 600, wordBreak: 'break-all' }}>
-                      {emailSubject}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={handleCopySubject}
-                      style={{
-                        background: '#FFFFFF',
-                        border: '1px solid #CBD5E1',
-                        borderRadius: '6px',
-                        padding: '4px 10px',
-                        fontSize: '12px',
-                        fontWeight: 600,
-                        cursor: 'pointer',
-                        color: copiedSubject ? '#16A34A' : '#334155',
-                      }}
-                    >
-                      {copiedSubject ? '✓ Copied' : '📋 Copy'}
-                    </button>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
 
