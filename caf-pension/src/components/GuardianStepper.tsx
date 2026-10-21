@@ -23,7 +23,7 @@ export const GuardianStepper: React.FC<GuardianStepperProps> = ({
   isViewStep = false,
 }) => {
   const { state } = useApplication();
-  const token = state.invite.token || 'demo-token';
+  const token = state.invite.token || 'guardian-token';
   const currentIndex = currentStep - 1;
   const memberName = mockData.personal.fullName;
 

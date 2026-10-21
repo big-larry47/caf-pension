@@ -9,7 +9,7 @@ export const GuardianBenefitPage: React.FC = () => {
   const navigate = useNavigate();
   const { state, updateState } = useApplication();
 
-  const tokenParam = token || 'demo-token';
+  const tokenParam = token || 'guardian-token';
   const guardianName = state.guardianProfile.fullName || 'Margaretha Byers';
   const memberName = mockData.personal.fullName;
 

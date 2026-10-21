@@ -189,7 +189,7 @@ const defaultState: ApplicationState = {
 
   // Guardian Flow
   invite: {
-    token: 'demo-token',
+    token: 'guardian-token',
     status: 'none',
     sentAt: '18 April 2025',
     expiresAt: '18 May 2025',

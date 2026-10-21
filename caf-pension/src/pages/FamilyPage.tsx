@@ -32,7 +32,7 @@ export const FamilyPage: React.FC<FamilyPageProps> = ({
     state.invite.status === 'verified';
 
   const isLocked = readOnly || isGuardian || inviteActive;
-  const token = state.invite.token || 'demo-token';
+  const token = state.invite.token || 'guardian-token';
 
   useEffect(() => {
     document.title = 'Step 4 Family and beneficiaries - CAF Pension Centre';

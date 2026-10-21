@@ -91,7 +91,7 @@ export const MemberDepositChoicePage: React.FC = () => {
         type: 'invite',
         recipientEmail: email,
         guardianName: fullName,
-        token: state.invite.token || 'demo-token',
+        token: state.invite.token || 'guardian-token',
         customMessage: message,
       });
 

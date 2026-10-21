@@ -32,7 +32,7 @@ export const DeductionsPage: React.FC<DeductionsPageProps> = ({
     state.invite.status === 'verified';
 
   const isLocked = readOnly || isGuardian || inviteActive;
-  const token = state.invite.token || 'demo-token';
+  const token = state.invite.token || 'guardian-token';
 
   useEffect(() => {
     document.title = 'Step 5 Deductions and tax - CAF Pension Centre';

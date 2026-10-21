@@ -34,7 +34,7 @@ export const BenefitPage: React.FC<BenefitPageProps> = ({
 
   // Guardian can actively choose Jenny's benefit option on Step 3!
   const isLocked = isGuardian ? false : (readOnly || inviteActive);
-  const token = state.invite.token || 'demo-token';
+  const token = state.invite.token || 'guardian-token';
 
   useEffect(() => {
     document.title = 'Step 3 Benefit option - CAF Pension Centre';

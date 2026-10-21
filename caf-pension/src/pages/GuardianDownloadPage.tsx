@@ -14,7 +14,7 @@ export const GuardianDownloadPage: React.FC = () => {
 
   // Security gate: ONLY accessible after successfully answering the security questions
   if (state.invite.status !== 'verified') {
-    return <Navigate to={`/g/${token || 'demo-token'}`} replace />;
+    return <Navigate to={`/g/${token || 'guardian-token'}`} replace />;
   }
 
   const guardianName = state.guardianProfile.fullName || 'Margaretha Byers';
@@ -53,7 +53,7 @@ export const GuardianDownloadPage: React.FC = () => {
         {/* Navigation back to Step 2: Benefit Option */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap', marginBottom: '14px' }}>
           <Link
-            to={`/g/${token || 'demo-token'}/benefit-option`}
+            to={`/g/${token || 'guardian-token'}/benefit-option`}
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -69,7 +69,7 @@ export const GuardianDownloadPage: React.FC = () => {
           </Link>
           <span style={{ color: '#CBD5E1' }}>|</span>
           <Link
-            to={`/g/${token || 'demo-token'}/case-file`}
+            to={`/g/${token || 'guardian-token'}/case-file`}
             style={{
               fontSize: '13px',
               color: '#64748B',
@@ -145,7 +145,7 @@ export const GuardianDownloadPage: React.FC = () => {
             </div>
           </div>
           <Link
-            to={`/g/${token || 'demo-token'}/benefit-option`}
+            to={`/g/${token || 'guardian-token'}/benefit-option`}
             style={{
               fontSize: '13px',
               fontWeight: 700,

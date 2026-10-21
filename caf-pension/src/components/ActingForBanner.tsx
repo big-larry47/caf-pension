@@ -9,7 +9,7 @@ interface ActingForBannerProps {
 
 export const ActingForBanner: React.FC<ActingForBannerProps> = ({ dateText }) => {
   const { state } = useApplication();
-  const token = state.invite.token || 'demo-token';
+  const token = state.invite.token || 'guardian-token';
   const memberName = mockData.personal.fullName;
   const roleTitle =
     state.guardianProfile.authorityType === 'poa'

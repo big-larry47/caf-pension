@@ -8,7 +8,7 @@ export const GuardianDossierPage: React.FC = () => {
   const { token } = useParams<{ token: string }>();
   const { state } = useApplication();
   const guardianName = state.guardianProfile.fullName || 'Margaretha Byers';
-  const benefitLink = `/g/${token || 'demo-token'}/benefit-option`;
+  const benefitLink = `/g/${token || 'guardian-token'}/benefit-option`;
 
   useEffect(() => {
     document.title = 'Military Casualty Dossier - CAF Pension Centre';

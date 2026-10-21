@@ -32,7 +32,7 @@ export const ServicePage: React.FC<ServicePageProps> = ({
     state.invite.status === 'verified';
 
   const isLocked = readOnly || isGuardian || inviteActive;
-  const token = state.invite.token || 'demo-token';
+  const token = state.invite.token || 'guardian-token';
 
   useEffect(() => {
     document.title = 'Step 2 Service and release - CAF Pension Centre';

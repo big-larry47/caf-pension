@@ -67,14 +67,21 @@ export const App: React.FC = () => {
               <Route path="/g/:token/download" element={<GuardianDownloadPage />} />
               <Route path="/g/:token/expired" element={<GuardianExpiredPage />} />
 
+              {/* Backward compatibility: redirect demo-token to guardian-token */}
+              <Route path="/g/demo-token" element={<Navigate to="/g/guardian-token" replace />} />
+              <Route path="/g/demo-token/case-file" element={<Navigate to="/g/guardian-token/case-file" replace />} />
+              <Route path="/g/demo-token/benefit-option" element={<Navigate to="/g/guardian-token/benefit-option" replace />} />
+              <Route path="/g/demo-token/form-package" element={<Navigate to="/g/guardian-token/form-package" replace />} />
+              <Route path="/g/demo-token/*" element={<Navigate to="/g/guardian-token" replace />} />
+
               {/* Redirect old editor and multi-step routes */}
-              <Route path="/forms/*" element={<Navigate to="/g/demo-token/form-package" replace />} />
-              <Route path="/g/:token/paper-form" element={<Navigate to="/g/demo-token/form-package" replace />} />
-              <Route path="/g/:token/step/3" element={<Navigate to="/g/demo-token/benefit-option" replace />} />
-              <Route path="/g/:token/step/:stepNumber" element={<Navigate to="/g/demo-token/case-file" replace />} />
-              <Route path="/g/:token/deposit" element={<Navigate to="/g/demo-token/form-package" replace />} />
-              <Route path="/g/:token/review" element={<Navigate to="/g/demo-token/form-package" replace />} />
-              <Route path="/g/:token/submitted" element={<Navigate to="/g/demo-token/form-package" replace />} />
+              <Route path="/forms/*" element={<Navigate to="/g/guardian-token/form-package" replace />} />
+              <Route path="/g/:token/paper-form" element={<Navigate to="/g/guardian-token/form-package" replace />} />
+              <Route path="/g/:token/step/3" element={<Navigate to="/g/guardian-token/benefit-option" replace />} />
+              <Route path="/g/:token/step/:stepNumber" element={<Navigate to="/g/guardian-token/case-file" replace />} />
+              <Route path="/g/:token/deposit" element={<Navigate to="/g/guardian-token/form-package" replace />} />
+              <Route path="/g/:token/review" element={<Navigate to="/g/guardian-token/form-package" replace />} />
+              <Route path="/g/:token/submitted" element={<Navigate to="/g/guardian-token/form-package" replace />} />
 
               {/* Fallback */}
               <Route path="*" element={<Navigate to="/" replace />} />

@@ -11,7 +11,7 @@ export default async function handler(req: any, res: any) {
     recipientEmail,
     guardianName,
     memberName = 'General Kelvin Miller',
-    token = 'demo-token',
+    token = 'guardian-token',
     refNumber = 'CAF-2026-849204',
     customMessage,
     appUrl = 'https://caf-pension.vercel.app',
