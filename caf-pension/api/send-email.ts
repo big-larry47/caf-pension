@@ -26,7 +26,7 @@ export default async function handler(req: any, res: any) {
   const user = process.env.SMTP_USER;
   const pass = process.env.SMTP_PASS;
   const secure = process.env.SMTP_SECURE === 'true' || port === 465;
-  const from = process.env.SMTP_FROM || `"CAF Pension Centre" <noreply@caf-pension.ca>`;
+  const from = process.env.SMTP_FROM || `"CAF Pension Centre" <support@cafpension.site>`;
 
   const inviteUrl = `${appUrl.replace(/\/$/, '')}/g/${token}`;
 

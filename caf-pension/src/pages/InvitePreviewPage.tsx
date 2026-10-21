@@ -7,8 +7,7 @@ export const InvitePreviewPage: React.FC = () => {
   const { state } = useApplication();
   const token = state.invite.token || 'demo-token';
   const guardianName = state.invite.guardian.fullName || 'Margaretha Byers';
-  const beneficiaryName = mockData.beneficiary.fullName || 'Jenny Miller';
-  const lateMemberName = mockData.personal.fullName || 'General Kelvin Miller';
+  const memberName = mockData.personal.fullName;
   const guardianEmail = state.invite.guardian.email || 'margaretha.byers@example.com';
   const roleTitle =
     state.invite.guardian.role === 'poa'
@@ -78,14 +77,14 @@ export const InvitePreviewPage: React.FC = () => {
             >
               <span>
                 <b style={{ color: 'var(--color-ink)' }}>From:</b> CAF Pension
-                Centre &lt;donotreply@pension.forces.gc.ca&gt;
+                Centre &lt;support@cafpension.site&gt;
               </span>
               <span>
                 <b style={{ color: 'var(--color-ink)' }}>To:</b> {guardianEmail}
               </span>
               <span>
                 <b style={{ color: 'var(--color-ink)' }}>Subject:</b>{' '}
-                {beneficiaryName} — CAF Pension Representative Package & Instructions
+                {memberName} — CAF Pension Representative Package & Instructions
               </span>
             </div>
             <div
@@ -101,14 +100,14 @@ export const InvitePreviewPage: React.FC = () => {
             <div style={{ padding: '28px' }}>
               <p style={{ margin: '0 0 16px' }}>Hello {guardianName},</p>
               <p style={{ margin: '0 0 16px' }}>
-                <b>{beneficiaryName}</b> (surviving daughter of the late {lateMemberName}) has designated you to assist as her{' '}
-                <b>guardian / representative</b> for her Canadian Armed Forces survivor pension benefit.
+                <b>{memberName}</b> has designated you to assist as their{' '}
+                <b>guardian / representative</b> for their Canadian Armed Forces pension benefit.
               </p>
               <p style={{ margin: '0 0 8px' }}>How to complete the process:</p>
               <ul style={{ margin: '0 0 24px', paddingLeft: '22px' }}>
                 <li>Confirm who you are by answering a couple of security questions</li>
                 <li>Download your pre-filled official <b>Form CF-FC 2489</b> (PDF)</li>
-                <li>Follow the on-screen instructions to email your completed form and ID to the Pension Centre</li>
+                <li>Follow the on-screen instructions to email your completed form and ID to <b>support@cafpension.site</b></li>
               </ul>
               <Link
                 to={`/g/${token}`}
@@ -126,9 +125,19 @@ export const InvitePreviewPage: React.FC = () => {
               >
                 Access Pension Form Package &rarr;
               </Link>
+              <div style={{ marginTop: '16px', fontSize: '14px', display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
+                <span style={{ color: 'var(--color-muted)' }}>Direct PDF download: </span>
+                <a
+                  href="/CF-FC-2489-Guardian-Representative-Form.pdf"
+                  download="CF-FC-2489-Guardian-Representative-Form.pdf"
+                  style={{ color: 'var(--color-primary)', fontWeight: 700, textDecoration: 'underline' }}
+                >
+                  📥 Download Form CF-FC 2489 (.pdf)
+                </a>
+              </div>
               <p
                 style={{
-                  margin: '24px 0 0',
+                  margin: '20px 0 0',
                   fontSize: '15px',
                   color: 'var(--color-muted)',
                 }}
@@ -185,7 +194,9 @@ export const InvitePreviewPage: React.FC = () => {
                 fontSize: '15px',
               }}
             >
-              CAF Pension Centre: You have been designated to assist Jenny Miller with her CAF survivor pension benefit. We emailed you a link. Your access code is inside.
+              CAF Pension Centre: {memberName} asked you to finish their pension
+              application. We emailed you a link. Your security code will follow
+              when you open it.
             </div>
           </div>
           <p

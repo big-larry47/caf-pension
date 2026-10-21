@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import { useApplication } from '../context/ApplicationContext';
 import { mockData } from '../data/mockData';
 import { ActingForBanner } from '../components/ActingForBanner';
@@ -10,35 +10,25 @@ export const GuardianVerifyPage: React.FC = () => {
   const navigate = useNavigate();
   const { token } = useParams<{ token: string }>();
 
-  const beneficiaryName = mockData.beneficiary.fullName || 'Jenny Miller';
-  const lateMemberName = mockData.personal.fullName || 'General Kelvin Miller';
+  const memberName = mockData.personal.fullName; // Jenny Miller
+  const lateMemberName = 'General Kelvin Miller';
   const guardianDefaultName = state.guardianProfile.fullName || 'Margaretha Byers';
 
-  // Progressive Disclosure: Step 1 (Code) -> Step 2 (Member DOB) -> Step 3 (Capacity)
-  const [currentStep, setCurrentStep] = useState<1 | 2 | 3>(1);
-
-  // Form State
+  // Security Questions State
   const [code, setCode] = useState('');
   const [mDay, setMDay] = useState('');
   const [mMonth, setMMonth] = useState('');
   const [mYear, setMYear] = useState('');
   const [confirmedCapacity, setConfirmedCapacity] = useState(false);
-
-  // Validation submission attempts per step
-  const [step1Submitted, setStep1Submitted] = useState(false);
-  const [step2Submitted, setStep2Submitted] = useState(false);
-  const [step3Submitted, setStep3Submitted] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   // Verification Animation State
   const [isVerifying, setIsVerifying] = useState(false);
   const [verifySuccess, setVerifySuccess] = useState(false);
 
-  // Focus ref for mobile auto-focus
-  const otpInputRef = useRef<HTMLInputElement>(null);
-  const dayInputRef = useRef<HTMLInputElement>(null);
-
   useEffect(() => {
     document.title = 'Security Verification - CAF Pension Centre';
+    // If invite was not opened yet, mark opened
     if (state.invite.status === 'sent') {
       setInviteStatus('opened');
     }
@@ -49,57 +39,31 @@ export const GuardianVerifyPage: React.FC = () => {
     (mDay.replace(/^0/, '') === '7' && mMonth.replace(/^0/, '') === '10' && mYear === '1959') ||
     (mDay.replace(/^0/, '') === '14' && mMonth.replace(/^0/, '') === '8' && mYear === '1958');
 
-  // Step 1 Validation
-  const step1Errors: FormError[] = [];
-  if (step1Submitted && cleanCode.length !== 6) {
-    step1Errors.push({
-      targetId: 'otp-code',
-      message: 'Enter your 6-digit access code (e.g. 123456)',
-    });
-  }
-
-  // Step 2 Validation
-  const step2Errors: FormError[] = [];
-  if (step2Submitted && !memberDobValid) {
-    step2Errors.push({
-      targetId: 'dob-day',
-      message: `Enter the correct birthdate for late ${lateMemberName} (07 / 10 / 1959)`,
-    });
-  }
-
-  // Step 3 Validation
-  const step3Errors: FormError[] = [];
-  if (step3Submitted && !confirmedCapacity) {
-    step3Errors.push({
-      targetId: 'capacity-check',
-      message: `You must confirm that you are acting or assisting for ${beneficiaryName}`,
-    });
-  }
-
-  const handleStep1Continue = (e: React.FormEvent) => {
-    e.preventDefault();
-    setStep1Submitted(true);
-    if (cleanCode.length === 6) {
-      setCurrentStep(2);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      setTimeout(() => dayInputRef.current?.focus(), 150);
+  // Form Errors
+  const errors: FormError[] = [];
+  if (submitted) {
+    if (cleanCode.length !== 6) {
+      errors.push({ targetId: 'otp-code', message: 'Enter your 6-digit security access code (demo code: 123456)' });
     }
-  };
-
-  const handleStep2Continue = (e: React.FormEvent) => {
-    e.preventDefault();
-    setStep2Submitted(true);
-    if (memberDobValid) {
-      setCurrentStep(3);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (!memberDobValid) {
+      errors.push({
+        targetId: 'dob-day',
+        message: `Enter the late ${lateMemberName}'s date of birth (DD: 07 / MM: 10 / YYYY: 1959)`,
+      });
     }
-  };
+    if (!confirmedCapacity) {
+      errors.push({
+        targetId: 'capacity-check',
+        message: `Please confirm that you are assisting or acting as guardian / representative for ${memberName}`,
+      });
+    }
+  }
 
-  const handleFinalVerify = (e: React.FormEvent) => {
+  const handleVerify = (e: React.FormEvent) => {
     e.preventDefault();
-    setStep3Submitted(true);
+    setSubmitted(true);
 
-    if (confirmedCapacity) {
+    if (cleanCode.length === 6 && memberDobValid && confirmedCapacity) {
       setIsVerifying(true);
       setTimeout(() => {
         setVerifySuccess(true);
@@ -116,196 +80,107 @@ export const GuardianVerifyPage: React.FC = () => {
             },
           });
           navigate(`/g/${token || 'demo-token'}/form-package`);
-        }, 400);
-      }, 700);
+        }, 500);
+      }, 750);
     }
   };
 
-  const activeErrors =
-    currentStep === 1 ? step1Errors : currentStep === 2 ? step2Errors : step3Errors;
-
   return (
     <>
-      <ActingForBanner dateText="Pension File: CAF-SRV-2026-9082" />
+      <ActingForBanner dateText={`Pension File: CAF-SRV-2026-9082`} />
+      <main className="container container--narrow" style={{ paddingBottom: '64px', paddingTop: '16px' }}>
+        
+        {errors.length > 0 && <ErrorSummary errors={errors} />}
 
-      <main
-        className="container"
-        style={{
-          maxWidth: '560px',
-          padding: '20px 16px 80px',
-        }}
-      >
-        {activeErrors.length > 0 && <ErrorSummary errors={activeErrors} />}
-
-        {/* Minimalist Mobile-First Header (No heavy card boxes) */}
-        <header style={{ marginBottom: '28px' }}>
-          <div
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              fontSize: '12px',
-              fontWeight: 700,
-              letterSpacing: '0.06em',
-              textTransform: 'uppercase',
-              color: '#0B3866',
-              marginBottom: '8px',
-            }}
-          >
-            <span>🔒 Secure Access</span>
-            <span>•</span>
-            <span>Ref: CAF-SRV-2026-9082</span>
+        {/* Security Header Card */}
+        <div
+          style={{
+            background: '#FFFFFF',
+            border: '1px solid #CBD5E1',
+            borderRadius: '12px',
+            padding: '28px',
+            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
+            marginBottom: '24px',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+            <div
+              style={{
+                width: '40px',
+                height: '40px',
+                borderRadius: '8px',
+                background: '#0B3866',
+                color: '#FFFFFF',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '20px',
+                flexShrink: 0,
+              }}
+            >
+              🔒
+            </div>
+            <div>
+              <span
+                style={{
+                  fontSize: '12px',
+                  fontWeight: 700,
+                  letterSpacing: '0.06em',
+                  textTransform: 'uppercase',
+                  color: '#0B3866',
+                }}
+              >
+                Government of Canada • Pension Centre
+              </span>
+              <h1 style={{ margin: '2px 0 0', fontSize: '24px', fontWeight: 700, color: '#0F172A', lineHeight: 1.3 }}>
+                Security Verification
+              </h1>
+            </div>
           </div>
 
-          <h1
-            style={{
-              fontSize: 'clamp(24px, 5vw, 30px)',
-              fontWeight: 800,
-              color: '#0F172A',
-              lineHeight: 1.2,
-              margin: '0 0 10px',
-              letterSpacing: '-0.02em',
-            }}
-          >
-            {currentStep === 1
-              ? 'Security Access Code'
-              : currentStep === 2
-              ? 'Member Verification'
-              : 'Representation Confirmation'}
-          </h1>
-
-          <p
-            style={{
-              margin: 0,
-              fontSize: '16px',
-              color: '#475569',
-              lineHeight: 1.5,
-            }}
-          >
-            {currentStep === 1
-              ? `Beneficiary ${beneficiaryName} selected you to assist with her CAF pension. Enter your access code to begin.`
-              : currentStep === 2
-              ? `Confirm the date of birth of late ${lateMemberName} (CAF-992-014-K) to verify your access.`
-              : `Final question: confirm your relationship to authorize downloading the official Form CF-FC 2489.`}
+          <p style={{ margin: '0 0 16px', fontSize: '15px', color: '#334155', lineHeight: 1.5 }}>
+            You have received this link to access the official Canadian Armed Forces Pension Representative package
+            for beneficiary <b>{memberName}</b> (dependent child of the late <b>{lateMemberName}</b>).
           </p>
-        </header>
-
-        {/* Progressive Disclosure Stepper (Flat & Clean Bar) */}
-        <div style={{ marginBottom: '28px' }} aria-label="Verification progress">
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              fontSize: '13px',
-              fontWeight: 600,
-              color: '#64748B',
-              marginBottom: '8px',
-            }}
-          >
-            <span style={{ color: '#0B3866', fontWeight: 700 }}>
-              Question {currentStep} of 3
-            </span>
-            <span>
-              {currentStep === 1
-                ? 'Step 1: Code'
-                : currentStep === 2
-                ? 'Step 2: Birthdate'
-                : 'Step 3: Confirm'}
-            </span>
-          </div>
 
           <div
             style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(3, 1fr)',
-              gap: '6px',
+              background: '#F1F5F9',
+              borderLeft: '4px solid #0B3866',
+              padding: '12px 16px',
+              borderRadius: '0 6px 6px 0',
+              fontSize: '14px',
+              color: '#334155',
+              lineHeight: 1.45,
             }}
           >
-            {[1, 2, 3].map((step) => {
-              const isPast = step < currentStep;
-              const isCurrent = step === currentStep;
-              return (
-                <div
-                  key={step}
-                  style={{
-                    height: '5px',
-                    borderRadius: '4px',
-                    background: isPast ? '#16A34A' : isCurrent ? '#0B3866' : '#E2E8F0',
-                    transition: 'all 0.3s ease',
-                  }}
-                />
-              );
-            })}
+            Please answer the security questions below. Once verified, you will be directed to download your pre-filled 
+            <b> Form CF-FC 2489</b> and view the instructions to email your completed package to the Pension Centre.
           </div>
         </div>
 
-        {/* Previously Completed Summary Pills (Progressive Reassurance) */}
-        {currentStep > 1 && (
+        {/* Security Questions Form */}
+        <form onSubmit={handleVerify} noValidate>
           <div
             style={{
+              background: '#FFFFFF',
+              border: '1px solid #CBD5E1',
+              borderRadius: '12px',
+              padding: '28px',
+              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
               display: 'flex',
               flexDirection: 'column',
-              gap: '8px',
-              marginBottom: '24px',
+              gap: '24px',
             }}
           >
-            <button
-              type="button"
-              onClick={() => setCurrentStep(1)}
+            {/* Question 1: 6-Digit Access Code */}
+            <div
+              id="q1-group"
               style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                padding: '10px 14px',
-                background: '#F0FDF4',
-                border: '1px solid #DCFCE7',
-                borderRadius: '8px',
-                fontSize: '14px',
-                color: '#166534',
-                textAlign: 'left',
-                cursor: 'pointer',
-                width: '100%',
+                borderBottom: '1px solid #E2E8F0',
+                paddingBottom: '20px',
               }}
             >
-              <span>✓ Access code verified ({code || '123456'})</span>
-              <span style={{ fontSize: '12px', fontWeight: 700, textDecoration: 'underline' }}>
-                Edit
-              </span>
-            </button>
-
-            {currentStep > 2 && (
-              <button
-                type="button"
-                onClick={() => setCurrentStep(2)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  padding: '10px 14px',
-                  background: '#F0FDF4',
-                  border: '1px solid #DCFCE7',
-                  borderRadius: '8px',
-                  fontSize: '14px',
-                  color: '#166534',
-                  textAlign: 'left',
-                  cursor: 'pointer',
-                  width: '100%',
-                }}
-              >
-                <span>✓ Member birthdate verified (07/10/1959)</span>
-                <span style={{ fontSize: '12px', fontWeight: 700, textDecoration: 'underline' }}>
-                  Edit
-                </span>
-              </button>
-            )}
-          </div>
-        )}
-
-        {/* ── STEP 1: 6-DIGIT CODE ── */}
-        {currentStep === 1 && (
-          <form onSubmit={handleStep1Continue} noValidate>
-            <div style={{ marginBottom: '28px' }}>
               <label
                 htmlFor="otp-code"
                 style={{
@@ -313,94 +188,64 @@ export const GuardianVerifyPage: React.FC = () => {
                   fontSize: '16px',
                   fontWeight: 700,
                   color: '#0F172A',
-                  marginBottom: '8px',
+                  marginBottom: '6px',
                 }}
               >
-                Enter your 6-digit access code
+                1. Enter your 6-digit security access code
               </label>
-
-              <p style={{ margin: '0 0 14px', fontSize: '14px', color: '#64748B' }}>
-                Provided via your invitation email or text message.
+              <p style={{ margin: '0 0 10px', fontSize: '13px', color: '#64748B' }}>
+                This one-time access code was provided with your invitation link.
+                <span style={{ color: '#0B3866', fontWeight: 600 }}> (Demo test code: 123456)</span>
               </p>
-
-              <input
-                ref={otpInputRef}
-                id="otp-code"
-                type="text"
-                inputMode="numeric"
-                pattern="[0-9]*"
-                maxLength={6}
-                value={code}
-                onChange={(e) => setCode(e.target.value.replace(/\D/g, ''))}
-                placeholder="••••••"
-                autoFocus
-                style={{
-                  width: '100%',
-                  maxWidth: '260px',
-                  height: '56px',
-                  fontSize: '28px',
-                  fontWeight: 800,
-                  letterSpacing: '0.3em',
-                  textAlign: 'center',
-                  border: '2px solid #0B3866',
-                  borderRadius: '10px',
-                  background: '#FFFFFF',
-                  color: '#0F172A',
-                  outline: 'none',
-                  boxSizing: 'border-box',
-                  fontFamily: 'monospace',
-                }}
-              />
-
-              <div style={{ marginTop: '12px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <input
+                  id="otp-code"
+                  type="text"
+                  inputMode="numeric"
+                  maxLength={6}
+                  value={code}
+                  onChange={(e) => setCode(e.target.value.replace(/\D/g, ''))}
+                  placeholder="123456"
+                  style={{
+                    width: '180px',
+                    height: '48px',
+                    fontSize: '22px',
+                    fontWeight: 700,
+                    letterSpacing: '0.25em',
+                    textAlign: 'center',
+                    border: '2px solid #94A3B8',
+                    borderRadius: '8px',
+                    color: '#0F172A',
+                    fontFamily: 'monospace',
+                  }}
+                />
                 <button
                   type="button"
                   onClick={() => setCode('123456')}
                   style={{
-                    background: 'none',
-                    border: 'none',
-                    padding: '6px 0',
+                    background: '#F1F5F9',
+                    border: '1px solid #CBD5E1',
+                    borderRadius: '6px',
+                    padding: '8px 12px',
                     fontSize: '13px',
                     fontWeight: 600,
-                    color: '#0B3866',
+                    color: '#334155',
                     cursor: 'pointer',
-                    textDecoration: 'underline',
                   }}
                 >
-                  ⚡ Autofill Demo Code (123456)
+                  Fill Demo Code (123456)
                 </button>
               </div>
             </div>
 
-            {/* Mobile-Friendly Full-Width Action Button */}
-            <button
-              type="submit"
+            {/* Question 2: Late Member's Date of Birth */}
+            <div
+              id="q2-group"
               style={{
-                width: '100%',
-                minHeight: '52px',
-                background: '#0B3866',
-                color: '#FFFFFF',
-                fontSize: '17px',
-                fontWeight: 700,
-                borderRadius: '10px',
-                border: 'none',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px',
-                boxShadow: '0 2px 4px rgba(11, 56, 102, 0.2)',
+                borderBottom: '1px solid #E2E8F0',
+                paddingBottom: '20px',
               }}
             >
-              Continue to Step 2 &rarr;
-            </button>
-          </form>
-        )}
-
-        {/* ── STEP 2: MEMBER BIRTHDATE ── */}
-        {currentStep === 2 && (
-          <form onSubmit={handleStep2Continue} noValidate>
-            <div style={{ marginBottom: '28px' }}>
               <label
                 style={{
                   display: 'block',
@@ -410,29 +255,19 @@ export const GuardianVerifyPage: React.FC = () => {
                   marginBottom: '6px',
                 }}
               >
-                What is the birthdate of late {lateMemberName}?
+                2. What is the date of birth of the late {lateMemberName}?
               </label>
-
-              <p style={{ margin: '0 0 16px', fontSize: '14px', color: '#64748B' }}>
-                Service Number: <b>CAF-992-014-K</b>
+              <p style={{ margin: '0 0 10px', fontSize: '13px', color: '#64748B' }}>
+                Service Number: <b>CAF-992-014-K</b>. For security verification, confirm their birthdate.
+                <span style={{ color: '#0B3866', fontWeight: 600 }}> (Demo hint: 07 / 10 / 1959)</span>
               </p>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
                 <div>
-                  <label
-                    htmlFor="dob-day"
-                    style={{
-                      display: 'block',
-                      fontSize: '12px',
-                      fontWeight: 600,
-                      color: '#64748B',
-                      marginBottom: '4px',
-                    }}
-                  >
+                  <label htmlFor="dob-day" style={{ display: 'block', fontSize: '12px', color: '#64748B', marginBottom: '2px' }}>
                     Day (DD)
                   </label>
                   <input
-                    ref={dayInputRef}
                     id="dob-day"
                     type="text"
                     inputMode="numeric"
@@ -441,32 +276,19 @@ export const GuardianVerifyPage: React.FC = () => {
                     value={mDay}
                     onChange={(e) => setMDay(e.target.value.replace(/\D/g, ''))}
                     style={{
-                      width: '72px',
-                      height: '52px',
-                      fontSize: '20px',
-                      fontWeight: 700,
+                      width: '64px',
+                      height: '44px',
+                      fontSize: '18px',
+                      fontWeight: 600,
                       textAlign: 'center',
-                      border: '2px solid #CBD5E1',
-                      borderRadius: '8px',
-                      color: '#0F172A',
-                      boxSizing: 'border-box',
+                      border: '2px solid #94A3B8',
+                      borderRadius: '6px',
                     }}
                   />
                 </div>
-
-                <span style={{ fontSize: '22px', color: '#94A3B8', marginTop: '18px' }}>/</span>
-
+                <span style={{ fontSize: '20px', color: '#94A3B8', marginTop: '16px' }}>/</span>
                 <div>
-                  <label
-                    htmlFor="dob-month"
-                    style={{
-                      display: 'block',
-                      fontSize: '12px',
-                      fontWeight: 600,
-                      color: '#64748B',
-                      marginBottom: '4px',
-                    }}
-                  >
+                  <label htmlFor="dob-month" style={{ display: 'block', fontSize: '12px', color: '#64748B', marginBottom: '2px' }}>
                     Month (MM)
                   </label>
                   <input
@@ -478,32 +300,19 @@ export const GuardianVerifyPage: React.FC = () => {
                     value={mMonth}
                     onChange={(e) => setMMonth(e.target.value.replace(/\D/g, ''))}
                     style={{
-                      width: '72px',
-                      height: '52px',
-                      fontSize: '20px',
-                      fontWeight: 700,
+                      width: '64px',
+                      height: '44px',
+                      fontSize: '18px',
+                      fontWeight: 600,
                       textAlign: 'center',
-                      border: '2px solid #CBD5E1',
-                      borderRadius: '8px',
-                      color: '#0F172A',
-                      boxSizing: 'border-box',
+                      border: '2px solid #94A3B8',
+                      borderRadius: '6px',
                     }}
                   />
                 </div>
-
-                <span style={{ fontSize: '22px', color: '#94A3B8', marginTop: '18px' }}>/</span>
-
+                <span style={{ fontSize: '20px', color: '#94A3B8', marginTop: '16px' }}>/</span>
                 <div>
-                  <label
-                    htmlFor="dob-year"
-                    style={{
-                      display: 'block',
-                      fontSize: '12px',
-                      fontWeight: 600,
-                      color: '#64748B',
-                      marginBottom: '4px',
-                    }}
-                  >
+                  <label htmlFor="dob-year" style={{ display: 'block', fontSize: '12px', color: '#64748B', marginBottom: '2px' }}>
                     Year (YYYY)
                   </label>
                   <input
@@ -515,21 +324,17 @@ export const GuardianVerifyPage: React.FC = () => {
                     value={mYear}
                     onChange={(e) => setMYear(e.target.value.replace(/\D/g, ''))}
                     style={{
-                      width: '96px',
-                      height: '52px',
-                      fontSize: '20px',
-                      fontWeight: 700,
+                      width: '90px',
+                      height: '44px',
+                      fontSize: '18px',
+                      fontWeight: 600,
                       textAlign: 'center',
-                      border: '2px solid #CBD5E1',
-                      borderRadius: '8px',
-                      color: '#0F172A',
-                      boxSizing: 'border-box',
+                      border: '2px solid #94A3B8',
+                      borderRadius: '6px',
                     }}
                   />
                 </div>
-              </div>
 
-              <div style={{ marginTop: '12px' }}>
                 <button
                   type="button"
                   onClick={() => {
@@ -538,76 +343,35 @@ export const GuardianVerifyPage: React.FC = () => {
                     setMYear('1959');
                   }}
                   style={{
-                    background: 'none',
-                    border: 'none',
-                    padding: '6px 0',
+                    background: '#F1F5F9',
+                    border: '1px solid #CBD5E1',
+                    borderRadius: '6px',
+                    padding: '8px 12px',
                     fontSize: '13px',
                     fontWeight: 600,
-                    color: '#0B3866',
+                    color: '#334155',
                     cursor: 'pointer',
-                    textDecoration: 'underline',
+                    marginTop: '16px',
                   }}
                 >
-                  ⚡ Autofill Demo Date (07/10/1959)
+                  Fill Demo DOB (07/10/1959)
                 </button>
               </div>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <button
-                type="submit"
-                style={{
-                  width: '100%',
-                  minHeight: '52px',
-                  background: '#0B3866',
-                  color: '#FFFFFF',
-                  fontSize: '17px',
-                  fontWeight: 700,
-                  borderRadius: '10px',
-                  border: 'none',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '8px',
-                }}
-              >
-                Continue to Final Step &rarr;
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setCurrentStep(1)}
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  color: '#64748B',
-                  fontSize: '15px',
-                  cursor: 'pointer',
-                  padding: '10px',
-                }}
-              >
-                &larr; Back to Step 1
-              </button>
-            </div>
-          </form>
-        )}
-
-        {/* ── STEP 3: CAPACITY & CONFIRMATION ── */}
-        {currentStep === 3 && (
-          <form onSubmit={handleFinalVerify} noValidate>
-            <div style={{ marginBottom: '28px' }}>
+            {/* Question 3: Representation Confirmation */}
+            <div id="q3-group">
               <label
                 htmlFor="capacity-check"
                 style={{
                   display: 'flex',
                   alignItems: 'flex-start',
-                  gap: '14px',
+                  gap: '12px',
                   cursor: 'pointer',
-                  padding: '16px',
                   background: confirmedCapacity ? '#F0FDF4' : '#F8FAFC',
-                  border: confirmedCapacity ? '2px solid #16A34A' : '2px solid #CBD5E1',
-                  borderRadius: '10px',
+                  border: confirmedCapacity ? '2px solid #22C55E' : '2px solid #E2E8F0',
+                  borderRadius: '8px',
+                  padding: '16px',
                   transition: 'all 0.15s ease',
                 }}
               >
@@ -617,42 +381,42 @@ export const GuardianVerifyPage: React.FC = () => {
                   checked={confirmedCapacity}
                   onChange={(e) => setConfirmedCapacity(e.target.checked)}
                   style={{
-                    width: '24px',
-                    height: '24px',
+                    width: '20px',
+                    height: '20px',
                     marginTop: '2px',
                     cursor: 'pointer',
                     accentColor: '#166534',
-                    flexShrink: 0,
                   }}
                 />
-                <span style={{ fontSize: '15px', color: '#1E293B', lineHeight: 1.5 }}>
-                  <b>Confirmation of Representation:</b> I confirm that I am{' '}
-                  <b>{guardianDefaultName}</b> and that I have been chosen by beneficiary{' '}
-                  <b>{beneficiaryName}</b> (daughter of the late {lateMemberName}) to assist as her guardian / representative for her Canadian Armed
-                  Forces pension benefit.
+                <span style={{ fontSize: '15px', color: '#1E293B', lineHeight: 1.45 }}>
+                  <b>Confirmation of Representation:</b> I confirm that I am <b>{guardianDefaultName}</b> and that I have been
+                  designated to assist or act as guardian / representative for beneficiary <b>{memberName}</b> in respect of
+                  her Canadian Armed Forces pension benefit.
                 </span>
               </label>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            {/* Submit Button & Verification Status */}
+            <div style={{ paddingTop: '8px' }}>
               <button
                 type="submit"
                 disabled={isVerifying}
                 style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '10px',
+                  minHeight: '52px',
                   width: '100%',
-                  minHeight: '54px',
                   background: verifySuccess ? '#166534' : '#0B3866',
                   color: '#FFFFFF',
                   fontSize: '17px',
                   fontWeight: 700,
-                  borderRadius: '10px',
+                  borderRadius: '8px',
                   border: 'none',
                   cursor: isVerifying ? 'wait' : 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '10px',
                   boxShadow: '0 2px 6px rgba(11, 56, 102, 0.25)',
+                  transition: 'background 0.2s ease',
                 }}
               >
                 {isVerifying ? (
@@ -668,36 +432,28 @@ export const GuardianVerifyPage: React.FC = () => {
                         animation: 'spin 0.8s linear infinite',
                       }}
                     />
-                    <span>Verifying with Pension Centre...</span>
+                    <span>Verifying Credentials with Pension Centre...</span>
                   </>
                 ) : verifySuccess ? (
-                  <span>✓ Verified! Opening Form Package...</span>
+                  <>
+                    <span>✓ Verified! Redirecting to Form Package...</span>
+                  </>
                 ) : (
-                  <span>Unlock &amp; View Form Package &rarr;</span>
+                  <>
+                    <span>Verify Security &amp; Access Form Package →</span>
+                  </>
                 )}
               </button>
-
-              <button
-                type="button"
-                onClick={() => setCurrentStep(2)}
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  color: '#64748B',
-                  fontSize: '15px',
-                  cursor: 'pointer',
-                  padding: '10px',
-                }}
-              >
-                &larr; Back to Step 2
-              </button>
             </div>
-          </form>
-        )}
+          </div>
+        </form>
 
-        <div style={{ marginTop: '40px', textAlign: 'center', fontSize: '13px', color: '#94A3B8' }}>
-          Government of Canada Pension Centre · Need assistance? Call 1-800-267-0325
+        {/* Alternative direct access note */}
+        <div style={{ marginTop: '24px', textAlign: 'center', fontSize: '14px', color: '#64748B' }}>
+          <span>Having difficulty verifying? Contact the CAF Pension Centre toll-free at </span>
+          <b style={{ color: '#0F172A' }}>1-800-267-0325</b> (TTY: 1-855-227-0031).
         </div>
+
       </main>
 
       <style>{`

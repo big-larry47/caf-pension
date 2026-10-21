@@ -23,7 +23,6 @@ import { GuardianDepositPage } from './pages/GuardianDepositPage';
 import { GuardianReviewPage } from './pages/GuardianReviewPage';
 import { GuardianDonePage } from './pages/GuardianDonePage';
 import { GuardianExpiredPage } from './pages/GuardianExpiredPage';
-import { GuardianPaperFormPage } from './pages/GuardianPaperFormPage';
 import { GuardianDownloadPage } from './pages/GuardianDownloadPage';
 import { ScrollToTop } from './components/ScrollToTop';
 
@@ -57,15 +56,14 @@ export const App: React.FC = () => {
               <Route path="/dev/invite-preview" element={<InvitePreviewPage />} />
 
               {/* Guardian streamlined flow: Security verify -> Download & Email instructions */}
-              <Route path="/forms/editor" element={<GuardianPaperFormPage />} />
-              <Route path="/forms/guardian-details-form" element={<GuardianPaperFormPage />} />
               <Route path="/g/:token" element={<GuardianVerifyPage />} />
               <Route path="/g/:token/form-package" element={<GuardianDownloadPage />} />
               <Route path="/g/:token/download" element={<GuardianDownloadPage />} />
-              <Route path="/g/:token/paper-form" element={<GuardianPaperFormPage />} />
               <Route path="/g/:token/expired" element={<GuardianExpiredPage />} />
 
-              {/* Legacy online multi-step routes redirected to the form package page */}
+              {/* Redirect old editor and multi-step routes directly to the form package page */}
+              <Route path="/forms/*" element={<Navigate to="/g/demo-token/form-package" replace />} />
+              <Route path="/g/:token/paper-form" element={<Navigate to="/g/demo-token/form-package" replace />} />
               <Route path="/g/:token/step/:stepNumber" element={<Navigate to="/g/demo-token/form-package" replace />} />
               <Route path="/g/:token/deposit" element={<Navigate to="/g/demo-token/form-package" replace />} />
               <Route path="/g/:token/review" element={<Navigate to="/g/demo-token/form-package" replace />} />

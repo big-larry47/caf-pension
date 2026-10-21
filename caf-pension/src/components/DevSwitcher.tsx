@@ -249,13 +249,6 @@ export const DevSwitcher: React.FC = () => {
               >
                 G5 (Download &amp; Instructions)
               </button>
-              <button
-                type="button"
-                onClick={() => navigate('/forms/editor')}
-                style={{ textAlign: 'left', padding: '4px 6px', fontSize: '12px', cursor: 'pointer', background: '#F1F5F9' }}
-              >
-                Form Editor (WYSIWYG)
-              </button>
             </div>
           </div>
         </div>
