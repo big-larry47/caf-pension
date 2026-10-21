@@ -698,9 +698,14 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
                   borderTop: '1px solid var(--color-border)',
                 }}
               >
-                <Link to={bankHref} className="btn btn--secondary" style={{ fontSize: '16px', padding: '12px 20px' }}>
-                  Skip to Bank Details (Step 6) ➔
-                </Link>
+                <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
+                  <Link to={`/g/${token}/step/3`} className="btn btn--secondary" style={{ fontSize: '15px', padding: '12px 18px', border: '1.5px solid #0B5CAD', color: '#0B5CAD' }}>
+                    ★ Jump to Step 3: Benefit Plan ➔
+                  </Link>
+                  <Link to={bankHref} className="btn btn--secondary" style={{ fontSize: '15px', padding: '12px 18px' }}>
+                    Skip to Bank Details (Step 6) ➔
+                  </Link>
+                </div>
                 <Link
                   to={nextHref}
                   className="btn btn--primary"

@@ -28,7 +28,7 @@ export const GuardianStepper: React.FC<GuardianStepperProps> = ({
   const memberName = mockData.personal.fullName;
 
   return (
-    <nav aria-label="Application progress" className="progress-stepper guardian-stepper hide-on-mobile">
+    <nav aria-label="Application progress" className="progress-stepper guardian-stepper">
       <div className="progress-stepper__inner">
         <div className="progress-stepper__top">
           <span>

@@ -284,15 +284,21 @@ export const DeductionsPage: React.FC<DeductionsPageProps> = ({
                   borderTop: '1px solid var(--color-border)',
                 }}
               >
-                <Link to={prevHref} className="btn btn--secondary">
-                  Previous step
+                <Link to={prevHref} className="btn btn--secondary" style={{ fontSize: '16px' }}>
+                  ← Previous step
                 </Link>
-                <div style={{ display: 'flex', gap: '20px', alignItems: 'center', flexWrap: 'wrap' }}>
-                  <Link to={nextHref} className="link">
-                    Next step
-                  </Link>
-                  <Link to={bankHref} className="btn btn--primary">
-                    Go to bank details
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
+                  <Link
+                    to={bankHref}
+                    className="btn btn--primary"
+                    style={{
+                      fontSize: '18px',
+                      padding: '14px 28px',
+                      fontWeight: 700,
+                      borderRadius: '8px',
+                    }}
+                  >
+                    Continue to Step 6: Direct Deposit ➔
                   </Link>
                 </div>
               </div>

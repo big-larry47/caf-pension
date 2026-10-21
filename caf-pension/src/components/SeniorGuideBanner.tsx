@@ -14,7 +14,7 @@ export const SeniorGuideBanner: React.FC<SeniorGuideBannerProps> = ({
     <div
       role="region"
       aria-label="Help for guardian"
-      className="senior-guide-banner hide-on-mobile"
+      className="senior-guide-banner"
       style={{
         background: '#EBF3FA',
         border: '2px solid #0B5CAD',
