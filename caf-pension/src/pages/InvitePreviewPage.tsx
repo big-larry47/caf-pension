@@ -195,8 +195,7 @@ export const InvitePreviewPage: React.FC = () => {
               }}
             >
               CAF Pension Centre: {memberName} asked you to finish their pension
-              application. We emailed you a link. Your security code will follow
-              when you open it.
+              application. We emailed you a link. Your security access code is: <b>842019</b>.
             </div>
           </div>
           <p

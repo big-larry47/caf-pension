@@ -5,6 +5,8 @@ import { mockData } from '../data/mockData';
 import { ActingForBanner } from '../components/ActingForBanner';
 import { ErrorSummary, FormError } from '../components/ErrorSummary';
 
+export const SECRET_ACCESS_CODE = '842019';
+
 export const GuardianVerifyPage: React.FC = () => {
   const { state, updateState, setInviteStatus } = useApplication();
   const navigate = useNavigate();
@@ -33,9 +35,11 @@ export const GuardianVerifyPage: React.FC = () => {
   const [isVerifying, setIsVerifying] = useState(false);
   const [verifySuccess, setVerifySuccess] = useState(false);
 
-  // Focus ref for mobile auto-focus
+  // Focus refs for mobile auto-focus and auto-advance
   const otpInputRef = useRef<HTMLInputElement>(null);
   const dayInputRef = useRef<HTMLInputElement>(null);
+  const monthInputRef = useRef<HTMLInputElement>(null);
+  const yearInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     document.title = 'Security Verification - CAF Pension Centre';
@@ -45,17 +49,25 @@ export const GuardianVerifyPage: React.FC = () => {
   }, []);
 
   const cleanCode = code.replace(/\D/g, '');
+  const isCodeCorrect = cleanCode === SECRET_ACCESS_CODE;
   const memberDobValid =
     (mDay.replace(/^0/, '') === '7' && mMonth.replace(/^0/, '') === '10' && mYear === '1959') ||
     (mDay.replace(/^0/, '') === '14' && mMonth.replace(/^0/, '') === '8' && mYear === '1958');
 
   // Step 1 Validation
   const step1Errors: FormError[] = [];
-  if (step1Submitted && cleanCode.length !== 6) {
-    step1Errors.push({
-      targetId: 'otp-code',
-      message: 'Enter your 6-digit access code (e.g. 123456)',
-    });
+  if (step1Submitted && !isCodeCorrect) {
+    if (cleanCode.length !== 6) {
+      step1Errors.push({
+        targetId: 'otp-code',
+        message: 'Enter your 6-digit access code',
+      });
+    } else {
+      step1Errors.push({
+        targetId: 'otp-code',
+        message: 'Invalid security access code. Please check the code provided to you and try again.',
+      });
+    }
   }
 
   // Step 2 Validation
@@ -63,7 +75,7 @@ export const GuardianVerifyPage: React.FC = () => {
   if (step2Submitted && !memberDobValid) {
     step2Errors.push({
       targetId: 'dob-day',
-      message: `Enter the correct birthdate for late ${lateMemberName} (07 / 10 / 1959)`,
+      message: `The birthdate entered does not match our military pension service records for late ${lateMemberName}. Please check and try again.`,
     });
   }
 
@@ -76,10 +88,68 @@ export const GuardianVerifyPage: React.FC = () => {
     });
   }
 
+  // Input change handlers that enable continuous typing without bouncing out
+  const handleCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value.replace(/\D/g, '').slice(0, 6);
+    setCode(val);
+    if (step1Submitted) setStep1Submitted(false);
+  };
+
+  const handleDayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value.replace(/\D/g, '').slice(0, 2);
+    setMDay(val);
+    if (step2Submitted) setStep2Submitted(false);
+    if (val.length === 2) {
+      monthInputRef.current?.focus();
+    }
+  };
+
+  const handleMonthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value.replace(/\D/g, '').slice(0, 2);
+    setMMonth(val);
+    if (step2Submitted) setStep2Submitted(false);
+    if (val.length === 2) {
+      yearInputRef.current?.focus();
+    }
+  };
+
+  const handleYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value.replace(/\D/g, '').slice(0, 4);
+    setMYear(val);
+    if (step2Submitted) setStep2Submitted(false);
+  };
+
+  const handleMonthKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Backspace' && mMonth === '') {
+      dayInputRef.current?.focus();
+    }
+  };
+
+  const handleYearKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Backspace' && mYear === '') {
+      monthInputRef.current?.focus();
+    }
+  };
+
+  const handleDayPaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    const pasteData = e.clipboardData.getData('text').replace(/\D/g, '');
+    if (pasteData.length >= 8) {
+      e.preventDefault();
+      const d = pasteData.slice(0, 2);
+      const m = pasteData.slice(2, 4);
+      const y = pasteData.slice(4, 8);
+      setMDay(d);
+      setMMonth(m);
+      setMYear(y);
+      if (step2Submitted) setStep2Submitted(false);
+      yearInputRef.current?.focus();
+    }
+  };
+
   const handleStep1Continue = (e: React.FormEvent) => {
     e.preventDefault();
     setStep1Submitted(true);
-    if (cleanCode.length === 6) {
+    if (cleanCode === SECRET_ACCESS_CODE) {
       setCurrentStep(2);
       window.scrollTo({ top: 0, behavior: 'smooth' });
       setTimeout(() => dayInputRef.current?.focus(), 150);
@@ -268,7 +338,7 @@ export const GuardianVerifyPage: React.FC = () => {
                 width: '100%',
               }}
             >
-              <span>✓ Access code verified ({code || '123456'})</span>
+              <span>✓ Access code verified</span>
               <span style={{ fontSize: '12px', fontWeight: 700, textDecoration: 'underline' }}>
                 Edit
               </span>
@@ -293,7 +363,7 @@ export const GuardianVerifyPage: React.FC = () => {
                   width: '100%',
                 }}
               >
-                <span>✓ Member birthdate verified (07/10/1959)</span>
+                <span>✓ Member birthdate verified</span>
                 <span style={{ fontSize: '12px', fontWeight: 700, textDecoration: 'underline' }}>
                   Edit
                 </span>
@@ -331,9 +401,9 @@ export const GuardianVerifyPage: React.FC = () => {
                 pattern="[0-9]*"
                 maxLength={6}
                 value={code}
-                onChange={(e) => setCode(e.target.value.replace(/\D/g, ''))}
+                onChange={handleCodeChange}
                 placeholder="••••••"
-                autoFocus
+                autoComplete="one-time-code"
                 style={{
                   width: '100%',
                   maxWidth: '260px',
@@ -419,9 +489,10 @@ export const GuardianVerifyPage: React.FC = () => {
                     type="text"
                     inputMode="numeric"
                     maxLength={2}
-                    placeholder="07"
+                    placeholder="DD"
                     value={mDay}
-                    onChange={(e) => setMDay(e.target.value.replace(/\D/g, ''))}
+                    onChange={handleDayChange}
+                    onPaste={handleDayPaste}
                     style={{
                       width: '72px',
                       height: '52px',
@@ -452,13 +523,15 @@ export const GuardianVerifyPage: React.FC = () => {
                     Month (MM)
                   </label>
                   <input
+                    ref={monthInputRef}
                     id="dob-month"
                     type="text"
                     inputMode="numeric"
                     maxLength={2}
-                    placeholder="10"
+                    placeholder="MM"
                     value={mMonth}
-                    onChange={(e) => setMMonth(e.target.value.replace(/\D/g, ''))}
+                    onChange={handleMonthChange}
+                    onKeyDown={handleMonthKeyDown}
                     style={{
                       width: '72px',
                       height: '52px',
@@ -489,13 +562,15 @@ export const GuardianVerifyPage: React.FC = () => {
                     Year (YYYY)
                   </label>
                   <input
+                    ref={yearInputRef}
                     id="dob-year"
                     type="text"
                     inputMode="numeric"
                     maxLength={4}
-                    placeholder="1959"
+                    placeholder="YYYY"
                     value={mYear}
-                    onChange={(e) => setMYear(e.target.value.replace(/\D/g, ''))}
+                    onChange={handleYearChange}
+                    onKeyDown={handleYearKeyDown}
                     style={{
                       width: '96px',
                       height: '52px',

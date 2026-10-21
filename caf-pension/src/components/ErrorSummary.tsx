@@ -18,11 +18,23 @@ export const ErrorSummary: React.FC<ErrorSummaryProps> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
+  const hasFocusedRef = useRef(false);
+
   useEffect(() => {
-    if (focusOnMount && errors.length > 0 && containerRef.current) {
+    // Only focus the error summary on initial appearance when no input is actively being typed in
+    const isInputActive =
+      document.activeElement &&
+      (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA');
+
+    if (focusOnMount && errors.length > 0 && !hasFocusedRef.current && !isInputActive && containerRef.current) {
       containerRef.current.focus();
+      hasFocusedRef.current = true;
     }
-  }, [errors, focusOnMount]);
+
+    if (errors.length === 0) {
+      hasFocusedRef.current = false;
+    }
+  }, [errors.length, focusOnMount]);
 
   if (errors.length === 0) return null;
 
