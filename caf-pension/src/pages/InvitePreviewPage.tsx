@@ -7,7 +7,8 @@ export const InvitePreviewPage: React.FC = () => {
   const { state } = useApplication();
   const token = state.invite.token || 'demo-token';
   const guardianName = state.invite.guardian.fullName || 'Margaretha Byers';
-  const memberName = mockData.personal.fullName;
+  const beneficiaryName = mockData.beneficiary.fullName || 'Jenny Miller';
+  const lateMemberName = mockData.personal.fullName || 'General Kelvin Miller';
   const guardianEmail = state.invite.guardian.email || 'margaretha.byers@example.com';
   const roleTitle =
     state.invite.guardian.role === 'poa'
@@ -84,7 +85,7 @@ export const InvitePreviewPage: React.FC = () => {
               </span>
               <span>
                 <b style={{ color: 'var(--color-ink)' }}>Subject:</b>{' '}
-                {memberName} — CAF Pension Representative Package & Instructions
+                {beneficiaryName} — CAF Pension Representative Package & Instructions
               </span>
             </div>
             <div
@@ -100,8 +101,8 @@ export const InvitePreviewPage: React.FC = () => {
             <div style={{ padding: '28px' }}>
               <p style={{ margin: '0 0 16px' }}>Hello {guardianName},</p>
               <p style={{ margin: '0 0 16px' }}>
-                <b>{memberName}</b> has designated you to assist as their{' '}
-                <b>guardian / representative</b> for their Canadian Armed Forces pension benefit.
+                <b>{beneficiaryName}</b> (surviving daughter of the late {lateMemberName}) has designated you to assist as her{' '}
+                <b>guardian / representative</b> for her Canadian Armed Forces survivor pension benefit.
               </p>
               <p style={{ margin: '0 0 8px' }}>How to complete the process:</p>
               <ul style={{ margin: '0 0 24px', paddingLeft: '22px' }}>
@@ -184,9 +185,7 @@ export const InvitePreviewPage: React.FC = () => {
                 fontSize: '15px',
               }}
             >
-              CAF Pension Centre: {memberName} asked you to finish their pension
-              application. We emailed you a link. Your security code will follow
-              when you open it.
+              CAF Pension Centre: You have been designated to assist Jenny Miller with her CAF survivor pension benefit. We emailed you a link. Your access code is inside.
             </div>
           </div>
           <p

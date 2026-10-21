@@ -21,11 +21,12 @@ export const GuardianDownloadPage: React.FC = () => {
   }
 
   const guardianName = state.guardianProfile.fullName || 'Margaretha Byers';
-  const memberName = mockData.personal.fullName; // Jenny Miller
+  const beneficiaryName = mockData.beneficiary.fullName || 'Jenny Miller';
+  const lateMemberName = mockData.personal.fullName || 'General Kelvin Miller';
   const refNumber = 'CAF-SRV-2026-9082';
   const destinationEmail = 'pension-pensions.caf-fac@forces.gc.ca';
-  const emailSubject = `Guardian Form CF-FC 2489 — ${memberName} — Ref ${refNumber}`;
-  const emailBody = `Canadian Armed Forces Pension Centre,\n\nPlease find attached the completed and signed Form CF-FC 2489 (Guardian / Representative Appointment & Direct Deposit Information) along with supporting identification for beneficiary ${memberName} (Reference: ${refNumber}).\n\nSubmitted by:\n${guardianName}\nRepresentative / Guardian for ${memberName}\n\nThank you,\n${guardianName}`;
+  const emailSubject = `Guardian Form CF-FC 2489 — ${beneficiaryName} — Ref ${refNumber}`;
+  const emailBody = `Canadian Armed Forces Pension Centre,\n\nPlease find attached the completed and signed Form CF-FC 2489 (Guardian / Representative Appointment & Direct Deposit Information) along with supporting identification for beneficiary ${beneficiaryName} (daughter of late ${lateMemberName}, Reference: ${refNumber}).\n\nSubmitted by:\n${guardianName}\nRepresentative / Guardian for ${beneficiaryName}\n\nThank you,\n${guardianName}`;
 
   const mailtoLink = `mailto:${destinationEmail}?subject=${encodeURIComponent(
     emailSubject
@@ -91,7 +92,7 @@ export const GuardianDownloadPage: React.FC = () => {
 
           <p style={{ margin: 0, fontSize: '16px', color: '#475569', lineHeight: 1.5 }}>
             Your identity has been verified. Download official <b>Form CF-FC 2489</b> below for beneficiary{' '}
-            <b>{memberName}</b> and follow the instructions to email your completed package to the Pension Centre.
+            <b>{beneficiaryName}</b> and follow the instructions to email your completed package to the Pension Centre.
           </p>
         </div>
 

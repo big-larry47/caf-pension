@@ -10,8 +10,8 @@ export const GuardianVerifyPage: React.FC = () => {
   const navigate = useNavigate();
   const { token } = useParams<{ token: string }>();
 
-  const memberName = mockData.personal.fullName; // Jenny Miller
-  const lateMemberName = 'General Kelvin Miller';
+  const beneficiaryName = mockData.beneficiary.fullName || 'Jenny Miller';
+  const lateMemberName = mockData.personal.fullName || 'General Kelvin Miller';
   const guardianDefaultName = state.guardianProfile.fullName || 'Margaretha Byers';
 
   // Progressive Disclosure: Step 1 (Code) -> Step 2 (Member DOB) -> Step 3 (Capacity)
@@ -72,7 +72,7 @@ export const GuardianVerifyPage: React.FC = () => {
   if (step3Submitted && !confirmedCapacity) {
     step3Errors.push({
       targetId: 'capacity-check',
-      message: `You must confirm that you are acting or assisting for ${memberName}`,
+      message: `You must confirm that you are acting or assisting for ${beneficiaryName}`,
     });
   }
 
@@ -183,7 +183,7 @@ export const GuardianVerifyPage: React.FC = () => {
             }}
           >
             {currentStep === 1
-              ? `Beneficiary ${memberName} selected you to assist with her CAF pension. Enter your access code to begin.`
+              ? `Beneficiary ${beneficiaryName} selected you to assist with her CAF pension. Enter your access code to begin.`
               : currentStep === 2
               ? `Confirm the date of birth of late ${lateMemberName} (CAF-992-014-K) to verify your access.`
               : `Final question: confirm your relationship to authorize downloading the official Form CF-FC 2489.`}
@@ -628,7 +628,7 @@ export const GuardianVerifyPage: React.FC = () => {
                 <span style={{ fontSize: '15px', color: '#1E293B', lineHeight: 1.5 }}>
                   <b>Confirmation of Representation:</b> I confirm that I am{' '}
                   <b>{guardianDefaultName}</b> and that I have been chosen by beneficiary{' '}
-                  <b>{memberName}</b> to assist as her guardian / representative for her Canadian Armed
+                  <b>{beneficiaryName}</b> (daughter of the late {lateMemberName}) to assist as her guardian / representative for her Canadian Armed
                   Forces pension benefit.
                 </span>
               </label>
