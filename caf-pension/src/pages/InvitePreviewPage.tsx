@@ -125,19 +125,9 @@ export const InvitePreviewPage: React.FC = () => {
               >
                 Access Pension Form Package &rarr;
               </Link>
-              <div style={{ marginTop: '16px', fontSize: '14px', display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
-                <span style={{ color: 'var(--color-muted)' }}>Direct PDF download: </span>
-                <a
-                  href="/CF-FC-2489-Guardian-Representative-Form.pdf"
-                  download="CF-FC-2489-Guardian-Representative-Form.pdf"
-                  style={{ color: 'var(--color-primary)', fontWeight: 700, textDecoration: 'underline' }}
-                >
-                  📥 Download Form CF-FC 2489 (.pdf)
-                </a>
-              </div>
               <p
                 style={{
-                  margin: '20px 0 0',
+                  margin: '24px 0 0',
                   fontSize: '15px',
                   color: 'var(--color-muted)',
                 }}

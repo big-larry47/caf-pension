@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, Navigate } from 'react-router-dom';
 import { useApplication } from '../context/ApplicationContext';
 import { mockData } from '../data/mockData';
 
 export const GuardianPaperFormPage: React.FC = () => {
   const { state } = useApplication();
+  const location = useLocation();
   const token = state.invite.token || 'demo-token';
   const memberName = mockData.personal.fullName || 'Kelvin Miller';
   const beneficiaryName = 'Jenny Miller';
+
+  // Security gate: If accessing via guardian route (/g/:token/paper-form), require answering security questions first
+  if (location.pathname.startsWith('/g/') && state.invite.status !== 'verified') {
+    return <Navigate to={`/g/${token}`} replace />;
+  }
 
   // Editor State (starts with blank guardian fields ready for the guardian to complete)
   const [isEditMode, setIsEditMode] = useState(true);

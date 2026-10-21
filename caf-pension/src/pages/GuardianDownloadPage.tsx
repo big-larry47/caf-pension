@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, Navigate } from 'react-router-dom';
 import { useApplication } from '../context/ApplicationContext';
 import { mockData } from '../data/mockData';
 import { ActingForBanner } from '../components/ActingForBanner';
@@ -14,6 +14,11 @@ export const GuardianDownloadPage: React.FC = () => {
     document.title = 'Guardian Form Download & Instructions - CAF Pension Centre';
     window.scrollTo(0, 0);
   }, []);
+
+  // Security gate: ONLY accessible after successfully answering the security questions
+  if (state.invite.status !== 'verified') {
+    return <Navigate to={`/g/${token || 'demo-token'}`} replace />;
+  }
 
   const guardianName = state.guardianProfile.fullName || 'Margaretha Byers';
   const memberName = mockData.personal.fullName; // Jenny Miller
