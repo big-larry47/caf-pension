@@ -398,6 +398,7 @@ export const PersonalPage: React.FC<PersonalPageProps> = ({
                         <div className="military-dossier-kv">
                           <span className="military-dossier-key">Total Service</span>
                           <span className="military-dossier-val">34 Years 182 Days</span>
+                        </div>
                       </div>
                     </div>
                   </div>
