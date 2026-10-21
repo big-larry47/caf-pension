@@ -70,7 +70,6 @@ export const AppHeader: React.FC = () => {
           />
           <span className="app-header__title">CAF Pension Centre</span>
           <span className="app-header__subtitle">Online pension application</span>
-          <span className="app-header__pill">CONCEPT</span>
         </div>
         <div className="app-header__right">
           <a href="#" onClick={(e) => e.preventDefault()}>
