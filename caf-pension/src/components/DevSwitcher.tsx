@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useApplication, InviteStatus } from '../context/ApplicationContext';
 
 export const DevSwitcher: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { state, updateState, setInviteStatus } = useApplication();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Completely omit DevSwitcher on printable/form pages and PDF generation routes
+  if (
+    location.pathname.startsWith('/forms/') ||
+    location.pathname.includes('/paper-form')
+  ) {
+    return null;
+  }
 
   const token = state.invite.token || 'demo-token';
 
@@ -24,6 +33,7 @@ export const DevSwitcher: React.FC = () => {
 
   return (
     <div
+      className="dev-switcher no-print"
       style={{
         position: 'fixed',
         bottom: '16px',

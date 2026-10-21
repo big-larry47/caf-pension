@@ -5,6 +5,15 @@ import { useApplication } from '../context/ApplicationContext';
 export const AppHeader: React.FC = () => {
   const location = useLocation();
   const { resetState } = useApplication();
+
+  // Omit standard application header on printable forms / live PDF editor
+  if (
+    location.pathname.startsWith('/forms/') ||
+    location.pathname.includes('/paper-form')
+  ) {
+    return null;
+  }
+
   const isStartPage = location.pathname === '/';
 
   const [isVisible, setIsVisible] = useState(true);
