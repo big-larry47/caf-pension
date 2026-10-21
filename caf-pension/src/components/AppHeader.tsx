@@ -26,8 +26,10 @@ export const AppHeader: React.FC = () => {
               filter: 'drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35))',
             }}
           />
-          <span className="app-header__title">CAF Pension Centre</span>
-          <span className="app-header__subtitle">Online pension application</span>
+          <div className="app-header__text">
+            <span className="app-header__title">CAF Pension Centre</span>
+            <span className="app-header__subtitle">Online pension application</span>
+          </div>
         </div>
         <div className="app-header__right">
           <a href="#" onClick={(e) => e.preventDefault()}>

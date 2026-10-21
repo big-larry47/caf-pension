@@ -78,18 +78,32 @@ a:hover { color: var(--color-primary-hover); }
   display: flex;
   align-items: center;
   gap: 12px;
-  flex-wrap: wrap;
 }
-.app-header__title { font-weight: 700; font-size: 18px; }
-.app-header__subtitle { font-size: 15px; color: var(--color-header-sub); }
-.app-header__pill {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  padding: 2px 8px;
-  border: 1px solid #8FA6C2;
-  border-radius: var(--radius-pill);
-  color: #DCE7F3;
+.app-header__text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.app-header__title {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.2;
+}
+.app-header__subtitle {
+  font-size: 13px;
+  color: var(--color-header-sub);
+  line-height: 1.25;
+}
+@media (max-width: 640px) {
+  .app-header__inner {
+    padding: 10px 16px;
+  }
+  .app-header__title {
+    font-size: 16px;
+  }
+  .app-header__subtitle {
+    font-size: 12px;
+  }
 }
 .app-header__right {
   display: flex;

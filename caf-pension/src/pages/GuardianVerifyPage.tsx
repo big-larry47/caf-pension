@@ -352,24 +352,6 @@ export const GuardianVerifyPage: React.FC = () => {
                 }}
               />
 
-              <div style={{ marginTop: '12px' }}>
-                <button
-                  type="button"
-                  onClick={() => setCode('123456')}
-                  style={{
-                    background: 'none',
-                    border: 'none',
-                    padding: '6px 0',
-                    fontSize: '13px',
-                    fontWeight: 600,
-                    color: '#0B3866',
-                    cursor: 'pointer',
-                    textDecoration: 'underline',
-                  }}
-                >
-                  ⚡ Autofill Demo Code (123456)
-                </button>
-              </div>
             </div>
 
             {/* Mobile-Friendly Full-Width Action Button */}
@@ -529,28 +511,6 @@ export const GuardianVerifyPage: React.FC = () => {
                 </div>
               </div>
 
-              <div style={{ marginTop: '12px' }}>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setMDay('07');
-                    setMMonth('10');
-                    setMYear('1959');
-                  }}
-                  style={{
-                    background: 'none',
-                    border: 'none',
-                    padding: '6px 0',
-                    fontSize: '13px',
-                    fontWeight: 600,
-                    color: '#0B3866',
-                    cursor: 'pointer',
-                    textDecoration: 'underline',
-                  }}
-                >
-                  ⚡ Autofill Demo Date (07/10/1959)
-                </button>
-              </div>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>

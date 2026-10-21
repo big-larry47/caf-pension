@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ApplicationProvider } from './context/ApplicationContext';
 import { AppHeader } from './components/AppHeader';
-import { DevSwitcher } from './components/DevSwitcher';
 import { StartPage } from './pages/StartPage';
 import { VerifyPage } from './pages/VerifyPage';
 import { ApplicantPage } from './pages/ApplicantPage';
@@ -73,7 +72,6 @@ export const App: React.FC = () => {
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </div>
-          <DevSwitcher />
         </div>
       </BrowserRouter>
     </ApplicationProvider>
