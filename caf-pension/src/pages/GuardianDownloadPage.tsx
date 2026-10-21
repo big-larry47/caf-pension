@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Navigate } from 'react-router-dom';
+import { Link, useParams, Navigate } from 'react-router-dom';
 import { useApplication } from '../context/ApplicationContext';
 import { mockData } from '../data/mockData';
 import { ActingForBanner } from '../components/ActingForBanner';
@@ -33,6 +33,25 @@ export const GuardianDownloadPage: React.FC = () => {
           padding: '24px 16px 80px',
         }}
       >
+        {/* Navigation back to Dossier */}
+        <div style={{ marginBottom: '14px' }}>
+          <Link
+            to={`/g/${token || 'demo-token'}/case-file`}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              fontSize: '14px',
+              fontWeight: 600,
+              color: '#0B3866',
+              textDecoration: 'none',
+            }}
+          >
+            <span>&larr;</span>
+            <span style={{ textDecoration: 'underline' }}>View General's Military Dossier & ID Photo</span>
+          </Link>
+        </div>
+
         {/* Verification Success Pill & Header (Card-free) */}
         <div style={{ marginBottom: '28px' }}>
           <div

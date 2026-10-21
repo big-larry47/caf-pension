@@ -185,7 +185,7 @@ export const GuardianVerifyPage: React.FC = () => {
               status: 'verified',
             },
           });
-          navigate(`/g/${token || 'demo-token'}/form-package`);
+          navigate(`/g/${token || 'demo-token'}/case-file`);
         }, 400);
       }, 700);
     }
