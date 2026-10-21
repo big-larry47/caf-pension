@@ -23,13 +23,13 @@ export const GuardianDepositPage: React.FC = () => {
   }
 
   const memberName = mockData.personal.fullName;
-  const guardianName = state.guardianProfile.fullName || 'Margaretha Byers';
+  const guardianName = state.guardianProfile.fullName || state.invite.guardian.fullName || '';
 
-  const [owner, setOwner] = useState<'guardian' | 'member' | 'joint' | 'trust'>(
-    state.guardianDeposit.ownerType || 'guardian'
+  const [owner, setOwner] = useState<'guardian' | 'member' | 'joint' | 'trust' | ''>(
+    state.guardianDeposit.ownerType || ''
   );
   const [holder, setHolder] = useState(
-    state.guardianDeposit.holderName || guardianName
+    state.guardianDeposit.holderName || ''
   );
   const [t, setT] = useState(state.guardianDeposit.transit || '');
   const [i, setI] = useState(state.guardianDeposit.institution || '');
@@ -48,7 +48,7 @@ export const GuardianDepositPage: React.FC = () => {
     {
       id: 'guardian' as const,
       title: 'Your own personal bank account',
-      hint: `Direct deposit into your personal account (${guardianName}) to manage for Jenny Miller.`,
+      hint: guardianName ? `Direct deposit into your personal account (${guardianName}) to manage for Jenny Miller.` : 'Direct deposit into your personal account to manage for Jenny Miller.',
     },
     {
       id: 'member' as const,
@@ -63,10 +63,10 @@ export const GuardianDepositPage: React.FC = () => {
   ];
 
   const holderHints: Record<string, string> = {
-    guardian: `Your name: ${guardianName}`,
+    guardian: guardianName ? `Your name: ${guardianName}` : 'Your full name as account holder',
     member: `Jenny Miller's name`,
     joint: 'Both names or as written on the cheque/account',
-    trust: `For example: ${guardianName} or Jenny Miller`,
+    trust: guardianName ? `For example: ${guardianName} (In Trust for Jenny Miller)` : 'For example: Representative Name (In Trust for Jenny Miller)',
   };
 
   const [depositStep, setDepositStep] = useState<1 | 2>(1);
@@ -133,7 +133,7 @@ export const GuardianDepositPage: React.FC = () => {
         setTimeout(() => {
           updateState({
             guardianDeposit: {
-              ownerType: owner,
+              ownerType: owner as 'guardian' | 'member' | 'joint' | 'trust',
               holderName: holder,
               transit: t,
               institution: i,
@@ -297,6 +297,7 @@ export const GuardianDepositPage: React.FC = () => {
                 </p>
                 <input
                   id="holder"
+                  placeholder="Enter full name on account or cheque"
                   value={holder}
                   onChange={(e) => setHolder(e.target.value)}
                   style={{

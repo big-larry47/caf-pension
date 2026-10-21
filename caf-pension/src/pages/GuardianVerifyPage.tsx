@@ -17,26 +17,26 @@ export const GuardianVerifyPage: React.FC = () => {
   const [currentPart, setCurrentPart] = useState<1 | 2 | 3>(1);
 
   // Section 1: Security Code & Member verification
-  const [code, setCode] = useState('123456');
-  const [mDay, setMDay] = useState('14');
-  const [mMonth, setMMonth] = useState('08');
-  const [mYear, setMYear] = useState('1958');
+  const [code, setCode] = useState('');
+  const [mDay, setMDay] = useState('');
+  const [mMonth, setMMonth] = useState('');
+  const [mYear, setMYear] = useState('');
   const [submittedPart1, setSubmittedPart1] = useState(false);
 
   // Section 2: Guardian Details
-  const [gName, setGName] = useState(state.guardianProfile.fullName || 'Margaretha Byers');
-  const [gDob, setGDob] = useState(state.guardianProfile.dateOfBirth || '1988-04-12');
-  const [gStreet, setGStreet] = useState(state.guardianProfile.address.street || '120 Queen Street, Apt 4B');
-  const [gCity, setGCity] = useState(state.guardianProfile.address.city || 'Ottawa');
-  const [gProv, setGProv] = useState(state.guardianProfile.address.province || 'Ontario');
-  const [gPc, setGPc] = useState(state.guardianProfile.address.postalCode || 'K1P 5Z9');
+  const [gName, setGName] = useState(state.guardianProfile.fullName || '');
+  const [gDob, setGDob] = useState(state.guardianProfile.dateOfBirth || '');
+  const [gStreet, setGStreet] = useState(state.guardianProfile.address?.street || '');
+  const [gCity, setGCity] = useState(state.guardianProfile.address?.city || '');
+  const [gProv, setGProv] = useState(state.guardianProfile.address?.province || 'Ontario');
+  const [gPc, setGPc] = useState(state.guardianProfile.address?.postalCode || '');
   const [gLang, setGLang] = useState<'en' | 'fr'>(state.guardianProfile.language || 'en');
   const [submittedPart2, setSubmittedPart2] = useState(false);
 
   // Section 3: Authority & Legal Declaration
   const [authority, setAuthority] = useState<AuthorityType>(state.guardianProfile.authorityType || 'poa');
-  const [fileName, setFileName] = useState(state.guardianProfile.authorityFile?.name || 'power-of-attorney.pdf');
-  const [declared, setDeclared] = useState(state.guardianProfile.declared ?? true);
+  const [fileName, setFileName] = useState(state.guardianProfile.authorityFile?.name || '');
+  const [declared, setDeclared] = useState(state.guardianProfile.declared ?? false);
   const [submittedPart3, setSubmittedPart3] = useState(false);
 
   // Backend interaction animation states
@@ -56,20 +56,19 @@ export const GuardianVerifyPage: React.FC = () => {
   const cleanCode = code.replace(/\D/g, '');
   const postalCodeValid = /^[A-Za-z]\d[A-Za-z] ?\d[A-Za-z]\d$/.test(gPc.trim());
   const memberDobValid =
-    mDay.padStart(2, '0') === '14' &&
-    mMonth.padStart(2, '0') === '08' &&
-    mYear === '1958';
+    (mDay.replace(/^0/, '') === '7' && mMonth.replace(/^0/, '') === '10' && mYear === '1959') ||
+    (mDay.replace(/^0/, '') === '14' && mMonth.replace(/^0/, '') === '8' && mYear === '1958');
 
   // Part 1 Errors
   const part1Errors: FormError[] = [];
   if (submittedPart1) {
     if (cleanCode.length !== 6) {
-      part1Errors.push({ targetId: 'otp', message: 'Enter your 6-digit security code' });
+      part1Errors.push({ targetId: 'otp', message: 'Enter your 6-digit security code (e.g. 123456)' });
     }
     if (!memberDobValid) {
       part1Errors.push({
         targetId: 'dd',
-        message: "Enter the late General's correct date of birth (14 / 08 / 1958)",
+        message: "Enter the late General's correct date of birth (07 / 10 / 1959)",
       });
     }
   }

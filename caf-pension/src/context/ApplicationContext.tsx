@@ -205,23 +205,23 @@ const defaultState: ApplicationState = {
   },
 
   guardianProfile: {
-    fullName: 'Margaretha Byers',
-    dateOfBirth: '1988-04-12',
+    fullName: '',
+    dateOfBirth: '',
     address: {
-      street: '120 Queen Street, Apt 4B',
-      city: 'Ottawa',
-      province: 'Ontario',
-      postalCode: 'K1P 5Z9',
+      street: '',
+      city: '',
+      province: '',
+      postalCode: '',
     },
     language: 'en',
     authorityType: 'poa',
-    authorityFile: { name: 'power-of-attorney.pdf', pages: 4 },
-    declared: true,
+    authorityFile: undefined,
+    declared: false,
   },
 
   guardianDeposit: {
-    ownerType: 'guardian',
-    holderName: 'Margaretha Byers (Power of Attorney for Jenny Miller)',
+    ownerType: '' as any,
+    holderName: '',
     transit: '',
     institution: '',
     account: '',
@@ -251,7 +251,7 @@ const defaultState: ApplicationState = {
   activeActor: 'member',
 };
 
-const STORAGE_KEY = 'caf_pension_application_state_v5';
+const STORAGE_KEY = 'caf_pension_application_state_v6';
 
 interface ApplicationContextType {
   state: ApplicationState;
@@ -267,7 +267,7 @@ export const ApplicationProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const [state, setState] = useState<ApplicationState>(() => {
     try {
       // Clear legacy storage keys across previous versions
-      ['caf_pension_application_state', 'caf_pension_application_state_v2', 'caf_pension_application_state_v3', 'caf_pension_application_state_v4'].forEach((k) => {
+      ['caf_pension_application_state', 'caf_pension_application_state_v2', 'caf_pension_application_state_v3', 'caf_pension_application_state_v4', 'caf_pension_application_state_v5'].forEach((k) => {
         sessionStorage.removeItem(k);
         localStorage.removeItem(k);
       });

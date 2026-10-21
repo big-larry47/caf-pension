@@ -179,10 +179,12 @@ export const GuardianReviewPage: React.FC = () => {
           k: 'Account type',
           v:
             state.guardianDeposit.ownerType === 'trust'
-              ? `Trust account for ${memberName}`
+              ? `Trust account for Jenny Miller`
               : state.guardianDeposit.ownerType === 'joint'
-              ? `Joint account with ${memberName}`
-              : `${memberName}'s own account`,
+              ? `Joint or trust account for Jenny Miller`
+              : state.guardianDeposit.ownerType === 'guardian'
+              ? `Personal account of ${guardianName}`
+              : `Jenny Miller's personal account`,
         },
         {
           k: 'Bank numbers',
