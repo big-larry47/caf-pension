@@ -85,7 +85,7 @@ export const mockData: MockData = {
   benefitAmounts: {
     deferredAnnuity: '$6,480.00 / month survivor annuity for Jenny Miller',
     annualAllowance: '$5,120.00 / month',
-    transferValue: '$1,240,500.00 lump-sum death benefit',
+    transferValue: '$789,400.00 lump-sum death benefit',
     immediateAnnuity: 'Survivor Child / Dependent Annuity (payable to Margaretha Byers, Power of Attorney for Jenny Miller)',
   },
   deductions: {

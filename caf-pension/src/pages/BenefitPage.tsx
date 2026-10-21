@@ -100,7 +100,7 @@ export const BenefitPage: React.FC<BenefitPageProps> = ({
     {
       id: 'transfer' as const,
       title: 'Lump-Sum Capital Death Benefit',
-      amount: '$1,240,500.00 one-time payout',
+      amount: '$789,400.00 one-time payout',
       desc: 'A single, one-time full settlement payment transferred directly to Jenny’s trust or locked-in investment account.',
       note: 'Paid in full as a lump sum. No further monthly pension payments.',
       disabled: false,
@@ -138,7 +138,7 @@ export const BenefitPage: React.FC<BenefitPageProps> = ({
                   <strong>Monthly Annuity ($6,480/mo):</strong> Best for steady, predictable monthly income that automatically adjusts for inflation each year.
                 </p>
                 <p style={{ margin: '0 0 10px', fontSize: '15px', lineHeight: 1.5 }}>
-                  <strong>Lump-Sum ($1,240,500):</strong> Best if you wish to manage funds within a trust or locked-in investment portfolio.
+                  <strong>Lump-Sum ($789,400):</strong> Best if you wish to manage funds within a trust or locked-in investment portfolio.
                 </p>
                 <p style={{ margin: 0, fontSize: '14px', color: '#64748B' }}>
                   Need advice? Call toll-free <strong>1-800-267-0325</strong> to speak directly with a pension counselor.

@@ -50,7 +50,7 @@ export const GuardianBenefitPage: React.FC = () => {
     {
       id: 'transfer' as const,
       title: 'Lump-Sum Capital Death Benefit',
-      amount: '$1,240,500.00 one-time payout',
+      amount: '$789,400.00 one-time payout',
       badge: 'Full Settlement',
       badgeColor: '#1E40AF',
       badgeBg: '#DBEAFE',

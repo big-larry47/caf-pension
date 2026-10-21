@@ -139,7 +139,7 @@ export const GuardianReviewPage: React.FC = () => {
           k: 'Benefit amount',
           v:
             state.benefitOption === 'transfer'
-              ? '$1,240,500.00 one-time payout'
+              ? '$789,400.00 one-time payout'
               : state.benefitOption === 'allowance'
               ? '$5,120.00 / month'
               : '$6,480.00 / month (indexed to inflation)',
@@ -207,7 +207,7 @@ export const GuardianReviewPage: React.FC = () => {
 
   const chosenBenefitAmount =
     state.benefitOption === 'transfer'
-      ? '$1,240,500.00 one-time payout'
+      ? '$789,400.00 one-time payout'
       : state.benefitOption === 'allowance'
       ? '$5,120.00 / month'
       : '$6,480.00 / month (indexed to inflation)';

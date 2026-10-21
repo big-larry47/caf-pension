@@ -17,7 +17,7 @@ export const GuardianDossierPage: React.FC = () => {
     },
     transfer: {
       title: 'Lump-Sum Capital Death Benefit',
-      amount: '$1,240,500.00 one-time payout',
+      amount: '$789,400.00 one-time payout',
     },
     allowance: {
       title: 'Annual Allowance (Reduced Monthly Income)',
