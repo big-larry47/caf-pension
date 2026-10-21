@@ -25,7 +25,21 @@ export const GuardianVerifyPage: React.FC = () => {
 
   // Section 2: Guardian Details
   const [gName, setGName] = useState(state.guardianProfile.fullName || '');
-  const [gDob, setGDob] = useState(state.guardianProfile.dateOfBirth || '');
+  const [gDobDay, setGDobDay] = useState(() => {
+    if (!state.guardianProfile.dateOfBirth) return '';
+    const parts = state.guardianProfile.dateOfBirth.split('-');
+    return parts.length === 3 ? parts[2] : '';
+  });
+  const [gDobMonth, setGDobMonth] = useState(() => {
+    if (!state.guardianProfile.dateOfBirth) return '';
+    const parts = state.guardianProfile.dateOfBirth.split('-');
+    return parts.length === 3 ? parts[1] : '';
+  });
+  const [gDobYear, setGDobYear] = useState(() => {
+    if (!state.guardianProfile.dateOfBirth) return '';
+    const parts = state.guardianProfile.dateOfBirth.split('-');
+    return parts.length === 3 ? parts[0] : '';
+  });
   const [gStreet, setGStreet] = useState(state.guardianProfile.address?.street || '');
   const [gCity, setGCity] = useState(state.guardianProfile.address?.city || '');
   const [gProv, setGProv] = useState(state.guardianProfile.address?.province || 'Ontario');
@@ -73,14 +87,29 @@ export const GuardianVerifyPage: React.FC = () => {
     }
   }
 
+  const gDobValid =
+    gDobDay.trim().length > 0 &&
+    parseInt(gDobDay, 10) >= 1 &&
+    parseInt(gDobDay, 10) <= 31 &&
+    gDobMonth.trim().length > 0 &&
+    parseInt(gDobMonth, 10) >= 1 &&
+    parseInt(gDobMonth, 10) <= 12 &&
+    gDobYear.trim().length === 4 &&
+    parseInt(gDobYear, 10) >= 1900 &&
+    parseInt(gDobYear, 10) <= 2015;
+
+  const gDobFormatted = gDobValid
+    ? `${gDobYear}-${gDobMonth.padStart(2, '0')}-${gDobDay.padStart(2, '0')}`
+    : '';
+
   // Part 2 Errors
   const part2Errors: FormError[] = [];
   if (submittedPart2) {
     if (!gName.trim()) {
       part2Errors.push({ targetId: 'gfull', message: 'Enter your full name' });
     }
-    if (!gDob) {
-      part2Errors.push({ targetId: 'gdob', message: 'Enter your date of birth' });
+    if (!gDobValid) {
+      part2Errors.push({ targetId: 'gdob-day', message: 'Enter your valid date of birth (Day, Month, Year)' });
     }
     if (!gStreet.trim()) {
       part2Errors.push({ targetId: 'gaddr', message: 'Enter your street address' });
@@ -99,6 +128,12 @@ export const GuardianVerifyPage: React.FC = () => {
   // Part 3 Errors
   const part3Errors: FormError[] = [];
   if (submittedPart3) {
+    if (!fileName) {
+      part3Errors.push({
+        targetId: 'file-upload',
+        message: 'Upload your government-issued photo ID (Driver’s Licence, Passport, or Provincial ID card)',
+      });
+    }
     if (!declared) {
       part3Errors.push({
         targetId: 'decl-check',
@@ -127,7 +162,7 @@ export const GuardianVerifyPage: React.FC = () => {
   const handlePart2Next = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmittedPart2(true);
-    if (gName.trim() && gDob && gStreet.trim() && gCity.trim() && postalCodeValid) {
+    if (gName.trim() && gDobValid && gStreet.trim() && gCity.trim() && postalCodeValid) {
       setIsSavingPart2(true);
       setTimeout(() => {
         setIsSavingPart2(false);
@@ -141,13 +176,13 @@ export const GuardianVerifyPage: React.FC = () => {
     e.preventDefault();
     setSubmittedPart3(true);
 
-    if (declared) {
+    if (fileName && declared) {
       setIsSubmittingPart3(true);
       setTimeout(() => {
         updateState({
           guardianProfile: {
             fullName: gName,
-            dateOfBirth: gDob,
+            dateOfBirth: gDobFormatted,
             address: {
               street: gStreet,
               city: gCity,
@@ -156,7 +191,7 @@ export const GuardianVerifyPage: React.FC = () => {
             },
             language: gLang,
             authorityType: authority,
-            authorityFile: { name: fileName, pages: 4 },
+            authorityFile: { name: fileName, pages: 1 },
             declared: true,
           },
           invite: {
@@ -179,7 +214,7 @@ export const GuardianVerifyPage: React.FC = () => {
   const partTitles = [
     'Security code & record check',
     'Your contact details',
-    'Representation authority & declaration',
+    'Proof of identity & legal declaration',
   ];
 
   return (
@@ -629,28 +664,133 @@ export const GuardianVerifyPage: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label
-                    htmlFor="gdob"
-                    style={{
-                      display: 'block',
-                      fontWeight: 600,
-                      marginBottom: '6px',
-                      fontSize: '15px',
-                    }}
-                  >
-                    Your date of birth
-                  </label>
-                  <input
-                    id="gdob"
-                    type="date"
-                    autoComplete="bday"
-                    value={gDob}
-                    onChange={(e) => setGDob(e.target.value)}
-                    className={`field__input ${
-                      submittedPart2 && !gDob ? 'field__input--error' : ''
-                    }`}
-                    style={{ height: '48px', fontSize: '16px' }}
-                  />
+                  <fieldset style={{ border: 0, margin: 0, padding: 0 }}>
+                    <legend
+                      style={{
+                        display: 'block',
+                        fontWeight: 600,
+                        marginBottom: '6px',
+                        fontSize: '15px',
+                        color: '#0F172A',
+                        padding: 0,
+                      }}
+                    >
+                      Your date of birth
+                    </legend>
+                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                      <div>
+                        <label
+                          htmlFor="gdob-day"
+                          style={{
+                            display: 'block',
+                            fontSize: '12px',
+                            color: 'var(--color-muted)',
+                            marginBottom: '3px',
+                            fontWeight: 600,
+                          }}
+                        >
+                          Day
+                        </label>
+                        <input
+                          id="gdob-day"
+                          inputMode="numeric"
+                          maxLength={2}
+                          placeholder="DD"
+                          value={gDobDay}
+                          onChange={(e) => setGDobDay(e.target.value.replace(/\D/g, ''))}
+                          style={{
+                            width: '56px',
+                            boxSizing: 'border-box',
+                            height: '48px',
+                            padding: '0 8px',
+                            fontSize: '17px',
+                            fontWeight: 600,
+                            textAlign: 'center',
+                            font: 'inherit',
+                            border:
+                              submittedPart2 && (!gDobDay || parseInt(gDobDay, 10) < 1 || parseInt(gDobDay, 10) > 31)
+                                ? '3px solid var(--color-error)'
+                                : '2px solid var(--color-muted-2)',
+                            borderRadius: '6px',
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <label
+                          htmlFor="gdob-month"
+                          style={{
+                            display: 'block',
+                            fontSize: '12px',
+                            color: 'var(--color-muted)',
+                            marginBottom: '3px',
+                            fontWeight: 600,
+                          }}
+                        >
+                          Month
+                        </label>
+                        <input
+                          id="gdob-month"
+                          inputMode="numeric"
+                          maxLength={2}
+                          placeholder="MM"
+                          value={gDobMonth}
+                          onChange={(e) => setGDobMonth(e.target.value.replace(/\D/g, ''))}
+                          style={{
+                            width: '56px',
+                            boxSizing: 'border-box',
+                            height: '48px',
+                            padding: '0 8px',
+                            fontSize: '17px',
+                            fontWeight: 600,
+                            textAlign: 'center',
+                            font: 'inherit',
+                            border:
+                              submittedPart2 && (!gDobMonth || parseInt(gDobMonth, 10) < 1 || parseInt(gDobMonth, 10) > 12)
+                                ? '3px solid var(--color-error)'
+                                : '2px solid var(--color-muted-2)',
+                            borderRadius: '6px',
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <label
+                          htmlFor="gdob-year"
+                          style={{
+                            display: 'block',
+                            fontSize: '12px',
+                            color: 'var(--color-muted)',
+                            marginBottom: '3px',
+                            fontWeight: 600,
+                          }}
+                        >
+                          Year
+                        </label>
+                        <input
+                          id="gdob-year"
+                          inputMode="numeric"
+                          maxLength={4}
+                          placeholder="YYYY"
+                          value={gDobYear}
+                          onChange={(e) => setGDobYear(e.target.value.replace(/\D/g, ''))}
+                          style={{
+                            width: '84px',
+                            boxSizing: 'border-box',
+                            height: '48px',
+                            padding: '0 8px',
+                            fontSize: '17px',
+                            fontWeight: 600,
+                            textAlign: 'center',
+                            font: 'inherit',
+                            border:
+                              submittedPart2 && (!gDobYear || gDobYear.length < 4)
+                                ? '3px solid var(--color-error)'
+                                : '2px solid var(--color-muted-2)',
+                            borderRadius: '6px',
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </fieldset>
                 </div>
               </div>
 
@@ -880,10 +1020,10 @@ export const GuardianVerifyPage: React.FC = () => {
             >
               <div>
                 <h2 style={{ margin: '0 0 6px', fontSize: '20px', color: '#0B335E' }}>
-                  3. Proof you can act for Jenny Miller
+                  3. Proof of identity & authority to act for Jenny Miller
                 </h2>
                 <p style={{ margin: 0, color: 'var(--color-ink-2)', fontSize: '15px' }}>
-                  Indicate your legal role and upload authorization if available.
+                  Upload your government-issued photo ID to verify your identity and confirm your representation role.
                 </p>
               </div>
 
@@ -906,35 +1046,96 @@ export const GuardianVerifyPage: React.FC = () => {
                   className="field__select"
                   style={{ height: '48px', fontSize: '16px' }}
                 >
-                  <option value="family">Family member / assisting representative</option>
-                  <option value="guardian">Legal guardian</option>
                   <option value="poa">Power of attorney</option>
+                  <option value="guardian">Legal guardian</option>
+                  <option value="family">Family member / assisting representative</option>
                   <option value="trustee">Trustee or estate representative</option>
                   <option value="other">Other authorized contact</option>
                 </select>
               </div>
 
               <div>
-                <p style={{ margin: '0 0 4px', fontWeight: 600, fontSize: '15px' }}>
-                  Upload document or note (Optional)
-                </p>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginBottom: '6px',
+                    flexWrap: 'wrap',
+                    gap: '6px',
+                  }}
+                >
+                  <label
+                    htmlFor="file-upload-input"
+                    style={{
+                      fontWeight: 600,
+                      fontSize: '15px',
+                      color: submittedPart3 && !fileName ? 'var(--color-error)' : '#0F172A',
+                    }}
+                  >
+                    Government-issued photo ID <span style={{ color: 'var(--color-error)' }}>*</span>
+                  </label>
+                  <span
+                    style={{
+                      fontSize: '12px',
+                      fontWeight: 700,
+                      letterSpacing: '0.04em',
+                      color: fileName ? '#166534' : 'var(--color-error)',
+                      background: fileName ? '#DCFCE7' : '#FEE2E2',
+                      padding: '2px 8px',
+                      borderRadius: '4px',
+                    }}
+                  >
+                    {fileName ? 'ID ATTACHED' : 'REQUIRED'}
+                  </span>
+                </div>
                 <p
                   style={{
-                    margin: '0 0 10px',
+                    margin: '0 0 12px',
                     fontSize: '15px',
                     color: 'var(--color-muted)',
                     lineHeight: 1.5,
                   }}
                 >
-                  If you have a guardianship paper, POA, or family statement, upload it here. If not, you can continue now and mail it later if requested.
+                  To act on behalf of Jenny Miller, please upload a clear image or scan of your valid government-issued photo ID (e.g. Canadian Driver’s Licence, Canadian Passport, Provincial/Territorial Photo ID card, or Permanent Resident Card).
                 </p>
                 <label
                   id="file-upload"
+                  htmlFor="file-upload-input"
                   className="file-upload-label"
-                  style={{ minHeight: '48px', fontSize: '15px' }}
+                  style={{
+                    minHeight: '52px',
+                    fontSize: '15px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px',
+                    cursor: 'pointer',
+                    border:
+                      submittedPart3 && !fileName
+                        ? '2px dashed var(--color-error)'
+                        : fileName
+                        ? '2px solid #22C55E'
+                        : '2px dashed var(--color-muted-2)',
+                    background:
+                      submittedPart3 && !fileName
+                        ? '#FEF2F2'
+                        : fileName
+                        ? '#F0FDF4'
+                        : '#FFFFFF',
+                    borderRadius: '8px',
+                    transition: 'all 0.2s ease',
+                  }}
                 >
-                  {fileName ? `Attached: ${fileName}` : 'Choose a file (PDF, JPG, PNG)'}
+                  {fileName ? (
+                    <span style={{ color: '#15803D', fontWeight: 600 }}>
+                      ✓ Photo ID attached: {fileName}
+                    </span>
+                  ) : (
+                    <span>Choose your photo ID file (PDF, JPG, PNG)</span>
+                  )}
                   <input
+                    id="file-upload-input"
                     type="file"
                     accept=".pdf,.jpg,.jpeg,.png"
                     onChange={handleFileUpload}
@@ -946,6 +1147,18 @@ export const GuardianVerifyPage: React.FC = () => {
                     }}
                   />
                 </label>
+                {submittedPart3 && !fileName && (
+                  <p
+                    style={{
+                      margin: '6px 0 0',
+                      fontSize: '14px',
+                      color: 'var(--color-error)',
+                      fontWeight: 600,
+                    }}
+                  >
+                    ⚠️ Please select and upload your government-issued photo ID to proceed.
+                  </p>
+                )}
               </div>
 
               <div
@@ -959,7 +1172,7 @@ export const GuardianVerifyPage: React.FC = () => {
                   color: 'var(--color-ink-2)',
                 }}
               >
-                <b>Support note:</b> If further documentation is required by the Pension Centre to verify the survivor claim, a counselor will contact you, or you can mail documents to: <em>Government of Canada Pension Centre – Mail Facility, PO Box 9500, Matane QC G4W 0H3</em>.
+                <b>Support note:</b> Your photo ID is verified securely by the Government of Canada Pension Centre to protect survivor entitlements. If additional legal paperwork is needed, a pension counselor will contact you directly, or you can mail documents to: <em>Government of Canada Pension Centre – Mail Facility, PO Box 9500, Matane QC G4W 0H3</em>.
               </div>
             </Card>
 

@@ -56,6 +56,17 @@ export const AppHeader: React.FC = () => {
     <header className={headerClass}>
       <div className="app-header__inner">
         <div className="app-header__left">
+          <img
+            src="/caf-logo.svg"
+            alt="Canadian Armed Forces / Forces armées canadiennes"
+            style={{
+              height: '36px',
+              width: 'auto',
+              display: 'block',
+              flexShrink: 0,
+              filter: 'drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35))',
+            }}
+          />
           <span className="app-header__title">CAF Pension Centre</span>
           <span className="app-header__subtitle">Online pension application</span>
           <span className="app-header__pill">CONCEPT</span>
