@@ -127,14 +127,22 @@ export const InvitePreviewPage: React.FC = () => {
               >
                 Open the application
               </Link>
-              <div style={{ marginTop: '12px', fontSize: '14px' }}>
+              <div style={{ marginTop: '12px', fontSize: '14px', display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
                 <span style={{ color: 'var(--color-muted)' }}>Prefer to submit on paper? </span>
+                <a
+                  href="/CF-FC-2489-Guardian-Representative-Form.pdf"
+                  download="CF-FC-2489-Guardian-Representative-Form.pdf"
+                  style={{ color: 'var(--color-primary)', fontWeight: 700, textDecoration: 'underline' }}
+                >
+                  📥 Download Form CF-FC 2489 (.pdf)
+                </a>
+                <span style={{ color: 'var(--color-muted)' }}>or</span>
                 <Link
                   to={`/g/${token}/paper-form`}
                   target="_blank"
                   style={{ color: 'var(--color-primary)', fontWeight: 600, textDecoration: 'underline' }}
                 >
-                  Download Form CF-FC 2489 (PDF)
+                  View Printable Form ↗
                 </Link>
               </div>
               <p

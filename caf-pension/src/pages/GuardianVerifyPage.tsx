@@ -326,30 +326,52 @@ export const GuardianVerifyPage: React.FC = () => {
               </p>
             </div>
           </div>
-          <Link
-            to={`/g/${token}/paper-form`}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '8px',
-              padding: '10px 18px',
-              background: '#FFFFFF',
-              color: '#0B5CAD',
-              border: '2px solid #0B5CAD',
-              borderRadius: '6px',
-              fontWeight: 700,
-              fontSize: '14px',
-              textDecoration: 'none',
-              whiteSpace: 'nowrap',
-              boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
-              transition: 'all 0.15s ease',
-            }}
-          >
-            <span>📄 Download / Print Paper Form</span>
-            <span style={{ fontSize: '12px' }}>↗</span>
-          </Link>
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+            <a
+              href="/CF-FC-2489-Guardian-Representative-Form.pdf"
+              download="CF-FC-2489-Guardian-Representative-Form.pdf"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '10px 18px',
+                background: '#0B5CAD',
+                color: '#FFFFFF',
+                borderRadius: '6px',
+                fontWeight: 700,
+                fontSize: '14px',
+                textDecoration: 'none',
+                boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
+                transition: 'all 0.15s ease',
+              }}
+            >
+              <span>📥 Download PDF Form (.pdf)</span>
+            </a>
+            <Link
+              to={`/g/${token}/paper-form`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '10px 16px',
+                background: '#FFFFFF',
+                color: '#0B5CAD',
+                border: '2px solid #0B5CAD',
+                borderRadius: '6px',
+                fontWeight: 700,
+                fontSize: '14px',
+                textDecoration: 'none',
+                whiteSpace: 'nowrap',
+                boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
+                transition: 'all 0.15s ease',
+              }}
+            >
+              <span>🖨️ View &amp; Print</span>
+              <span style={{ fontSize: '12px' }}>↗</span>
+            </Link>
+          </div>
         </div>
 
         <h1 style={{ margin: '0 0 8px', fontSize: '28px', lineHeight: 1.25, color: '#0F172A' }}>
