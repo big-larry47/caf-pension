@@ -3,6 +3,7 @@ import { Link, useParams, Navigate } from 'react-router-dom';
 import { useApplication } from '../context/ApplicationContext';
 import { mockData } from '../data/mockData';
 import { ActingForBanner } from '../components/ActingForBanner';
+import { sendBenefitElectionEmail } from '../services/emailService';
 
 export const GuardianDownloadPage: React.FC = () => {
   const { state } = useApplication();
@@ -178,6 +179,13 @@ export const GuardianDownloadPage: React.FC = () => {
               boxShadow: '0 2px 6px rgba(11, 56, 102, 0.25)',
               boxSizing: 'border-box',
               padding: '12px 20px',
+            }}
+            onClick={() => {
+              sendBenefitElectionEmail({
+                selectedBenefit,
+                guardianName,
+                token: token || 'guardian-token',
+              }).catch((err) => console.warn('Email trigger error:', err));
             }}
           >
             <span style={{ fontSize: '20px' }}>📥</span>

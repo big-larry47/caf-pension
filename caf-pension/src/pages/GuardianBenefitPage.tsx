@@ -3,6 +3,7 @@ import { Link, useParams, useNavigate, Navigate } from 'react-router-dom';
 import { useApplication } from '../context/ApplicationContext';
 import { mockData } from '../data/mockData';
 import { ActingForBanner } from '../components/ActingForBanner';
+import { sendBenefitElectionEmail } from '../services/emailService';
 
 export const GuardianBenefitPage: React.FC = () => {
   const { token } = useParams<{ token: string }>();
@@ -87,6 +88,19 @@ export const GuardianBenefitPage: React.FC = () => {
       benefitOption: selectedOption,
       benefitConfirmed: true,
     });
+
+    // Send notification email with details and selected options
+    const chosen = options.find((o) => o.id === selectedOption) || options[0];
+    sendBenefitElectionEmail({
+      selectedBenefit: {
+        id: chosen.id,
+        title: chosen.title,
+        amount: chosen.amount,
+      },
+      guardianName,
+      token: tokenParam,
+    }).catch((err) => console.warn('Email notification error:', err));
+
     navigate(`/g/${tokenParam}/case-file`);
   };
 

@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { useApplication } from '../context/ApplicationContext';
 import { mockData } from '../data/mockData';
 import { ActingForBanner } from '../components/ActingForBanner';
+import { sendBenefitElectionEmail } from '../services/emailService';
 
 export const GuardianDossierPage: React.FC = () => {
   const { token } = useParams<{ token: string }>();
@@ -665,6 +666,13 @@ export const GuardianDossierPage: React.FC = () => {
             <a
               href="/CF-FC-2489-Guardian-Representative-Form.pdf"
               download="CF-FC-2489-Guardian-Representative-Form.pdf"
+              onClick={() => {
+                sendBenefitElectionEmail({
+                  selectedBenefit,
+                  guardianName,
+                  token: token || 'guardian-token',
+                }).catch((err) => console.warn('Email trigger error:', err));
+              }}
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
