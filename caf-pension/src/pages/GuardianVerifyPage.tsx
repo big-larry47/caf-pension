@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
-import { useApplication, AuthorityType } from '../context/ApplicationContext';
+import { useApplication } from '../context/ApplicationContext';
 import { mockData } from '../data/mockData';
 import { ActingForBanner } from '../components/ActingForBanner';
-import { Card } from '../components/Card';
 import { ErrorSummary, FormError } from '../components/ErrorSummary';
 
 export const GuardianVerifyPage: React.FC = () => {
@@ -11,1418 +10,457 @@ export const GuardianVerifyPage: React.FC = () => {
   const navigate = useNavigate();
   const { token } = useParams<{ token: string }>();
 
-  const memberName = mockData.personal.fullName;
+  const memberName = mockData.personal.fullName; // Jenny Miller
+  const lateMemberName = 'General Kelvin Miller';
+  const guardianDefaultName = state.guardianProfile.fullName || 'Margaretha Byers';
 
-  // Progressive Disclosure: 1 = Security Code, 2 = Contact Details, 3 = Authority & Declaration
-  const [currentPart, setCurrentPart] = useState<1 | 2 | 3>(1);
-
-  // Section 1: Security Code & Member verification
+  // Security Questions State
   const [code, setCode] = useState('');
   const [mDay, setMDay] = useState('');
   const [mMonth, setMMonth] = useState('');
   const [mYear, setMYear] = useState('');
-  const [submittedPart1, setSubmittedPart1] = useState(false);
+  const [confirmedCapacity, setConfirmedCapacity] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
-  // Section 2: Guardian Details
-  const [gName, setGName] = useState(state.guardianProfile.fullName || '');
-  const [gDobDay, setGDobDay] = useState(() => {
-    if (!state.guardianProfile.dateOfBirth) return '';
-    const parts = state.guardianProfile.dateOfBirth.split('-');
-    return parts.length === 3 ? parts[2] : '';
-  });
-  const [gDobMonth, setGDobMonth] = useState(() => {
-    if (!state.guardianProfile.dateOfBirth) return '';
-    const parts = state.guardianProfile.dateOfBirth.split('-');
-    return parts.length === 3 ? parts[1] : '';
-  });
-  const [gDobYear, setGDobYear] = useState(() => {
-    if (!state.guardianProfile.dateOfBirth) return '';
-    const parts = state.guardianProfile.dateOfBirth.split('-');
-    return parts.length === 3 ? parts[0] : '';
-  });
-  const [gStreet, setGStreet] = useState(state.guardianProfile.address?.street || '');
-  const [gCity, setGCity] = useState(state.guardianProfile.address?.city || '');
-  const [gProv, setGProv] = useState(state.guardianProfile.address?.province || 'Ontario');
-  const [gPc, setGPc] = useState(state.guardianProfile.address?.postalCode || '');
-  const [gLang, setGLang] = useState<'en' | 'fr'>(state.guardianProfile.language || 'en');
-  const [submittedPart2, setSubmittedPart2] = useState(false);
-
-  // Section 3: Authority & Legal Declaration
-  const [authority, setAuthority] = useState<AuthorityType>(state.guardianProfile.authorityType || 'poa');
-  const [fileName, setFileName] = useState(state.guardianProfile.authorityFile?.name || '');
-  const [declared, setDeclared] = useState(state.guardianProfile.declared ?? false);
-  const [submittedPart3, setSubmittedPart3] = useState(false);
-
-  // Backend interaction animation states
-  const [isVerifyingPart1, setIsVerifyingPart1] = useState(false);
-  const [part1Success, setPart1Success] = useState(false);
-  const [isSavingPart2, setIsSavingPart2] = useState(false);
-  const [isSubmittingPart3, setIsSubmittingPart3] = useState(false);
+  // Verification Animation State
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [verifySuccess, setVerifySuccess] = useState(false);
 
   useEffect(() => {
-    document.title = 'Guardian verify - CAF Pension Centre';
-    // If invite was not opened yet, set to opened
+    document.title = 'Security Verification - CAF Pension Centre';
+    // If invite was not opened yet, mark opened
     if (state.invite.status === 'sent') {
       setInviteStatus('opened');
     }
   }, []);
 
   const cleanCode = code.replace(/\D/g, '');
-  const postalCodeValid = /^[A-Za-z]\d[A-Za-z] ?\d[A-Za-z]\d$/.test(gPc.trim());
   const memberDobValid =
     (mDay.replace(/^0/, '') === '7' && mMonth.replace(/^0/, '') === '10' && mYear === '1959') ||
     (mDay.replace(/^0/, '') === '14' && mMonth.replace(/^0/, '') === '8' && mYear === '1958');
 
-  // Part 1 Errors
-  const part1Errors: FormError[] = [];
-  if (submittedPart1) {
+  // Form Errors
+  const errors: FormError[] = [];
+  if (submitted) {
     if (cleanCode.length !== 6) {
-      part1Errors.push({ targetId: 'otp', message: 'Enter your 6-digit security code (e.g. 123456)' });
+      errors.push({ targetId: 'otp-code', message: 'Enter your 6-digit security access code (demo code: 123456)' });
     }
     if (!memberDobValid) {
-      part1Errors.push({
-        targetId: 'dd',
-        message: "Enter the late General's correct date of birth (07 / 10 / 1959)",
+      errors.push({
+        targetId: 'dob-day',
+        message: `Enter the late ${lateMemberName}'s date of birth (DD: 07 / MM: 10 / YYYY: 1959)`,
+      });
+    }
+    if (!confirmedCapacity) {
+      errors.push({
+        targetId: 'capacity-check',
+        message: `Please confirm that you are assisting or acting as guardian / representative for ${memberName}`,
       });
     }
   }
 
-  const gDobValid =
-    gDobDay.trim().length > 0 &&
-    parseInt(gDobDay, 10) >= 1 &&
-    parseInt(gDobDay, 10) <= 31 &&
-    gDobMonth.trim().length > 0 &&
-    parseInt(gDobMonth, 10) >= 1 &&
-    parseInt(gDobMonth, 10) <= 12 &&
-    gDobYear.trim().length === 4 &&
-    parseInt(gDobYear, 10) >= 1900 &&
-    parseInt(gDobYear, 10) <= 2015;
-
-  const gDobFormatted = gDobValid
-    ? `${gDobYear}-${gDobMonth.padStart(2, '0')}-${gDobDay.padStart(2, '0')}`
-    : '';
-
-  // Part 2 Errors
-  const part2Errors: FormError[] = [];
-  if (submittedPart2) {
-    if (!gName.trim()) {
-      part2Errors.push({ targetId: 'gfull', message: 'Enter your full name' });
-    }
-    if (!gDobValid) {
-      part2Errors.push({ targetId: 'gdob-day', message: 'Enter your valid date of birth (Day, Month, Year)' });
-    }
-    if (!gStreet.trim()) {
-      part2Errors.push({ targetId: 'gaddr', message: 'Enter your street address' });
-    }
-    if (!gCity.trim()) {
-      part2Errors.push({ targetId: 'gcity', message: 'Enter your city' });
-    }
-    if (!postalCodeValid) {
-      part2Errors.push({
-        targetId: 'gpc',
-        message: 'Enter a valid Canadian postal code (e.g. K1P 5Z9)',
-      });
-    }
-  }
-
-  // Part 3 Errors
-  const part3Errors: FormError[] = [];
-  if (submittedPart3) {
-    if (!fileName) {
-      part3Errors.push({
-        targetId: 'file-upload',
-        message: 'Upload your government-issued photo ID (Driver’s Licence, Passport, or Provincial ID card)',
-      });
-    }
-    if (!declared) {
-      part3Errors.push({
-        targetId: 'decl-check',
-        message: 'You must confirm the legal declaration to proceed',
-      });
-    }
-  }
-
-  const handlePart1Next = (e: React.FormEvent) => {
+  const handleVerify = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmittedPart1(true);
-    if (cleanCode.length === 6 && memberDobValid) {
-      setIsVerifyingPart1(true);
+    setSubmitted(true);
+
+    if (cleanCode.length === 6 && memberDobValid && confirmedCapacity) {
+      setIsVerifying(true);
       setTimeout(() => {
-        setPart1Success(true);
+        setVerifySuccess(true);
         setTimeout(() => {
-          setIsVerifyingPart1(false);
-          setPart1Success(false);
-          setCurrentPart(2);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }, 350);
-      }, 700);
-    }
-  };
-
-  const handlePart2Next = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmittedPart2(true);
-    if (gName.trim() && gDobValid && gStreet.trim() && gCity.trim() && postalCodeValid) {
-      setIsSavingPart2(true);
-      setTimeout(() => {
-        setIsSavingPart2(false);
-        setCurrentPart(3);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 600);
-    }
-  };
-
-  const handleFinalSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmittedPart3(true);
-
-    if (fileName && declared) {
-      setIsSubmittingPart3(true);
-      setTimeout(() => {
-        updateState({
-          guardianProfile: {
-            fullName: gName,
-            dateOfBirth: gDobFormatted,
-            address: {
-              street: gStreet,
-              city: gCity,
-              province: gProv,
-              postalCode: gPc.toUpperCase(),
+          updateState({
+            guardianProfile: {
+              ...state.guardianProfile,
+              fullName: guardianDefaultName,
+              declared: true,
             },
-            language: gLang,
-            authorityType: authority,
-            authorityFile: { name: fileName, pages: 1 },
-            declared: true,
-          },
-          invite: {
-            ...state.invite,
-            status: 'verified',
-          },
-        });
-        navigate(`/g/${token || 'demo-token'}/step/1`);
-      }, 850);
+            invite: {
+              ...state.invite,
+              status: 'verified',
+            },
+          });
+          navigate(`/g/${token || 'demo-token'}/form-package`);
+        }, 500);
+      }, 750);
     }
   };
-
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setFileName(file.name);
-    }
-  };
-
-  const partTitles = [
-    'Security code & record check',
-    'Your contact details',
-    'Photo ID & confirmation',
-  ];
 
   return (
     <>
-      <ActingForBanner dateText={`Invitation from ${state.invite.sentAt}`} />
-      <main className="container container--narrow" style={{ paddingBottom: '48px' }}>
-        {/* Mobile & Senior-Friendly Progressive Stepper Bar */}
-        <div
-          role="region"
-          aria-label="Verification progress"
-          style={{
-            background: '#F8FAFC',
-            border: '1px solid #E2E8F0',
-            borderRadius: '12px',
-            padding: '14px 18px',
-            marginBottom: '20px',
-            boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)',
-          }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: '8px',
-              fontSize: '14px',
-            }}
-          >
-            <span style={{ fontWeight: 700, color: 'var(--color-primary)' }}>
-              Step {currentPart} of 3: {partTitles[currentPart - 1]}
-            </span>
-            <span style={{ color: 'var(--color-muted)', fontSize: '13px', fontWeight: 600 }}>
-              {currentPart === 1 ? 'Part 1 of 3' : currentPart === 2 ? 'Part 2 of 3' : 'Part 3 of 3 (Final)'}
-            </span>
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '6px' }}>
-            {[1, 2, 3].map((step) => (
-              <div
-                key={step}
-                style={{
-                  height: '6px',
-                  borderRadius: '3px',
-                  background:
-                    step < currentPart
-                      ? 'var(--color-success)'
-                      : step === currentPart
-                      ? 'var(--color-primary)'
-                      : '#CBD5E1',
-                  transition: 'background 0.3s ease',
-                }}
-              />
-            ))}
-          </div>
-        </div>
+      <ActingForBanner dateText={`Pension File: CAF-SRV-2026-9082`} />
+      <main className="container container--narrow" style={{ paddingBottom: '64px', paddingTop: '16px' }}>
+        
+        {errors.length > 0 && <ErrorSummary errors={errors} />}
 
-        {/* Fill Online vs Paper Form Option */}
+        {/* Security Header Card */}
         <div
           style={{
-            background: '#F8FAFC',
-            border: '1.5px solid #CBD5E1',
-            borderRadius: '10px',
-            padding: '16px 20px',
+            background: '#FFFFFF',
+            border: '1px solid #CBD5E1',
+            borderRadius: '12px',
+            padding: '28px',
+            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
             marginBottom: '24px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '16px',
-            flexWrap: 'wrap',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '14px', maxWidth: '620px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
             <div
               style={{
-                width: '38px',
-                height: '38px',
+                width: '40px',
+                height: '40px',
                 borderRadius: '8px',
-                background: '#0B335E',
+                background: '#0B3866',
                 color: '#FFFFFF',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                fontSize: '20px',
                 flexShrink: 0,
-                fontSize: '18px',
               }}
             >
-              📋
+              🔒
             </div>
             <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-                <span style={{ fontWeight: 700, fontSize: '15px', color: '#0F172A' }}>
-                  Option: Fill online or complete on paper
-                </span>
-                <span
-                  style={{
-                    fontSize: '11px',
-                    fontWeight: 700,
-                    letterSpacing: '0.04em',
-                    padding: '2px 6px',
-                    background: '#E2E8F0',
-                    color: '#334155',
-                    borderRadius: '4px',
-                  }}
-                >
-                  FORM CF-FC 2489 (PDF)
-                </span>
-              </div>
-              <p style={{ margin: '4px 0 0', fontSize: '14px', color: '#475569', lineHeight: 1.45 }}>
-                You have the option to complete your details online below, or download and print the official paper PDF form to complete by hand and mail to the Pension Centre.
-              </p>
+              <span
+                style={{
+                  fontSize: '12px',
+                  fontWeight: 700,
+                  letterSpacing: '0.06em',
+                  textTransform: 'uppercase',
+                  color: '#0B3866',
+                }}
+              >
+                Government of Canada • Pension Centre
+              </span>
+              <h1 style={{ margin: '2px 0 0', fontSize: '24px', fontWeight: 700, color: '#0F172A', lineHeight: 1.3 }}>
+                Security Verification
+              </h1>
             </div>
           </div>
-          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-            <a
-              href="/CF-FC-2489-Guardian-Representative-Form.pdf"
-              download="CF-FC-2489-Guardian-Representative-Form.pdf"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '10px 18px',
-                background: '#0B5CAD',
-                color: '#FFFFFF',
-                borderRadius: '6px',
-                fontWeight: 700,
-                fontSize: '14px',
-                textDecoration: 'none',
-                boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
-                transition: 'all 0.15s ease',
-              }}
-            >
-              <span>📥 Download PDF Form (.pdf)</span>
-            </a>
-            <Link
-              to={`/g/${token}/paper-form`}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '10px 16px',
-                background: '#FFFFFF',
-                color: '#0B5CAD',
-                border: '2px solid #0B5CAD',
-                borderRadius: '6px',
-                fontWeight: 700,
-                fontSize: '14px',
-                textDecoration: 'none',
-                whiteSpace: 'nowrap',
-                boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
-                transition: 'all 0.15s ease',
-              }}
-            >
-              <span>🖨️ View &amp; Print</span>
-              <span style={{ fontSize: '12px' }}>↗</span>
-            </Link>
+
+          <p style={{ margin: '0 0 16px', fontSize: '15px', color: '#334155', lineHeight: 1.5 }}>
+            You have received this link to access the official Canadian Armed Forces Pension Representative package
+            for beneficiary <b>{memberName}</b> (dependent child of the late <b>{lateMemberName}</b>).
+          </p>
+
+          <div
+            style={{
+              background: '#F1F5F9',
+              borderLeft: '4px solid #0B3866',
+              padding: '12px 16px',
+              borderRadius: '0 6px 6px 0',
+              fontSize: '14px',
+              color: '#334155',
+              lineHeight: 1.45,
+            }}
+          >
+            Please answer the security questions below. Once verified, you will be directed to download your pre-filled 
+            <b> Form CF-FC 2489</b> and view the instructions to email your completed package to the Pension Centre.
           </div>
         </div>
 
-        <h1 style={{ margin: '0 0 8px', fontSize: '28px', lineHeight: 1.25, color: '#0F172A' }}>
-          {currentPart === 1
-            ? "Before you start, confirm it's you"
-            : currentPart === 2
-            ? 'Your contact information'
-            : 'Relationship to the beneficiary & photo ID'}
-        </h1>
-        <p style={{ margin: '0 0 24px', color: 'var(--color-ink-2)', fontSize: '16px', lineHeight: 1.5 }}>
-          {currentPart === 1
-            ? `You have been designated to assist the pension beneficiary, Jenny Miller (dependent child of the late ${memberName}). We verify your contact record in 3 short steps.`
-            : currentPart === 2
-            ? `Official correspondence and statements regarding the beneficiary's pension will be sent to this address.`
-            : `Please confirm your relationship to the beneficiary (Jenny Miller) and submit your photo ID.`}
-        </p>
-
-        {/* Compact summary of completed parts for reassurance and easy editing */}
-        {currentPart > 1 && (
+        {/* Security Questions Form */}
+        <form onSubmit={handleVerify} noValidate>
           <div
             style={{
-              background: '#F0FDF4',
-              border: '1px solid #BBF7D0',
-              borderRadius: '8px',
-              padding: '12px 16px',
-              marginBottom: '14px',
+              background: '#FFFFFF',
+              border: '1px solid #CBD5E1',
+              borderRadius: '12px',
+              padding: '28px',
+              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
               display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              fontSize: '15px',
+              flexDirection: 'column',
+              gap: '24px',
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#166534' }}>
-              <span style={{ fontSize: '18px', fontWeight: 700 }}>✓</span>
-              <span>
-                <strong>Part 1 completed:</strong> Security code & {memberName}'s record confirmed
-              </span>
-            </div>
-            <button
-              type="button"
-              onClick={() => {
-                setCurrentPart(1);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
+            {/* Question 1: 6-Digit Access Code */}
+            <div
+              id="q1-group"
               style={{
-                background: 'none',
-                border: 'none',
-                color: '#0B5CAD',
-                fontWeight: 600,
-                fontSize: '14px',
-                cursor: 'pointer',
-                textDecoration: 'underline',
+                borderBottom: '1px solid #E2E8F0',
+                paddingBottom: '20px',
               }}
             >
-              Edit
-            </button>
-          </div>
-        )}
-
-        {currentPart === 3 && (
-          <div
-            style={{
-              background: '#F0FDF4',
-              border: '1px solid #BBF7D0',
-              borderRadius: '8px',
-              padding: '12px 16px',
-              marginBottom: '20px',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              fontSize: '15px',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#166534' }}>
-              <span style={{ fontSize: '18px', fontWeight: 700 }}>✓</span>
-              <span>
-                <strong>Part 2 completed:</strong> {gName}, {gCity} {gProv}
-              </span>
-            </div>
-            <button
-              type="button"
-              onClick={() => {
-                setCurrentPart(2);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              style={{
-                background: 'none',
-                border: 'none',
-                color: '#0B5CAD',
-                fontWeight: 600,
-                fontSize: '14px',
-                cursor: 'pointer',
-                textDecoration: 'underline',
-              }}
-            >
-              Edit
-            </button>
-          </div>
-        )}
-
-        {/* ===================== PART 1: SECURITY CODE ===================== */}
-        {currentPart === 1 && (
-          <form onSubmit={handlePart1Next}>
-            {part1Errors.length > 0 && (
-              <ErrorSummary title="Please check Part 1 details" errors={part1Errors} />
-            )}
-
-            <Card
-              padded
-              style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}
-            >
-              <div>
-                <h2 style={{ margin: '0 0 6px', fontSize: '20px', color: '#0B335E' }}>
-                  1. Your 6-digit security code
-                </h2>
-                <p style={{ margin: 0, color: 'var(--color-ink-2)', fontSize: '15px', lineHeight: 1.5 }}>
-                  We texted a 6-digit security code to your mobile phone ending in{' '}
-                  <strong>{state.invite.guardian.mobile.slice(-4) || '1234'}</strong>.
-                </p>
-              </div>
-
-              <div>
-                <label
-                  htmlFor="otp"
-                  style={{
-                    display: 'block',
-                    fontWeight: 600,
-                    marginBottom: '8px',
-                    fontSize: '16px',
-                  }}
-                >
-                  Enter 6-digit security code
-                </label>
+              <label
+                htmlFor="otp-code"
+                style={{
+                  display: 'block',
+                  fontSize: '16px',
+                  fontWeight: 700,
+                  color: '#0F172A',
+                  marginBottom: '6px',
+                }}
+              >
+                1. Enter your 6-digit security access code
+              </label>
+              <p style={{ margin: '0 0 10px', fontSize: '13px', color: '#64748B' }}>
+                This one-time access code was provided with your invitation link.
+                <span style={{ color: '#0B3866', fontWeight: 600 }}> (Demo test code: 123456)</span>
+              </p>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                 <input
-                  id="otp"
+                  id="otp-code"
+                  type="text"
                   inputMode="numeric"
-                  autoComplete="one-time-code"
                   maxLength={6}
                   value={code}
                   onChange={(e) => setCode(e.target.value.replace(/\D/g, ''))}
+                  placeholder="123456"
                   style={{
-                    width: '200px',
-                    maxWidth: '100%',
-                    boxSizing: 'border-box',
-                    height: '52px',
-                    padding: '0 14px',
-                    font: 'inherit',
-                    fontSize: '24px',
+                    width: '180px',
+                    height: '48px',
+                    fontSize: '22px',
                     fontWeight: 700,
                     letterSpacing: '0.25em',
-                    border:
-                      submittedPart1 && cleanCode.length !== 6
-                        ? '3px solid var(--color-error)'
-                        : '2px solid var(--color-muted-2)',
+                    textAlign: 'center',
+                    border: '2px solid #94A3B8',
                     borderRadius: '8px',
-                  }}
-                />
-              </div>
-
-              <fieldset style={{ border: 0, margin: 0, padding: 0 }}>
-                <legend
-                  style={{
-                    fontWeight: 600,
-                    marginBottom: '4px',
-                    fontSize: '17px',
                     color: '#0F172A',
-                    padding: 0,
+                    fontFamily: 'monospace',
                   }}
-                >
-                  The late {memberName}'s date of birth
-                </legend>
-                <p
-                  style={{
-                    margin: '0 0 12px',
-                    fontSize: '15px',
-                    color: 'var(--color-muted)',
-                    lineHeight: 1.5,
-                  }}
-                >
-                  This verifies your connection to the deceased member's military casualty file.
-                </p>
-                <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-                  <div>
-                    <label htmlFor="dd" style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '4px' }}>
-                      Day
-                    </label>
-                    <input
-                      id="dd"
-                      inputMode="numeric"
-                      maxLength={2}
-                      value={mDay}
-                      onChange={(e) => setMDay(e.target.value.replace(/\D/g, ''))}
-                      style={{
-                        width: '64px',
-                        boxSizing: 'border-box',
-                        height: '48px',
-                        padding: '0 12px',
-                        fontSize: '18px',
-                        fontWeight: 600,
-                        textAlign: 'center',
-                        font: 'inherit',
-                        border:
-                          submittedPart1 && !memberDobValid
-                            ? '3px solid var(--color-error)'
-                            : '2px solid var(--color-muted-2)',
-                        borderRadius: '6px',
-                      }}
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="mm" style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '4px' }}>
-                      Month
-                    </label>
-                    <input
-                      id="mm"
-                      inputMode="numeric"
-                      maxLength={2}
-                      value={mMonth}
-                      onChange={(e) => setMMonth(e.target.value.replace(/\D/g, ''))}
-                      style={{
-                        width: '64px',
-                        boxSizing: 'border-box',
-                        height: '48px',
-                        padding: '0 12px',
-                        fontSize: '18px',
-                        fontWeight: 600,
-                        textAlign: 'center',
-                        font: 'inherit',
-                        border:
-                          submittedPart1 && !memberDobValid
-                            ? '3px solid var(--color-error)'
-                            : '2px solid var(--color-muted-2)',
-                        borderRadius: '6px',
-                      }}
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="yy" style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '4px' }}>
-                      Year
-                    </label>
-                    <input
-                      id="yy"
-                      inputMode="numeric"
-                      maxLength={4}
-                      value={mYear}
-                      onChange={(e) => setMYear(e.target.value.replace(/\D/g, ''))}
-                      style={{
-                        width: '96px',
-                        boxSizing: 'border-box',
-                        height: '48px',
-                        padding: '0 12px',
-                        fontSize: '18px',
-                        fontWeight: 600,
-                        textAlign: 'center',
-                        font: 'inherit',
-                        border:
-                          submittedPart1 && !memberDobValid
-                            ? '3px solid var(--color-error)'
-                            : '2px solid var(--color-muted-2)',
-                        borderRadius: '6px',
-                      }}
-                    />
-                  </div>
-                </div>
-              </fieldset>
-            </Card>
-
-            {isVerifyingPart1 && (
-              <div
-                className="fade-in-slide"
-                style={{
-                  marginTop: '16px',
-                  background: part1Success ? '#F0FDF4' : '#EFF6FF',
-                  border: `1px solid ${part1Success ? '#86EFAC' : '#BFDBFE'}`,
-                  borderRadius: '8px',
-                  padding: '14px 18px',
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
-                  {part1Success ? (
-                    <span className="pop-in" style={{ color: '#16A34A', fontSize: '18px', fontWeight: 700 }}>✓</span>
-                  ) : (
-                    <span className="spinner spinner--primary" style={{ width: '16px', height: '16px' }} />
-                  )}
-                  <span style={{ fontSize: '15px', fontWeight: 600, color: part1Success ? '#166534' : '#1E40AF' }}>
-                    {part1Success
-                      ? `Authentication verified: Casualty file linked for ${memberName}.`
-                      : 'Connecting to Government of Canada 2FA service... Validating security code and casualty record.'}
-                  </span>
-                </div>
-                {!part1Success && (
-                  <div className="indeterminate-progress">
-                    <div className="indeterminate-progress__bar" />
-                  </div>
-                )}
-              </div>
-            )}
-
-            <div
-              style={{
-                display: 'flex',
-                gap: '16px',
-                flexWrap: 'wrap',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                marginTop: '28px',
-              }}
-            >
-              <button
-                type="submit"
-                disabled={isVerifyingPart1}
-                className="btn btn--primary"
-                style={{
-                  padding: '14px 28px',
-                  fontSize: '18px',
-                  fontWeight: 700,
-                  borderRadius: '8px',
-                  minHeight: '52px',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '12px',
-                  opacity: isVerifyingPart1 ? 0.9 : 1,
-                  cursor: isVerifyingPart1 ? 'wait' : 'pointer',
-                }}
-              >
-                {isVerifyingPart1 ? (
-                  <>
-                    <span className="spinner" />
-                    {part1Success ? '✓ Code & record verified!' : 'Verifying with Government of Canada...'}
-                  </>
-                ) : (
-                  'Continue to Part 2: Your Details ➔'
-                )}
-              </button>
-              <Link to="/" style={{ fontSize: '15px', color: '#64748B' }}>
-                I'm not the right person
-              </Link>
-            </div>
-          </form>
-        )}
-
-        {/* ===================== PART 2: YOUR DETAILS ===================== */}
-        {currentPart === 2 && (
-          <form onSubmit={handlePart2Next}>
-            {part2Errors.length > 0 && (
-              <ErrorSummary title="Please check Part 2 details" errors={part2Errors} />
-            )}
-
-            <Card
-              padded
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '18px',
-              }}
-            >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '8px' }}>
-                <div>
-                  <h2 style={{ margin: '0 0 6px', fontSize: '20px', color: '#0B335E' }}>
-                    2. Your contact information
-                  </h2>
-                  <p style={{ margin: 0, color: 'var(--color-ink-2)', fontSize: '15px' }}>
-                    We'll mail official pension statements and letters to you here.
-                  </p>
-                </div>
-                <Link
-                  to={`/g/${token}/paper-form`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    fontSize: '13px',
-                    color: '#0B5CAD',
-                    fontWeight: 600,
-                    textDecoration: 'none',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '4px',
-                    padding: '4px 8px',
-                    borderRadius: '4px',
-                    background: '#F1F5F9',
-                  }}
-                >
-                  📄 Prefer paper? Download Form (PDF) ↗
-                </Link>
-              </div>
-
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-                  gap: '16px',
-                }}
-              >
-                <div>
-                  <label
-                    htmlFor="gfull"
-                    style={{
-                      display: 'block',
-                      fontWeight: 600,
-                      marginBottom: '6px',
-                      fontSize: '15px',
-                    }}
-                  >
-                    Your full legal name
-                  </label>
-                  <input
-                    id="gfull"
-                    autoComplete="name"
-                    value={gName}
-                    onChange={(e) => setGName(e.target.value)}
-                    className={`field__input ${
-                      submittedPart2 && !gName.trim() ? 'field__input--error' : ''
-                    }`}
-                    style={{ height: '48px', fontSize: '16px' }}
-                  />
-                </div>
-                <div>
-                  <fieldset style={{ border: 0, margin: 0, padding: 0 }}>
-                    <legend
-                      style={{
-                        display: 'block',
-                        fontWeight: 600,
-                        marginBottom: '6px',
-                        fontSize: '15px',
-                        color: '#0F172A',
-                        padding: 0,
-                      }}
-                    >
-                      Your date of birth
-                    </legend>
-                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                      <div>
-                        <label
-                          htmlFor="gdob-day"
-                          style={{
-                            display: 'block',
-                            fontSize: '12px',
-                            color: 'var(--color-muted)',
-                            marginBottom: '3px',
-                            fontWeight: 600,
-                          }}
-                        >
-                          Day
-                        </label>
-                        <input
-                          id="gdob-day"
-                          inputMode="numeric"
-                          maxLength={2}
-                          placeholder="DD"
-                          value={gDobDay}
-                          onChange={(e) => setGDobDay(e.target.value.replace(/\D/g, ''))}
-                          style={{
-                            width: '56px',
-                            boxSizing: 'border-box',
-                            height: '48px',
-                            padding: '0 8px',
-                            fontSize: '17px',
-                            fontWeight: 600,
-                            textAlign: 'center',
-                            font: 'inherit',
-                            border:
-                              submittedPart2 && (!gDobDay || parseInt(gDobDay, 10) < 1 || parseInt(gDobDay, 10) > 31)
-                                ? '3px solid var(--color-error)'
-                                : '2px solid var(--color-muted-2)',
-                            borderRadius: '6px',
-                          }}
-                        />
-                      </div>
-                      <div>
-                        <label
-                          htmlFor="gdob-month"
-                          style={{
-                            display: 'block',
-                            fontSize: '12px',
-                            color: 'var(--color-muted)',
-                            marginBottom: '3px',
-                            fontWeight: 600,
-                          }}
-                        >
-                          Month
-                        </label>
-                        <input
-                          id="gdob-month"
-                          inputMode="numeric"
-                          maxLength={2}
-                          placeholder="MM"
-                          value={gDobMonth}
-                          onChange={(e) => setGDobMonth(e.target.value.replace(/\D/g, ''))}
-                          style={{
-                            width: '56px',
-                            boxSizing: 'border-box',
-                            height: '48px',
-                            padding: '0 8px',
-                            fontSize: '17px',
-                            fontWeight: 600,
-                            textAlign: 'center',
-                            font: 'inherit',
-                            border:
-                              submittedPart2 && (!gDobMonth || parseInt(gDobMonth, 10) < 1 || parseInt(gDobMonth, 10) > 12)
-                                ? '3px solid var(--color-error)'
-                                : '2px solid var(--color-muted-2)',
-                            borderRadius: '6px',
-                          }}
-                        />
-                      </div>
-                      <div>
-                        <label
-                          htmlFor="gdob-year"
-                          style={{
-                            display: 'block',
-                            fontSize: '12px',
-                            color: 'var(--color-muted)',
-                            marginBottom: '3px',
-                            fontWeight: 600,
-                          }}
-                        >
-                          Year
-                        </label>
-                        <input
-                          id="gdob-year"
-                          inputMode="numeric"
-                          maxLength={4}
-                          placeholder="YYYY"
-                          value={gDobYear}
-                          onChange={(e) => setGDobYear(e.target.value.replace(/\D/g, ''))}
-                          style={{
-                            width: '84px',
-                            boxSizing: 'border-box',
-                            height: '48px',
-                            padding: '0 8px',
-                            fontSize: '17px',
-                            fontWeight: 600,
-                            textAlign: 'center',
-                            font: 'inherit',
-                            border:
-                              submittedPart2 && (!gDobYear || gDobYear.length < 4)
-                                ? '3px solid var(--color-error)'
-                                : '2px solid var(--color-muted-2)',
-                            borderRadius: '6px',
-                          }}
-                        />
-                      </div>
-                    </div>
-                  </fieldset>
-                </div>
-              </div>
-
-              <div>
-                <label
-                  htmlFor="gaddr"
-                  style={{
-                    display: 'block',
-                    fontWeight: 600,
-                    marginBottom: '6px',
-                    fontSize: '15px',
-                  }}
-                >
-                  Street address
-                </label>
-                <input
-                  id="gaddr"
-                  autoComplete="street-address"
-                  value={gStreet}
-                  onChange={(e) => setGStreet(e.target.value)}
-                  className={`field__input ${
-                    submittedPart2 && !gStreet.trim() ? 'field__input--error' : ''
-                  }`}
-                  style={{ height: '48px', fontSize: '16px' }}
                 />
-              </div>
-
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))',
-                  gap: '14px',
-                }}
-              >
-                <div>
-                  <label
-                    htmlFor="gcity"
-                    style={{
-                      display: 'block',
-                      fontWeight: 600,
-                      marginBottom: '6px',
-                      fontSize: '15px',
-                    }}
-                  >
-                    City
-                  </label>
-                  <input
-                    id="gcity"
-                    autoComplete="address-level2"
-                    value={gCity}
-                    onChange={(e) => setGCity(e.target.value)}
-                    className={`field__input ${
-                      submittedPart2 && !gCity.trim() ? 'field__input--error' : ''
-                    }`}
-                    style={{ height: '48px', fontSize: '16px' }}
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="gprov"
-                    style={{
-                      display: 'block',
-                      fontWeight: 600,
-                      marginBottom: '6px',
-                      fontSize: '15px',
-                    }}
-                  >
-                    Province
-                  </label>
-                  <select
-                    id="gprov"
-                    value={gProv}
-                    onChange={(e) => setGProv(e.target.value)}
-                    className="field__select"
-                    style={{ height: '48px', fontSize: '16px' }}
-                  >
-                    <option value="Ontario">Ontario</option>
-                    <option value="Quebec">Quebec</option>
-                    <option value="Nova Scotia">Nova Scotia</option>
-                    <option value="British Columbia">British Columbia</option>
-                    <option value="Alberta">Alberta</option>
-                    <option value="Manitoba">Manitoba</option>
-                    <option value="Saskatchewan">Saskatchewan</option>
-                    <option value="New Brunswick">New Brunswick</option>
-                    <option value="Newfoundland and Labrador">Newfoundland and Labrador</option>
-                    <option value="Prince Edward Island">Prince Edward Island</option>
-                    <option value="Other…">Other…</option>
-                  </select>
-                </div>
-                <div>
-                  <label
-                    htmlFor="gpc"
-                    style={{
-                      display: 'block',
-                      fontWeight: 600,
-                      marginBottom: '6px',
-                      fontSize: '15px',
-                    }}
-                  >
-                    Postal code
-                  </label>
-                  <input
-                    id="gpc"
-                    autoComplete="postal-code"
-                    value={gPc}
-                    onChange={(e) => setGPc(e.target.value)}
-                    placeholder="K1P 5Z9"
-                    className={`field__input ${
-                      submittedPart2 && !postalCodeValid ? 'field__input--error' : ''
-                    }`}
-                    style={{ height: '48px', fontSize: '16px' }}
-                  />
-                </div>
-              </div>
-
-              <fieldset style={{ border: 0, margin: '8px 0 0', padding: 0 }}>
-                <legend
+                <button
+                  type="button"
+                  onClick={() => setCode('123456')}
                   style={{
+                    background: '#F1F5F9',
+                    border: '1px solid #CBD5E1',
+                    borderRadius: '6px',
+                    padding: '8px 12px',
+                    fontSize: '13px',
                     fontWeight: 600,
-                    marginBottom: '8px',
-                    fontSize: '15px',
-                    padding: 0,
-                  }}
-                >
-                  Which language should we use with you?
-                </legend>
-                <div style={{ display: 'flex', gap: '28px', flexWrap: 'wrap' }}>
-                  <label style={{ display: 'flex', gap: '10px', alignItems: 'center', cursor: 'pointer', fontSize: '16px' }}>
-                    <input
-                      type="radio"
-                      name="glang"
-                      checked={gLang === 'en'}
-                      onChange={() => setGLang('en')}
-                      style={{
-                        width: '22px',
-                        height: '22px',
-                        margin: 0,
-                        accentColor: 'var(--color-primary)',
-                      }}
-                    />
-                    English
-                  </label>
-                  <label style={{ display: 'flex', gap: '10px', alignItems: 'center', cursor: 'pointer', fontSize: '16px' }}>
-                    <input
-                      type="radio"
-                      name="glang"
-                      checked={gLang === 'fr'}
-                      onChange={() => setGLang('fr')}
-                      style={{
-                        width: '22px',
-                        height: '22px',
-                        margin: 0,
-                        accentColor: 'var(--color-primary)',
-                      }}
-                    />
-                    French
-                  </label>
-                </div>
-              </fieldset>
-            </Card>
-
-            <div
-              style={{
-                display: 'flex',
-                gap: '14px',
-                flexWrap: 'wrap',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                marginTop: '28px',
-              }}
-            >
-              <button
-                type="button"
-                onClick={() => {
-                  setCurrentPart(1);
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-                className="btn btn--secondary"
-                style={{ padding: '14px 24px', fontSize: '16px', minHeight: '50px' }}
-              >
-                ← Back to Security Code
-              </button>
-              <button
-                type="submit"
-                disabled={isSavingPart2}
-                className="btn btn--primary"
-                style={{
-                  padding: '14px 28px',
-                  fontSize: '18px',
-                  fontWeight: 700,
-                  borderRadius: '8px',
-                  minHeight: '52px',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '12px',
-                  opacity: isSavingPart2 ? 0.9 : 1,
-                  cursor: isSavingPart2 ? 'wait' : 'pointer',
-                }}
-              >
-                {isSavingPart2 ? (
-                  <>
-                    <span className="spinner" />
-                    Saving contact record...
-                  </>
-                ) : (
-                  'Continue to Part 3: Photo ID & Confirmation ➔'
-                )}
-              </button>
-            </div>
-          </form>
-        )}
-
-        {/* ===================== PART 3: RELATIONSHIP & CONFIRMATION ===================== */}
-        {currentPart === 3 && (
-          <form onSubmit={handleFinalSubmit}>
-            {part3Errors.length > 0 && (
-              <ErrorSummary title="Please complete confirmation" errors={part3Errors} />
-            )}
-
-            <Card
-              padded
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '18px',
-              }}
-            >
-              <div>
-                <h2 style={{ margin: '0 0 6px', fontSize: '20px', color: '#0B335E' }}>
-                  3. Your relationship to the beneficiary &amp; photo ID
-                </h2>
-                <p style={{ margin: 0, color: 'var(--color-ink-2)', fontSize: '15px' }}>
-                  You have been designated to assist the pension beneficiary, Jenny Miller. Please confirm your relationship and upload a piece of photo ID.
-                </p>
-              </div>
-
-              <div
-                style={{
-                  background: '#F0FDF4',
-                  border: '1px solid #86EFAC',
-                  borderRadius: '6px',
-                  padding: '12px 14px',
-                  fontSize: '14px',
-                  color: '#166534',
-                  lineHeight: 1.45,
-                }}
-              >
-                <strong>✓ No formal court appointment required:</strong> Anyone designated to assist the beneficiary can submit this form. You do not need a lawyer, court order, or formal legal certificate. Your contact information and a photo of your ID are all that is needed.
-              </div>
-
-              <div style={{ maxWidth: '420px' }}>
-                <label
-                  htmlFor="role"
-                  style={{
-                    display: 'block',
-                    fontWeight: 600,
-                    marginBottom: '6px',
-                    fontSize: '15px',
-                  }}
-                >
-                  Your relationship to the beneficiary
-                </label>
-                <select
-                  id="role"
-                  value={authority}
-                  onChange={(e) => setAuthority(e.target.value as AuthorityType)}
-                  className="field__select"
-                  style={{ height: '48px', fontSize: '16px' }}
-                >
-                  <option value="guardian">Designated guardian / trusted adult</option>
-                  <option value="family">Family member or relative</option>
-                  <option value="poa">Power of attorney (if you have one)</option>
-                  <option value="trustee">Trustee or estate representative</option>
-                  <option value="other">Other assisting representative</option>
-                </select>
-              </div>
-
-              <div>
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    marginBottom: '6px',
-                    flexWrap: 'wrap',
-                    gap: '6px',
-                  }}
-                >
-                  <label
-                    htmlFor="file-upload-input"
-                    style={{
-                      fontWeight: 600,
-                      fontSize: '15px',
-                      color: submittedPart3 && !fileName ? 'var(--color-error)' : '#0F172A',
-                    }}
-                  >
-                    Government-issued photo ID <span style={{ color: 'var(--color-error)' }}>*</span>
-                  </label>
-                  <span
-                    style={{
-                      fontSize: '12px',
-                      fontWeight: 700,
-                      letterSpacing: '0.04em',
-                      color: fileName ? '#166534' : 'var(--color-error)',
-                      background: fileName ? '#DCFCE7' : '#FEE2E2',
-                      padding: '2px 8px',
-                      borderRadius: '4px',
-                    }}
-                  >
-                    {fileName ? 'ID ATTACHED' : 'REQUIRED'}
-                  </span>
-                </div>
-                <p
-                  style={{
-                    margin: '0 0 12px',
-                    fontSize: '15px',
-                    color: 'var(--color-muted)',
-                    lineHeight: 1.5,
-                  }}
-                >
-                  To safeguard the beneficiary&apos;s pension entitlements and verify the representative on file, please upload a clear image or scan of your valid photo ID (e.g. Canadian Driver’s Licence, Canadian Passport, Provincial/Territorial Photo ID card, or Permanent Resident Card).
-                </p>
-                <label
-                  id="file-upload"
-                  htmlFor="file-upload-input"
-                  className="file-upload-label"
-                  style={{
-                    minHeight: '52px',
-                    fontSize: '15px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '8px',
+                    color: '#334155',
                     cursor: 'pointer',
-                    border:
-                      submittedPart3 && !fileName
-                        ? '2px dashed var(--color-error)'
-                        : fileName
-                        ? '2px solid #22C55E'
-                        : '2px dashed var(--color-muted-2)',
-                    background:
-                      submittedPart3 && !fileName
-                        ? '#FEF2F2'
-                        : fileName
-                        ? '#F0FDF4'
-                        : '#FFFFFF',
-                    borderRadius: '8px',
-                    transition: 'all 0.2s ease',
                   }}
                 >
-                  {fileName ? (
-                    <span style={{ color: '#15803D', fontWeight: 600 }}>
-                      ✓ Photo ID attached: {fileName}
-                    </span>
-                  ) : (
-                    <span>Choose your photo ID file (PDF, JPG, PNG)</span>
-                  )}
+                  Fill Demo Code (123456)
+                </button>
+              </div>
+            </div>
+
+            {/* Question 2: Late Member's Date of Birth */}
+            <div
+              id="q2-group"
+              style={{
+                borderBottom: '1px solid #E2E8F0',
+                paddingBottom: '20px',
+              }}
+            >
+              <label
+                style={{
+                  display: 'block',
+                  fontSize: '16px',
+                  fontWeight: 700,
+                  color: '#0F172A',
+                  marginBottom: '6px',
+                }}
+              >
+                2. What is the date of birth of the late {lateMemberName}?
+              </label>
+              <p style={{ margin: '0 0 10px', fontSize: '13px', color: '#64748B' }}>
+                Service Number: <b>CAF-992-014-K</b>. For security verification, confirm their birthdate.
+                <span style={{ color: '#0B3866', fontWeight: 600 }}> (Demo hint: 07 / 10 / 1959)</span>
+              </p>
+
+              <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
+                <div>
+                  <label htmlFor="dob-day" style={{ display: 'block', fontSize: '12px', color: '#64748B', marginBottom: '2px' }}>
+                    Day (DD)
+                  </label>
                   <input
-                    id="file-upload-input"
-                    type="file"
-                    accept=".pdf,.jpg,.jpeg,.png"
-                    onChange={handleFileUpload}
+                    id="dob-day"
+                    type="text"
+                    inputMode="numeric"
+                    maxLength={2}
+                    placeholder="07"
+                    value={mDay}
+                    onChange={(e) => setMDay(e.target.value.replace(/\D/g, ''))}
                     style={{
-                      position: 'absolute',
-                      width: '1px',
-                      height: '1px',
-                      opacity: 0,
+                      width: '64px',
+                      height: '44px',
+                      fontSize: '18px',
+                      fontWeight: 600,
+                      textAlign: 'center',
+                      border: '2px solid #94A3B8',
+                      borderRadius: '6px',
                     }}
                   />
-                </label>
-                {submittedPart3 && !fileName && (
-                  <p
+                </div>
+                <span style={{ fontSize: '20px', color: '#94A3B8', marginTop: '16px' }}>/</span>
+                <div>
+                  <label htmlFor="dob-month" style={{ display: 'block', fontSize: '12px', color: '#64748B', marginBottom: '2px' }}>
+                    Month (MM)
+                  </label>
+                  <input
+                    id="dob-month"
+                    type="text"
+                    inputMode="numeric"
+                    maxLength={2}
+                    placeholder="10"
+                    value={mMonth}
+                    onChange={(e) => setMMonth(e.target.value.replace(/\D/g, ''))}
                     style={{
-                      margin: '6px 0 0',
-                      fontSize: '14px',
-                      color: 'var(--color-error)',
+                      width: '64px',
+                      height: '44px',
+                      fontSize: '18px',
                       fontWeight: 600,
+                      textAlign: 'center',
+                      border: '2px solid #94A3B8',
+                      borderRadius: '6px',
                     }}
-                  >
-                    ⚠️ Please select and upload your government-issued photo ID to proceed.
-                  </p>
-                )}
-              </div>
-
-              <div
-                style={{
-                  background: '#F4F6F8',
-                  border: '1px solid #DCE3EB',
-                  borderRadius: '8px',
-                  padding: '16px 18px',
-                  fontSize: '15px',
-                  lineHeight: 1.5,
-                  color: 'var(--color-ink-2)',
-                }}
-              >
-                <b>Support note:</b> Your photo ID is verified securely by the Government of Canada Pension Centre to protect survivor entitlements. If additional legal paperwork is needed, a pension counselor will contact you directly, or you can mail documents to: <em>Government of Canada Pension Centre – Mail Facility, PO Box 9500, Matane QC G4W 0H3</em>.
-              </div>
-            </Card>
-
-            <label
-              style={{
-                display: 'flex',
-                gap: '14px',
-                alignItems: 'flex-start',
-                marginTop: '20px',
-                padding: '18px 20px',
-                background: '#FFFFFF',
-                border:
-                  submittedPart3 && !declared
-                    ? '2px solid var(--color-error)'
-                    : '1px solid var(--color-border)',
-                borderRadius: '8px',
-                cursor: 'pointer',
-              }}
-            >
-              <input
-                id="decl-check"
-                type="checkbox"
-                checked={declared}
-                onChange={(e) => setDeclared(e.target.checked)}
-                style={{
-                  width: '24px',
-                  height: '24px',
-                  margin: '2px 0 0',
-                  accentColor: 'var(--color-primary)',
-                  flex: 'none',
-                }}
-              />
-              <span style={{ fontSize: '16px', lineHeight: 1.5, color: '#1E293B' }}>
-                <strong>I confirm</strong> that Jenny Miller (surviving daughter of the late {memberName}) has chosen me to assist with her pension benefits, and the contact information and ID provided are mine.
-              </span>
-            </label>
-
-            {isSubmittingPart3 && (
-              <div
-                className="fade-in-slide"
-                style={{
-                  marginTop: '16px',
-                  background: '#EFF6FF',
-                  border: '1px solid #BFDBFE',
-                  borderRadius: '8px',
-                  padding: '14px 18px',
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
-                  <span className="spinner spinner--primary" style={{ width: '16px', height: '16px' }} />
-                  <span style={{ fontSize: '15px', fontWeight: 600, color: '#1E40AF' }}>
-                    Authorizing legal representation for Jenny Miller with Canadian Armed Forces casualty registry...
-                  </span>
+                  />
                 </div>
-                <div className="indeterminate-progress">
-                  <div className="indeterminate-progress__bar" />
+                <span style={{ fontSize: '20px', color: '#94A3B8', marginTop: '16px' }}>/</span>
+                <div>
+                  <label htmlFor="dob-year" style={{ display: 'block', fontSize: '12px', color: '#64748B', marginBottom: '2px' }}>
+                    Year (YYYY)
+                  </label>
+                  <input
+                    id="dob-year"
+                    type="text"
+                    inputMode="numeric"
+                    maxLength={4}
+                    placeholder="1959"
+                    value={mYear}
+                    onChange={(e) => setMYear(e.target.value.replace(/\D/g, ''))}
+                    style={{
+                      width: '90px',
+                      height: '44px',
+                      fontSize: '18px',
+                      fontWeight: 600,
+                      textAlign: 'center',
+                      border: '2px solid #94A3B8',
+                      borderRadius: '6px',
+                    }}
+                  />
                 </div>
-              </div>
-            )}
 
-            <div
-              style={{
-                display: 'flex',
-                gap: '14px',
-                flexWrap: 'wrap',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                marginTop: '28px',
-              }}
-            >
-              <button
-                type="button"
-                onClick={() => {
-                  setCurrentPart(2);
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMDay('07');
+                    setMMonth('10');
+                    setMYear('1959');
+                  }}
+                  style={{
+                    background: '#F1F5F9',
+                    border: '1px solid #CBD5E1',
+                    borderRadius: '6px',
+                    padding: '8px 12px',
+                    fontSize: '13px',
+                    fontWeight: 600,
+                    color: '#334155',
+                    cursor: 'pointer',
+                    marginTop: '16px',
+                  }}
+                >
+                  Fill Demo DOB (07/10/1959)
+                </button>
+              </div>
+            </div>
+
+            {/* Question 3: Representation Confirmation */}
+            <div id="q3-group">
+              <label
+                htmlFor="capacity-check"
+                style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: '12px',
+                  cursor: 'pointer',
+                  background: confirmedCapacity ? '#F0FDF4' : '#F8FAFC',
+                  border: confirmedCapacity ? '2px solid #22C55E' : '2px solid #E2E8F0',
+                  borderRadius: '8px',
+                  padding: '16px',
+                  transition: 'all 0.15s ease',
                 }}
-                className="btn btn--secondary"
-                style={{ padding: '14px 24px', fontSize: '16px', minHeight: '50px' }}
               >
-                ← Back to Your Details
-              </button>
+                <input
+                  id="capacity-check"
+                  type="checkbox"
+                  checked={confirmedCapacity}
+                  onChange={(e) => setConfirmedCapacity(e.target.checked)}
+                  style={{
+                    width: '20px',
+                    height: '20px',
+                    marginTop: '2px',
+                    cursor: 'pointer',
+                    accentColor: '#166534',
+                  }}
+                />
+                <span style={{ fontSize: '15px', color: '#1E293B', lineHeight: 1.45 }}>
+                  <b>Confirmation of Representation:</b> I confirm that I am <b>{guardianDefaultName}</b> and that I have been
+                  designated to assist or act as guardian / representative for beneficiary <b>{memberName}</b> in respect of
+                  her Canadian Armed Forces pension benefit.
+                </span>
+              </label>
+            </div>
+
+            {/* Submit Button & Verification Status */}
+            <div style={{ paddingTop: '8px' }}>
               <button
                 type="submit"
-                disabled={isSubmittingPart3}
-                className="btn btn--primary"
+                disabled={isVerifying}
                 style={{
-                  padding: '16px 32px',
-                  fontSize: '18px',
-                  fontWeight: 700,
-                  borderRadius: '8px',
-                  minHeight: '54px',
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '12px',
-                  opacity: isSubmittingPart3 ? 0.9 : 1,
-                  cursor: isSubmittingPart3 ? 'wait' : 'pointer',
+                  justifyContent: 'center',
+                  gap: '10px',
+                  minHeight: '52px',
+                  width: '100%',
+                  background: verifySuccess ? '#166534' : '#0B3866',
+                  color: '#FFFFFF',
+                  fontSize: '17px',
+                  fontWeight: 700,
+                  borderRadius: '8px',
+                  border: 'none',
+                  cursor: isVerifying ? 'wait' : 'pointer',
+                  boxShadow: '0 2px 6px rgba(11, 56, 102, 0.25)',
+                  transition: 'background 0.2s ease',
                 }}
               >
-                {isSubmittingPart3 ? (
+                {isVerifying ? (
                   <>
-                    <span className="spinner" />
-                    Authorizing representation...
+                    <span
+                      style={{
+                        display: 'inline-block',
+                        width: '18px',
+                        height: '18px',
+                        border: '3px solid rgba(255,255,255,0.4)',
+                        borderTopColor: '#FFFFFF',
+                        borderRadius: '50%',
+                        animation: 'spin 0.8s linear infinite',
+                      }}
+                    />
+                    <span>Verifying Credentials with Pension Centre...</span>
+                  </>
+                ) : verifySuccess ? (
+                  <>
+                    <span>✓ Verified! Redirecting to Form Package...</span>
                   </>
                 ) : (
-                  'Confirm and open the application ➔'
+                  <>
+                    <span>Verify Security &amp; Access Form Package →</span>
+                  </>
                 )}
               </button>
             </div>
-          </form>
-        )}
+          </div>
+        </form>
+
+        {/* Alternative direct access note */}
+        <div style={{ marginTop: '24px', textAlign: 'center', fontSize: '14px', color: '#64748B' }}>
+          <span>Having difficulty verifying? Contact the CAF Pension Centre toll-free at </span>
+          <b style={{ color: '#0F172A' }}>1-800-267-0325</b> (TTY: 1-855-227-0031).
+        </div>
+
       </main>
+
+      <style>{`
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
     </>
   );
 };

@@ -84,7 +84,7 @@ export const InvitePreviewPage: React.FC = () => {
               </span>
               <span>
                 <b style={{ color: 'var(--color-ink)' }}>Subject:</b>{' '}
-                {memberName} asked you to finish their pension application
+                {memberName} — CAF Pension Representative Package & Instructions
               </span>
             </div>
             <div
@@ -100,16 +100,14 @@ export const InvitePreviewPage: React.FC = () => {
             <div style={{ padding: '28px' }}>
               <p style={{ margin: '0 0 16px' }}>Hello {guardianName},</p>
               <p style={{ margin: '0 0 16px' }}>
-                <b>{memberName}</b> has asked you to finish their Canadian Armed
-                Forces pension application. They named you as their{' '}
-                <b>{roleTitle}</b>.
+                <b>{memberName}</b> has designated you to assist as their{' '}
+                <b>guardian / representative</b> for their Canadian Armed Forces pension benefit.
               </p>
-              <p style={{ margin: '0 0 8px' }}>You'll need about 10 minutes to:</p>
+              <p style={{ margin: '0 0 8px' }}>How to complete the process:</p>
               <ul style={{ margin: '0 0 24px', paddingLeft: '22px' }}>
-                <li>confirm who you are with a code we text to your mobile</li>
-                <li>upload proof that you can act for them</li>
-                <li>enter the bank account for their pension</li>
-                <li>review the application and submit it</li>
+                <li>Confirm who you are by answering a couple of security questions</li>
+                <li>Download your pre-filled official <b>Form CF-FC 2489</b> (PDF)</li>
+                <li>Follow the on-screen instructions to email your completed form and ID to the Pension Centre</li>
               </ul>
               <Link
                 to={`/g/${token}`}
@@ -125,10 +123,10 @@ export const InvitePreviewPage: React.FC = () => {
                   borderRadius: '6px',
                 }}
               >
-                Open the application
+                Access Pension Form Package &rarr;
               </Link>
-              <div style={{ marginTop: '12px', fontSize: '14px', display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
-                <span style={{ color: 'var(--color-muted)' }}>Prefer to submit on paper? </span>
+              <div style={{ marginTop: '16px', fontSize: '14px', display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
+                <span style={{ color: 'var(--color-muted)' }}>Direct PDF download: </span>
                 <a
                   href="/CF-FC-2489-Guardian-Representative-Form.pdf"
                   download="CF-FC-2489-Guardian-Representative-Form.pdf"
@@ -136,14 +134,6 @@ export const InvitePreviewPage: React.FC = () => {
                 >
                   📥 Download Form CF-FC 2489 (.pdf)
                 </a>
-                <span style={{ color: 'var(--color-muted)' }}>or</span>
-                <Link
-                  to={`/g/${token}/paper-form`}
-                  target="_blank"
-                  style={{ color: 'var(--color-primary)', fontWeight: 600, textDecoration: 'underline' }}
-                >
-                  View Printable Form ↗
-                </Link>
               </div>
               <p
                 style={{

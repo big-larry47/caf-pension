@@ -994,7 +994,7 @@ a:hover { color: var(--color-primary-hover); }
 
 .p-section {
   border: 1.5px solid #0F172A;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
 }
 
 .p-section__header {
@@ -1146,10 +1146,10 @@ a:hover { color: var(--color-primary-hover); }
 
 .p-sig-line {
   border-bottom: 1.5px solid #0F172A;
-  min-height: 38px;
+  min-height: 24px;
   display: flex;
   align-items: flex-end;
-  padding-bottom: 4px;
+  padding-bottom: 2px;
 }
 
 .p-sig-label {
@@ -1189,13 +1189,12 @@ a:hover { color: var(--color-primary-hover); }
 @media print {
   @page {
     size: letter portrait;
-    margin: 8mm 10mm;
+    margin: 6mm 8mm;
   }
 
   body {
     background: #FFFFFF !important;
     color: #000000 !important;
-    font-size: 11pt !important;
   }
 
   .app-header,
@@ -1223,7 +1222,7 @@ a:hover { color: var(--color-primary-hover); }
     box-shadow: none !important;
     border: none !important;
     padding: 0 !important;
-    margin: 0 0 20mm 0 !important;
+    margin: 0 !important;
     page-break-after: always;
     page-break-inside: avoid;
   }
@@ -1235,6 +1234,7 @@ a:hover { color: var(--color-primary-hover); }
 
   .p-section {
     page-break-inside: avoid;
+    margin-bottom: 8px !important;
   }
 
   .edit-target,

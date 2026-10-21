@@ -244,31 +244,17 @@ export const DevSwitcher: React.FC = () => {
               </button>
               <button
                 type="button"
-                onClick={() => navigate(`/g/${token}/step/3`)}
-                style={{ textAlign: 'left', padding: '4px 6px', fontSize: '12px', cursor: 'pointer' }}
+                onClick={() => navigate(`/g/${token}/form-package`)}
+                style={{ textAlign: 'left', padding: '4px 6px', fontSize: '12px', cursor: 'pointer', background: '#DCFCE7', color: '#166534', fontWeight: 600 }}
               >
-                G5 (View Step 3)
+                G5 (Download &amp; Instructions)
               </button>
               <button
                 type="button"
-                onClick={() => navigate(`/g/${token}/deposit`)}
-                style={{ textAlign: 'left', padding: '4px 6px', fontSize: '12px', cursor: 'pointer' }}
+                onClick={() => navigate('/forms/editor')}
+                style={{ textAlign: 'left', padding: '4px 6px', fontSize: '12px', cursor: 'pointer', background: '#F1F5F9' }}
               >
-                G6 (Guardian Deposit)
-              </button>
-              <button
-                type="button"
-                onClick={() => navigate(`/g/${token}/review`)}
-                style={{ textAlign: 'left', padding: '4px 6px', fontSize: '12px', cursor: 'pointer' }}
-              >
-                G7 (Guardian Review)
-              </button>
-              <button
-                type="button"
-                onClick={() => navigate(`/g/${token}/submitted`)}
-                style={{ textAlign: 'left', padding: '4px 6px', fontSize: '12px', cursor: 'pointer' }}
-              >
-                G8 (Submitted)
+                Form Editor (WYSIWYG)
               </button>
             </div>
           </div>

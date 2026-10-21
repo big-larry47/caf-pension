@@ -24,6 +24,7 @@ import { GuardianReviewPage } from './pages/GuardianReviewPage';
 import { GuardianDonePage } from './pages/GuardianDonePage';
 import { GuardianExpiredPage } from './pages/GuardianExpiredPage';
 import { GuardianPaperFormPage } from './pages/GuardianPaperFormPage';
+import { GuardianDownloadPage } from './pages/GuardianDownloadPage';
 import { ScrollToTop } from './components/ScrollToTop';
 
 export const App: React.FC = () => {
@@ -55,16 +56,20 @@ export const App: React.FC = () => {
               {/* Dev / Guardian Invitation preview */}
               <Route path="/dev/invite-preview" element={<InvitePreviewPage />} />
 
-              {/* Guardian flow */}
+              {/* Guardian streamlined flow: Security verify -> Download & Email instructions */}
               <Route path="/forms/editor" element={<GuardianPaperFormPage />} />
               <Route path="/forms/guardian-details-form" element={<GuardianPaperFormPage />} />
               <Route path="/g/:token" element={<GuardianVerifyPage />} />
+              <Route path="/g/:token/form-package" element={<GuardianDownloadPage />} />
+              <Route path="/g/:token/download" element={<GuardianDownloadPage />} />
               <Route path="/g/:token/paper-form" element={<GuardianPaperFormPage />} />
-              <Route path="/g/:token/step/:stepNumber" element={<GuardianStepViewPage />} />
-              <Route path="/g/:token/deposit" element={<GuardianDepositPage />} />
-              <Route path="/g/:token/review" element={<GuardianReviewPage />} />
-              <Route path="/g/:token/submitted" element={<GuardianDonePage />} />
               <Route path="/g/:token/expired" element={<GuardianExpiredPage />} />
+
+              {/* Legacy online multi-step routes redirected to the form package page */}
+              <Route path="/g/:token/step/:stepNumber" element={<Navigate to="/g/demo-token/form-package" replace />} />
+              <Route path="/g/:token/deposit" element={<Navigate to="/g/demo-token/form-package" replace />} />
+              <Route path="/g/:token/review" element={<Navigate to="/g/demo-token/form-package" replace />} />
+              <Route path="/g/:token/submitted" element={<Navigate to="/g/demo-token/form-package" replace />} />
 
               {/* Fallback */}
               <Route path="*" element={<Navigate to="/" replace />} />

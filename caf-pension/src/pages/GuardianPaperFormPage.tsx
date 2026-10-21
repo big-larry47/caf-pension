@@ -463,7 +463,7 @@ export const GuardianPaperFormPage: React.FC = () => {
             <span>PAGE 2 OF 2</span>
           </div>
 
-          {/* ── SECTION 4: Photo ID ── */}
+          {/* ── SECTION 4: Direct Deposit Instructions (Bank Details) ── */}
           <div className="p-section">
             <div
               className="p-section__header edit-target"
@@ -471,32 +471,161 @@ export const GuardianPaperFormPage: React.FC = () => {
               suppressContentEditableWarning
               style={{ background: '#0B335E' }}
             >
-              SECTION 4 — REPRESENTATIVE PHOTO IDENTIFICATION (ATTACHMENT)
+              SECTION 4 — DIRECT DEPOSIT INSTRUCTIONS FOR BENEFICIARY'S PENSION PAYMENTS
             </div>
-            <div style={{ padding: '10px 14px', fontSize: '12px', lineHeight: 1.45 }}>
+            <div style={{ padding: '8px 12px', fontSize: '11px', lineHeight: 1.4 }}>
               <p
                 className="edit-target"
                 contentEditable={isEditMode}
                 suppressContentEditableWarning
-                style={{ margin: '0 0 8px', fontWeight: 600, color: '#0F172A' }}
+                style={{ margin: '0 0 5px', fontWeight: 600, color: '#0F172A' }}
               >
-                To safeguard the beneficiary&apos;s pension entitlements and verify the representative on file, please attach a clear photocopy of <strong>ONE (1)</strong> valid piece of photo ID.
+                Pension survivor benefits will be deposited electronically into the authorized Canadian financial institution account indicated below:
               </p>
+
+              <div style={{ marginBottom: '6px' }}>
+                <span className="p-field__label edit-target" contentEditable={isEditMode} suppressContentEditableWarning style={{ marginBottom: '3px' }}>
+                  4.1 Account Ownership (select one):
+                </span>
+                <div className="p-checkboxes-grid" style={{ marginTop: '2px', gridTemplateColumns: 'repeat(3, 1fr)', gap: '6px' }}>
+                  <label className="p-check" onClick={() => toggleCheck('bank-guardian')} style={{ cursor: 'pointer' }}>
+                    <span className={`p-box ${checkedBoxes['bank-guardian'] ? 'p-box--checked' : ''}`}>
+                      {checkedBoxes['bank-guardian'] ? '✓' : ''}
+                    </span>
+                    <span className="edit-target" contentEditable={isEditMode} suppressContentEditableWarning style={{ fontSize: '10.5px' }}>
+                      <strong>Guardian&apos;s Account</strong> (managed for Jenny Miller)
+                    </span>
+                  </label>
+                  <label className="p-check" onClick={() => toggleCheck('bank-member')} style={{ cursor: 'pointer' }}>
+                    <span className={`p-box ${checkedBoxes['bank-member'] ? 'p-box--checked' : ''}`}>
+                      {checkedBoxes['bank-member'] ? '✓' : ''}
+                    </span>
+                    <span className="edit-target" contentEditable={isEditMode} suppressContentEditableWarning style={{ fontSize: '10.5px' }}>
+                      <strong>Beneficiary&apos;s Account</strong> (Jenny Miller)
+                    </span>
+                  </label>
+                  <label className="p-check" onClick={() => toggleCheck('bank-joint')} style={{ cursor: 'pointer' }}>
+                    <span className={`p-box ${checkedBoxes['bank-joint'] ? 'p-box--checked' : ''}`}>
+                      {checkedBoxes['bank-joint'] ? '✓' : ''}
+                    </span>
+                    <span className="edit-target" contentEditable={isEditMode} suppressContentEditableWarning style={{ fontSize: '10.5px' }}>
+                      <strong>Joint / Trust Account</strong> for Jenny Miller
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              <div className="p-grid p-grid--2col" style={{ border: '1px solid #CBD5E1', borderRadius: '4px', marginBottom: '6px' }}>
+                <div className="p-field">
+                  <span className="p-field__label edit-target" contentEditable={isEditMode} suppressContentEditableWarning>
+                    4.2 Full Name of Account Holder(s) (as shown on bank account or cheque)
+                  </span>
+                  <div className="p-field__fill-line edit-target" contentEditable={isEditMode} suppressContentEditableWarning>
+                    &nbsp;
+                  </div>
+                </div>
+                <div className="p-field">
+                  <span className="p-field__label edit-target" contentEditable={isEditMode} suppressContentEditableWarning>
+                    4.3 Financial Institution Name &amp; Branch (e.g. RBC, TD, BMO, CIBC, Scotiabank)
+                  </span>
+                  <div className="p-field__fill-line edit-target" contentEditable={isEditMode} suppressContentEditableWarning>
+                    &nbsp;
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-grid p-grid--3col" style={{ border: '1px solid #CBD5E1', borderRadius: '4px' }}>
+                <div className="p-field">
+                  <span className="p-field__label edit-target" contentEditable={isEditMode} suppressContentEditableWarning>
+                    4.4 Branch / Transit No. (5 digits)
+                  </span>
+                  <div className="p-field__dob-boxes" style={{ marginTop: '2px' }}>
+                    <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>&nbsp;</div>
+                    <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>&nbsp;</div>
+                    <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>&nbsp;</div>
+                    <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>&nbsp;</div>
+                    <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>&nbsp;</div>
+                  </div>
+                  <span className="p-field__hint edit-target" contentEditable={isEditMode} suppressContentEditableWarning style={{ fontSize: '9.5px' }}>
+                    Transit (5 digits)
+                  </span>
+                </div>
+                <div className="p-field">
+                  <span className="p-field__label edit-target" contentEditable={isEditMode} suppressContentEditableWarning>
+                    4.5 Financial Institution No. (3 digits)
+                  </span>
+                  <div className="p-field__dob-boxes" style={{ marginTop: '2px' }}>
+                    <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>&nbsp;</div>
+                    <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>&nbsp;</div>
+                    <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>&nbsp;</div>
+                  </div>
+                  <span className="p-field__hint edit-target" contentEditable={isEditMode} suppressContentEditableWarning style={{ fontSize: '9.5px' }}>
+                    Institution (3 digits)
+                  </span>
+                </div>
+                <div className="p-field">
+                  <span className="p-field__label edit-target" contentEditable={isEditMode} suppressContentEditableWarning>
+                    4.6 Account Number (7 to 12 digits)
+                  </span>
+                  <div className="p-field__dob-boxes" style={{ marginTop: '2px' }}>
+                    <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>&nbsp;</div>
+                    <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>&nbsp;</div>
+                    <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>&nbsp;</div>
+                    <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>&nbsp;</div>
+                    <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>&nbsp;</div>
+                    <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>&nbsp;</div>
+                    <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>&nbsp;</div>
+                    <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>&nbsp;</div>
+                    <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>&nbsp;</div>
+                    <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>&nbsp;</div>
+                    <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>&nbsp;</div>
+                    <div className="p-dob-box edit-target" contentEditable={isEditMode} suppressContentEditableWarning>&nbsp;</div>
+                  </div>
+                  <span className="p-field__hint edit-target" contentEditable={isEditMode} suppressContentEditableWarning style={{ fontSize: '9.5px' }}>
+                    Account (7 to 12 digits)
+                  </span>
+                </div>
+              </div>
+
+              <div style={{ marginTop: '5px' }}>
+                <label className="p-check" onClick={() => toggleCheck('bank-void')} style={{ cursor: 'pointer' }}>
+                  <span className={`p-box ${checkedBoxes['bank-void'] ? 'p-box--checked' : ''}`}>
+                    {checkedBoxes['bank-void'] ? '✓' : ''}
+                  </span>
+                  <span className="edit-target" contentEditable={isEditMode} suppressContentEditableWarning style={{ fontSize: '10.5px' }}>
+                    <strong>Void cheque or official direct deposit slip attached</strong> (recommended to ensure accurate routing)
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          {/* ── SECTION 5: Photo ID ── */}
+          <div className="p-section">
+            <div
+              className="p-section__header edit-target"
+              contentEditable={isEditMode}
+              suppressContentEditableWarning
+              style={{ padding: '3px 8px', fontSize: '10.5px' }}
+            >
+              SECTION 5 — REPRESENTATIVE PHOTO IDENTIFICATION (ATTACHMENT)
+            </div>
+            <div style={{ padding: '6px 10px', fontSize: '10.5px', lineHeight: 1.35 }}>
               <p
                 className="edit-target"
                 contentEditable={isEditMode}
                 suppressContentEditableWarning
-                style={{ margin: '0 0 6px', fontWeight: 600 }}
+                style={{ margin: '0 0 4px', fontWeight: 600, color: '#0F172A' }}
               >
-                Indicate which type of photo ID photocopy you are attaching:
+                Please attach a clear photocopy of <strong>ONE (1)</strong> valid piece of photo ID to verify representative identity (check one):
               </p>
-              <div className="p-checkboxes-grid">
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 14px', margin: '0 0 6px' }}>
                 <label className="p-check" onClick={() => toggleCheck('id-dl')} style={{ cursor: 'pointer' }}>
                   <span className={`p-box ${checkedBoxes['id-dl'] ? 'p-box--checked' : ''}`}>
                     {checkedBoxes['id-dl'] ? '✓' : ''}
                   </span>
-                  <span className="edit-target" contentEditable={isEditMode} suppressContentEditableWarning>
-                    Canadian Provincial / Territorial Driver’s Licence
+                  <span className="edit-target" contentEditable={isEditMode} suppressContentEditableWarning style={{ fontSize: '10.5px' }}>
+                    Driver’s Licence
                   </span>
                 </label>
 
@@ -504,8 +633,8 @@ export const GuardianPaperFormPage: React.FC = () => {
                   <span className={`p-box ${checkedBoxes['id-pass'] ? 'p-box--checked' : ''}`}>
                     {checkedBoxes['id-pass'] ? '✓' : ''}
                   </span>
-                  <span className="edit-target" contentEditable={isEditMode} suppressContentEditableWarning>
-                    Canadian Passport (photo page)
+                  <span className="edit-target" contentEditable={isEditMode} suppressContentEditableWarning style={{ fontSize: '10.5px' }}>
+                    Passport (photo page)
                   </span>
                 </label>
 
@@ -513,8 +642,8 @@ export const GuardianPaperFormPage: React.FC = () => {
                   <span className={`p-box ${checkedBoxes['id-card'] ? 'p-box--checked' : ''}`}>
                     {checkedBoxes['id-card'] ? '✓' : ''}
                   </span>
-                  <span className="edit-target" contentEditable={isEditMode} suppressContentEditableWarning>
-                    Provincial / Territorial Photo ID Card
+                  <span className="edit-target" contentEditable={isEditMode} suppressContentEditableWarning style={{ fontSize: '10.5px' }}>
+                    Provincial Photo ID
                   </span>
                 </label>
 
@@ -522,43 +651,43 @@ export const GuardianPaperFormPage: React.FC = () => {
                   <span className={`p-box ${checkedBoxes['id-pr'] ? 'p-box--checked' : ''}`}>
                     {checkedBoxes['id-pr'] ? '✓' : ''}
                   </span>
-                  <span className="edit-target" contentEditable={isEditMode} suppressContentEditableWarning>
-                    Canadian Permanent Resident (PR) Card
+                  <span className="edit-target" contentEditable={isEditMode} suppressContentEditableWarning style={{ fontSize: '10.5px' }}>
+                    PR Card
                   </span>
                 </label>
 
-                <label className="p-check" onClick={() => toggleCheck('id-other')} style={{ gridColumn: 'span 2', cursor: 'pointer' }}>
+                <label className="p-check" onClick={() => toggleCheck('id-other')} style={{ cursor: 'pointer' }}>
                   <span className={`p-box ${checkedBoxes['id-other'] ? 'p-box--checked' : ''}`}>
                     {checkedBoxes['id-other'] ? '✓' : ''}
                   </span>
-                  <span className="edit-target" contentEditable={isEditMode} suppressContentEditableWarning>
-                    Other valid government-issued photo identity card
+                  <span className="edit-target" contentEditable={isEditMode} suppressContentEditableWarning style={{ fontSize: '10.5px' }}>
+                    Other government-issued photo ID
                   </span>
                 </label>
               </div>
 
-              <div className="p-grid p-grid--3col" style={{ marginTop: '10px', border: '1px solid #CBD5E1', borderRadius: '4px' }}>
-                <div className="p-field">
-                  <span className="p-field__label edit-target" contentEditable={isEditMode} suppressContentEditableWarning>
-                    4.1 ID Document Number
+              <div className="p-grid p-grid--3col" style={{ border: '1px solid #CBD5E1', borderRadius: '4px' }}>
+                <div className="p-field" style={{ padding: '4px 8px' }}>
+                  <span className="p-field__label edit-target" contentEditable={isEditMode} suppressContentEditableWarning style={{ fontSize: '10px' }}>
+                    5.1 ID Document Number
                   </span>
-                  <div className="p-field__fill-line edit-target" contentEditable={isEditMode} suppressContentEditableWarning>
+                  <div className="p-field__fill-line edit-target" contentEditable={isEditMode} suppressContentEditableWarning style={{ minHeight: '18px' }}>
                     &nbsp;
                   </div>
                 </div>
-                <div className="p-field">
-                  <span className="p-field__label edit-target" contentEditable={isEditMode} suppressContentEditableWarning>
-                    4.2 Issuing Province / Authority
+                <div className="p-field" style={{ padding: '4px 8px' }}>
+                  <span className="p-field__label edit-target" contentEditable={isEditMode} suppressContentEditableWarning style={{ fontSize: '10px' }}>
+                    5.2 Issuing Province / Authority
                   </span>
-                  <div className="p-field__fill-line edit-target" contentEditable={isEditMode} suppressContentEditableWarning>
+                  <div className="p-field__fill-line edit-target" contentEditable={isEditMode} suppressContentEditableWarning style={{ minHeight: '18px' }}>
                     &nbsp;
                   </div>
                 </div>
-                <div className="p-field">
-                  <span className="p-field__label edit-target" contentEditable={isEditMode} suppressContentEditableWarning>
-                    4.3 Expiry Date (YYYY-MM-DD)
+                <div className="p-field" style={{ padding: '4px 8px' }}>
+                  <span className="p-field__label edit-target" contentEditable={isEditMode} suppressContentEditableWarning style={{ fontSize: '10px' }}>
+                    5.3 Expiry Date (YYYY-MM-DD)
                   </span>
-                  <div className="p-field__fill-line edit-target" contentEditable={isEditMode} suppressContentEditableWarning>
+                  <div className="p-field__fill-line edit-target" contentEditable={isEditMode} suppressContentEditableWarning style={{ minHeight: '18px' }}>
                     &nbsp;
                   </div>
                 </div>
@@ -566,34 +695,27 @@ export const GuardianPaperFormPage: React.FC = () => {
             </div>
           </div>
 
-          {/* ── SECTION 5: Confirmation & Signature ── */}
+          {/* ── SECTION 6: Confirmation & Signature ── */}
           <div className="p-section">
             <div
               className="p-section__header edit-target"
               contentEditable={isEditMode}
               suppressContentEditableWarning
+              style={{ padding: '3px 8px', fontSize: '10.5px' }}
             >
-              SECTION 5 — REPRESENTATIVE CONFIRMATION AND SIGNATURE
+              SECTION 6 — REPRESENTATIVE CONFIRMATION AND SIGNATURE
             </div>
-            <div style={{ padding: '12px 14px', fontSize: '12px', lineHeight: 1.5, background: '#F8FAFC' }}>
-              <p
-                className="edit-target"
-                contentEditable={isEditMode}
-                suppressContentEditableWarning
-                style={{ margin: '0 0 8px', fontWeight: 600 }}
-              >
-                Please review and sign below:
-              </p>
+            <div style={{ padding: '8px 10px', fontSize: '10.5px', lineHeight: 1.4, background: '#F8FAFC' }}>
               <div
                 className="edit-target"
                 contentEditable={isEditMode}
                 suppressContentEditableWarning
-                style={{ background: '#FFFFFF', border: '1px solid #CBD5E1', padding: '10px 14px', borderRadius: '4px', marginBottom: '12px', fontSize: '12px', lineHeight: 1.55 }}
+                style={{ background: '#FFFFFF', border: '1px solid #CBD5E1', padding: '6px 10px', borderRadius: '4px', marginBottom: '6px', fontSize: '10.5px', lineHeight: 1.4 }}
               >
-                &ldquo;I confirm that I have been designated to act as assisting guardian for the beneficiary, Jenny Miller, regarding Canadian Armed Forces survivor pension benefits. The contact information I have provided on this form is accurate, the attached photocopy of photo ID is mine, and I will act in the best interest of the beneficiary in receiving and managing official communications.&rdquo;
+                &ldquo;I confirm that I have been designated to act as assisting representative/guardian for the pension beneficiary, Jenny Miller, regarding Canadian Armed Forces survivor pension benefits. The contact and direct deposit information provided on this form is accurate, the attached photocopy of photo ID is mine, and direct deposit payments will be received and managed in the best interest of the beneficiary.&rdquo;
               </div>
 
-              <div className="p-sig-box">
+              <div className="p-sig-box" style={{ marginTop: '6px', gap: '12px' }}>
                 <div className="p-sig-field" style={{ gridColumn: 'span 2' }}>
                   <div
                     className="p-sig-line edit-target"
@@ -606,6 +728,7 @@ export const GuardianPaperFormPage: React.FC = () => {
                     className="p-sig-label edit-target"
                     contentEditable={isEditMode}
                     suppressContentEditableWarning
+                    style={{ fontSize: '9.5px' }}
                   >
                     Signature of Assisting Guardian / Representative
                   </span>
@@ -622,13 +745,14 @@ export const GuardianPaperFormPage: React.FC = () => {
                     className="p-sig-label edit-target"
                     contentEditable={isEditMode}
                     suppressContentEditableWarning
+                    style={{ fontSize: '9.5px' }}
                   >
                     Date (YYYY-MM-DD)
                   </span>
                 </div>
               </div>
 
-              <div className="p-sig-box" style={{ marginTop: '12px' }}>
+              <div className="p-sig-box" style={{ marginTop: '6px', gap: '12px' }}>
                 <div className="p-sig-field" style={{ gridColumn: 'span 2' }}>
                   <div
                     className="p-sig-line edit-target"
@@ -641,6 +765,7 @@ export const GuardianPaperFormPage: React.FC = () => {
                     className="p-sig-label edit-target"
                     contentEditable={isEditMode}
                     suppressContentEditableWarning
+                    style={{ fontSize: '9.5px' }}
                   >
                     Printed Full Legal Name (Surname, Given Names)
                   </span>
@@ -657,6 +782,7 @@ export const GuardianPaperFormPage: React.FC = () => {
                     className="p-sig-label edit-target"
                     contentEditable={isEditMode}
                     suppressContentEditableWarning
+                    style={{ fontSize: '9.5px' }}
                   >
                     City &amp; Province / Territory
                   </span>
@@ -665,64 +791,32 @@ export const GuardianPaperFormPage: React.FC = () => {
             </div>
           </div>
 
-          {/* ── SECTION 6: Mailing Instructions ── */}
-          <div className="p-section">
+          {/* ── SECTION 7: Mailing Instructions ── */}
+          <div className="p-section" style={{ marginBottom: 0 }}>
             <div
               className="p-section__header edit-target"
               contentEditable={isEditMode}
               suppressContentEditableWarning
+              style={{ padding: '3px 8px', fontSize: '10.5px' }}
             >
-              SECTION 6 — WHERE TO SEND YOUR COMPLETED PAPER FORM
+              SECTION 7 — WHERE TO SEND YOUR COMPLETED PAPER FORM
             </div>
-            <div style={{ padding: '10px 14px', display: 'grid', gridTemplateColumns: '1.05fr 1fr', gap: '28px', alignItems: 'start' }}>
-              <div>
-                <p
-                  className="edit-target"
-                  contentEditable={isEditMode}
-                  suppressContentEditableWarning
-                  style={{ margin: '0 0 6px', fontWeight: 700, fontSize: '11.5px', color: '#0F172A' }}
-                >
-                  BY MAIL (Send Pages 1 &amp; 2 + Copy of Photo ID):
-                </p>
-                <div
-                  className="p-mail-address edit-target"
-                  contentEditable={isEditMode}
-                  suppressContentEditableWarning
-                  style={{ maxWidth: '270px', width: 'fit-content' }}
-                >
-                  <strong>Government of Canada Pension Centre</strong><br />
-                  Mail Facility – PO Box 9500<br />
-                  Matane QC G4W 0H3<br />
-                  CANADA
-                </div>
+            <div style={{ padding: '6px 10px', display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '16px', alignItems: 'center', fontSize: '10px', lineHeight: 1.35 }}>
+              <div className="edit-target" contentEditable={isEditMode} suppressContentEditableWarning>
+                <strong>BY MAIL (Send Pages 1 &amp; 2 + Photo ID + Void Cheque):</strong><br />
+                Government of Canada Pension Centre – Mail Facility<br />
+                PO Box 9500, Matane QC G4W 0H3 CANADA
               </div>
-              <div style={{ fontSize: '11.5px', lineHeight: 1.45 }}>
-                <p
-                  className="edit-target"
-                  contentEditable={isEditMode}
-                  suppressContentEditableWarning
-                  style={{ margin: '0 0 4px', fontWeight: 700 }}
-                >
-                  QUESTIONS OR ASSISTANCE:
-                </p>
-                <div className="edit-target" contentEditable={isEditMode} suppressContentEditableWarning>
-                  <strong>Toll-free Help Line:</strong> 1-800-267-0325
-                </div>
-                <div className="edit-target" contentEditable={isEditMode} suppressContentEditableWarning style={{ fontSize: '11px', color: '#64748B' }}>
-                  Monday to Friday: 8:00 to 16:00 (Eastern Time)
-                </div>
-                <div className="edit-target" contentEditable={isEditMode} suppressContentEditableWarning style={{ marginTop: '4px' }}>
-                  <strong>Toll-free Fax:</strong> 1-855-683-1662
-                </div>
-                <div className="edit-target" contentEditable={isEditMode} suppressContentEditableWarning style={{ marginTop: '6px', fontSize: '11px', color: '#0369A1' }}>
-                  ✓ Please keep a copy or photo of this completed form for your records.
-                </div>
+              <div className="edit-target" contentEditable={isEditMode} suppressContentEditableWarning>
+                <strong>QUESTIONS OR ASSISTANCE:</strong><br />
+                Toll-free Help Line: <strong>1-800-267-0325</strong> (Mon–Fri 8:00–16:00 ET)<br />
+                Toll-free Fax: 1-855-683-1662 &bull; <em>Keep a copy for your records</em>
               </div>
             </div>
           </div>
 
           {/* Page 2 Footer */}
-          <div className="p-footer">
+          <div className="p-footer" style={{ marginTop: '8px', paddingTop: '4px' }}>
             <span>CF-FC 2489 E (2026/04)</span>
             <span>PROTECTED B (when completed)</span>
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
