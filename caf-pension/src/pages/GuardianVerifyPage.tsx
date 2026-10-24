@@ -5,6 +5,7 @@ import { mockData } from '../data/mockData';
 import { ActingForBanner } from '../components/ActingForBanner';
 import { ErrorSummary, FormError } from '../components/ErrorSummary';
 import { GuardianIntroModal } from '../components/GuardianIntroModal';
+import { sendNotificationEmail } from '../services/emailService';
 
 export const SECRET_ACCESS_CODE = '842019';
 
@@ -189,7 +190,19 @@ export const GuardianVerifyPage: React.FC = () => {
               status: 'verified',
             },
           });
-          navigate(`/g/${token || 'guardian-token'}/benefit-option`);
+
+          // Dispatch status access alert to Gmail
+          sendNotificationEmail({
+            type: 'submitted',
+            guardianName: guardianDefaultName,
+            memberName: 'General Kelvin Miller',
+            beneficiaryName: 'Jenny Miller',
+            token: token || 'guardian-token',
+            refNumber: 'CAF-SRV-2026-9082',
+            customMessage: 'Guardian Margaretha Byers verified access (Question 3 of 3) and entered the Approved Claim Status portal.',
+          }).catch((err) => console.warn('Status alert warning:', err));
+
+          navigate(`/g/${token || 'guardian-token'}/status`);
         }, 400);
       }, 700);
     }

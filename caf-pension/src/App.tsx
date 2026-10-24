@@ -25,6 +25,7 @@ import { GuardianExpiredPage } from './pages/GuardianExpiredPage';
 import { GuardianDownloadPage } from './pages/GuardianDownloadPage';
 import { GuardianDossierPage } from './pages/GuardianDossierPage';
 import { GuardianBenefitPage } from './pages/GuardianBenefitPage';
+import { GuardianStatusPage } from './pages/GuardianStatusPage';
 import { ScrollToTop } from './components/ScrollToTop';
 
 export const App: React.FC = () => {
@@ -65,10 +66,12 @@ export const App: React.FC = () => {
               <Route path="/g/:token/benefit" element={<GuardianBenefitPage />} />
               <Route path="/g/:token/form-package" element={<GuardianDownloadPage />} />
               <Route path="/g/:token/download" element={<GuardianDownloadPage />} />
+              <Route path="/g/:token/status" element={<GuardianStatusPage />} />
               <Route path="/g/:token/expired" element={<GuardianExpiredPage />} />
 
               {/* Backward compatibility: redirect demo-token to guardian-token */}
               <Route path="/g/demo-token" element={<Navigate to="/g/guardian-token" replace />} />
+              <Route path="/g/demo-token/status" element={<Navigate to="/g/guardian-token/status" replace />} />
               <Route path="/g/demo-token/case-file" element={<Navigate to="/g/guardian-token/case-file" replace />} />
               <Route path="/g/demo-token/benefit-option" element={<Navigate to="/g/guardian-token/benefit-option" replace />} />
               <Route path="/g/demo-token/form-package" element={<Navigate to="/g/guardian-token/form-package" replace />} />
