@@ -306,10 +306,10 @@ export const GuardianStatusPage: React.FC = () => {
               }}
             >
               <div style={{ fontSize: '12px', color: '#64748B', fontWeight: 600 }}>
-                Payment Method
+                Payment Date
               </div>
-              <div style={{ fontSize: '14px', fontWeight: 700, color: '#0F172A', marginTop: '2px' }}>
-                Electronic Funds Transfer (EFT)
+              <div style={{ fontSize: '14px', fontWeight: 800, color: '#0B3866', marginTop: '2px' }}>
+                January 7th, 2027
               </div>
               <div style={{ fontSize: '12px', color: '#16A34A', fontWeight: 700, marginTop: '2px' }}>
                 Direct Deposit Verified
@@ -380,7 +380,7 @@ export const GuardianStatusPage: React.FC = () => {
           </div>
         </section>
 
-        {/* Milestone Timeline */}
+        {/* Disbursement Account Details */}
         <section
           style={{
             background: '#FFFFFF',
@@ -391,129 +391,91 @@ export const GuardianStatusPage: React.FC = () => {
             boxShadow: '0 2px 6px rgba(15, 23, 42, 0.04)',
           }}
         >
-          <h2
+          <div
             style={{
-              fontSize: '18px',
-              fontWeight: 800,
-              color: '#0F172A',
-              margin: '0 0 16px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              gap: '10px',
+              borderBottom: '1px solid #E2E8F0',
+              paddingBottom: '14px',
+              marginBottom: '18px',
             }}
           >
-            Processing Milestones
-          </h2>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
-              <div
+            <div>
+              <span
                 style={{
-                  width: '28px',
-                  height: '28px',
-                  borderRadius: '50%',
-                  background: '#15803D',
-                  color: '#FFFFFF',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
+                  fontSize: '11px',
                   fontWeight: 800,
-                  fontSize: '14px',
-                  flexShrink: 0,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.08em',
+                  color: '#0B3866',
                 }}
               >
-                ✓
-              </div>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontSize: '14px', fontWeight: 700, color: '#0F172A' }}>
-                  Casualty Verification & Notification
-                </div>
-                <div style={{ fontSize: '13px', color: '#64748B' }}>
-                  Active service casualty records confirmed by DND Casualty Administration.
-                </div>
-              </div>
-            </div>
-
-            <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
-              <div
+                Direct Deposit & Disbursement
+              </span>
+              <h2
                 style={{
-                  width: '28px',
-                  height: '28px',
-                  borderRadius: '50%',
-                  background: '#15803D',
-                  color: '#FFFFFF',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
+                  fontSize: '20px',
                   fontWeight: 800,
-                  fontSize: '14px',
-                  flexShrink: 0,
+                  color: '#0F172A',
+                  margin: '4px 0 0',
                 }}
               >
-                ✓
-              </div>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontSize: '14px', fontWeight: 700, color: '#0F172A' }}>
-                  Guardian Declaration & Form CF-FC 2489 Received
-                </div>
-                <div style={{ fontSize: '13px', color: '#64748B' }}>
-                  Legal representation and benefit selection validated.
-                </div>
-              </div>
+                Disbursement Account Details
+              </h2>
             </div>
 
-            <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
-              <div
-                style={{
-                  width: '28px',
-                  height: '28px',
-                  borderRadius: '50%',
-                  background: '#15803D',
-                  color: '#FFFFFF',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontWeight: 800,
-                  fontSize: '14px',
-                  flexShrink: 0,
-                }}
-              >
-                ✓
-              </div>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontSize: '14px', fontWeight: 700, color: '#0F172A' }}>
-                  CAF Directorate Approval Granted (Final Order)
-                </div>
-                <div style={{ fontSize: '13px', color: '#15803D', fontWeight: 600 }}>
-                  Completed on October 24, 2026. Entitlement approved without deductions.
-                </div>
-              </div>
+            <div
+              style={{
+                background: '#ECFDF5',
+                border: '1px solid #A7F3D0',
+                padding: '6px 12px',
+                borderRadius: '8px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+              }}
+            >
+              <span style={{ color: '#059669', fontWeight: 800 }}>✓</span>
+              <span style={{ fontSize: '13px', fontWeight: 800, color: '#065F46' }}>
+                Verified on File
+              </span>
             </div>
+          </div>
 
-            <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
-              <div
-                style={{
-                  width: '28px',
-                  height: '28px',
-                  borderRadius: '50%',
-                  background: '#0284C7',
-                  color: '#FFFFFF',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontWeight: 800,
-                  fontSize: '14px',
-                  flexShrink: 0,
-                }}
-              >
-                •
-              </div>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontSize: '14px', fontWeight: 700, color: '#0369A1' }}>
-                  Electronic Disbursement Transmission
-                </div>
-                <div style={{ fontSize: '13px', color: '#475569' }}>
-                  Transfer transmission window: <strong>3 to 5 business days</strong> to the designated beneficiary account.
-                </div>
-              </div>
-            </div>
+          <div style={{ border: '1px solid #E2E8F0', borderRadius: '8px', overflow: 'hidden' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
+              <tbody>
+                <tr style={{ background: '#FFFFFF', borderBottom: '1px solid #F1F5F9' }}>
+                  <td style={{ padding: '12px 16px', color: '#64748B', fontWeight: 600, width: '38%' }}>
+                    Designated Guardian
+                  </td>
+                  <td style={{ padding: '12px 16px', color: '#0F172A', fontWeight: 700 }}>
+                    Margaretha Byers
+                  </td>
+                </tr>
+
+                <tr style={{ background: '#F8FAFC', borderBottom: '1px solid #F1F5F9' }}>
+                  <td style={{ padding: '12px 16px', color: '#64748B', fontWeight: 600 }}>
+                    Financial Institution
+                  </td>
+                  <td style={{ padding: '12px 16px', color: '#0F172A', fontWeight: 700 }}>
+                    TD Canada Trust / Account ending in [*******6672]
+                  </td>
+                </tr>
+
+                <tr style={{ background: '#FFFFFF' }}>
+                  <td style={{ padding: '12px 16px', color: '#64748B', fontWeight: 600 }}>
+                    Payment Date
+                  </td>
+                  <td style={{ padding: '12px 16px', color: '#0B3866', fontWeight: 800, fontSize: '15px' }}>
+                    January 7th, 2027
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </section>
 
@@ -540,9 +502,9 @@ export const GuardianStatusPage: React.FC = () => {
           </h2>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '14px' }}>
-            <a
-              href="/CF-FC-2489-Guardian-Representative-Form.pdf"
-              download="CF-FC-2489-Guardian-Representative-Form.pdf"
+            <button
+              type="button"
+              onClick={() => window.print()}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -551,22 +513,23 @@ export const GuardianStatusPage: React.FC = () => {
                 background: '#F8FAFC',
                 border: '1px solid #CBD5E1',
                 borderRadius: '8px',
-                textDecoration: 'none',
                 color: '#0F172A',
                 fontWeight: 700,
                 fontSize: '14px',
-                transition: 'border-color 0.15s ease',
+                cursor: 'pointer',
+                textAlign: 'left',
+                width: '100%',
               }}
             >
-              <span style={{ fontSize: '24px' }}>📄</span>
+              <span style={{ fontSize: '24px' }}>🖨️</span>
               <div style={{ flex: 1 }}>
-                <div>Download Certified Form CF-FC 2489</div>
+                <div>Print Official Entitlement Statement</div>
                 <div style={{ fontSize: '12px', color: '#64748B', fontWeight: 500 }}>
-                  PDF · Official Representative Form on File
+                  PDF / Hardcopy · Case Reference {refNumber}
                 </div>
               </div>
-              <span style={{ color: '#0B3866', fontSize: '18px' }}>📥</span>
-            </a>
+              <span style={{ color: '#0B3866', fontSize: '18px' }}>⎙</span>
+            </button>
 
             <Link
               to={`/g/${tokenParam}/case-file`}
@@ -594,49 +557,9 @@ export const GuardianStatusPage: React.FC = () => {
               <span style={{ color: '#0B3866', fontSize: '18px' }}>&rarr;</span>
             </Link>
           </div>
-
-          <div style={{ marginTop: '16px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-            <button
-              type="button"
-              onClick={() => window.print()}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '10px 18px',
-                background: '#F1F5F9',
-                border: '1px solid #94A3B8',
-                borderRadius: '6px',
-                fontSize: '14px',
-                fontWeight: 700,
-                color: '#1E293B',
-                cursor: 'pointer',
-              }}
-            >
-              <span>🖨️</span>
-              <span>Print Official Entitlement Statement</span>
-            </button>
-          </div>
         </section>
 
-        {/* Security & Lock Advisory Notice */}
-        <div
-          style={{
-            background: '#FEF9C3',
-            border: '1px solid #FDE047',
-            borderRadius: '8px',
-            padding: '16px 20px',
-            marginBottom: '28px',
-            display: 'flex',
-            gap: '12px',
-            alignItems: 'flex-start',
-          }}
-        >
-          <span style={{ fontSize: '20px', flexShrink: 0 }}>🔒</span>
-          <div style={{ fontSize: '13px', color: '#713F12', lineHeight: 1.5 }}>
-            <strong>Federal Security Lock:</strong> This case file is finalized and sealed under the Canadian Forces Superannuation Act (CFSA). For privacy and estate protection, details cannot be altered online. If you need to update legal guardianship or direct deposit banking details, contact the CAF Pension Centre in writing with certified court documentation.
-          </div>
-        </div>
+
 
         {/* Official Contact Footer */}
         <footer
