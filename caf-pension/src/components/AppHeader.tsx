@@ -1,14 +1,13 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { useApplication } from '../context/ApplicationContext';
+import { useLocation } from 'react-router-dom';
 
 export const AppHeader: React.FC = () => {
   const location = useLocation();
-  const { resetState } = useApplication();
   const isStartPage = location.pathname === '/';
 
-  const handleSignOut = () => {
-    resetState();
+  const handleSignOut = (e: React.MouseEvent) => {
+    e.preventDefault();
+    window.location.reload();
   };
 
   return (
@@ -36,9 +35,9 @@ export const AppHeader: React.FC = () => {
             Français
           </a>
           {!isStartPage && (
-            <Link to="/" onClick={handleSignOut}>
+            <a href="#refresh" onClick={handleSignOut} title="Refresh page">
               Sign out
-            </Link>
+            </a>
           )}
         </div>
       </div>
